@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --section-pad: 160px 0;
+  --max: 1440px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+body {
+  font-family: 'Zen Old Mincho', serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 2;
+  letter-spacing: 0.1em;
+  color: #000000;
+}

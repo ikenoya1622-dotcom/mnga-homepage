@@ -1,17 +1,9 @@
 export default function Message() {
   return (
-    <section style={{padding: '100px 0', backgroundColor: '#f9fafb'}}>
-      <div style={{maxWidth: '1100px', margin: '0 auto', padding: '0 40px'}}>
-        <div
-          className="message-inner"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '80px',
-            alignItems: 'center',
-          }}
-        >
-          <div>
+    <section style={{padding: '80px 0', backgroundColor: '#f9fafb'}}>
+      <div style={{maxWidth: '1100px', margin: '0 auto', padding: '0 24px'}}>
+        <div className="message-inner">
+          <div className="message-photo-wrap">
             <div
               style={{
                 maxWidth: '300px',

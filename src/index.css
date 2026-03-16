@@ -25,3 +25,118 @@ body {
   letter-spacing: 0.1em;
   color: #000000;
 }
+
+/* =============================
+   Hero
+============================= */
+.hero-section {
+  height: 500px;
+}
+.hero-title {
+  font-size: 1.875rem;
+}
+.hero-subtitle {
+  font-size: 1.125rem;
+}
+
+/* =============================
+   Message
+============================= */
+.message-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* =============================
+   Partners
+============================= */
+.partners-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+  padding-left: 10%;
+  margin-top: 80px;
+}
+
+/* =============================
+   Value
+============================= */
+.membership-inner {
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+}
+.membership-visual-wrap {
+  width: 40%;
+  flex-shrink: 0;
+}
+
+/* =============================
+   Mobile ( ~768px )
+============================= */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  .container {
+    padding: 0 20px;
+  }
+
+  /* Hero */
+  .hero-section {
+    height: 380px;
+  }
+  .hero-title {
+    font-size: 1.4rem;
+  }
+  .hero-subtitle {
+    font-size: 0.95rem;
+  }
+
+  /* Message */
+  .message-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .message-photo-wrap div {
+    margin-left: 0 !important;
+    max-width: 200px;
+  }
+
+  /* Partners */
+  .partners-logos {
+    padding-left: 0;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  /* Value */
+  .membership-inner {
+    flex-direction: column;
+  }
+  .membership-visual-wrap {
+    width: 100%;
+  }
+}
+
+/* =============================
+   Tablet ( 769px ~ 1024px )
+============================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 0 40px;
+  }
+
+  .message-inner {
+    gap: 40px;
+  }
+
+  .partners-logos {
+    padding-left: 0;
+    flex-wrap: wrap;
+  }
+}

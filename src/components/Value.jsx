@@ -11,11 +11,11 @@ export default function Value() {
     <section className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <p className="text-sm text-gray-500 mb-8">5. 提供価値</p>
-        <div className="membership-inner flex flex-col md:flex-row gap-12" style={{paddingLeft: '10%'}}>
-          <div className="w-full md:w-2/5">
-            <div className="bg-gray-200" style={{aspectRatio: '3/4', height: 'auto', maxWidth: '150%', marginRight: 'auto'}} />
+        <div className="membership-inner">
+          <div className="membership-visual-wrap">
+            <div className="bg-gray-200" style={{aspectRatio: '3/4', height: 'auto'}} />
           </div>
-          <div className="w-full md:w-3/5 space-y-6">
+          <div className="space-y-6">
             {values.map((v) => (
               <div key={v.title}>
                 <h3 className="font-bold text-base mb-1">{v.title}</h3>

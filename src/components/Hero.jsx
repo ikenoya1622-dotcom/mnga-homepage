@@ -27,39 +27,26 @@ export default function Hero() {
 
   return (
     <section
-      className="pt-16 flex items-center justify-center relative"
+      className="hero-section pt-16 flex items-center justify-center relative"
       style={{
-        height: '500px',
-        paddingLeft: '80px',
-        paddingRight: '80px',
         backgroundImage: 'url(/images/tokyo-bg.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* オーバーレイ */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        background: 'rgba(0, 0, 0, 0.5)',
-      }} />
-
-      <div className="text-center relative z-10">
-        <h1 ref={titleRef} className="text-3xl font-bold mb-3" style={{color: '#ffffff'}}>
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)' }} />
+      <div className="text-center relative z-10 px-6">
+        <h1 ref={titleRef} className="font-bold mb-3 hero-title" style={{color: '#ffffff'}}>
           いなくてはならない日本へ
         </h1>
-        <p ref={subtitleRef} className="text-lg mb-10" style={{color: '#ffffff'}}>
+        <p ref={subtitleRef} className="mb-10 hero-subtitle" style={{color: '#ffffff'}}>
           -Make Nippon Great Again-
         </p>
         <button
           ref={btnRef}
-          className="px-12 py-3 text-sm transition-colors"
-          style={{
-            color: '#ffffff',
-            border: '1px solid #ffffff',
-            background: 'transparent',
-          }}
+          className="px-8 md:px-12 py-3 text-sm transition-colors"
+          style={{ color: '#ffffff', border: '1px solid #ffffff', background: 'transparent' }}
           onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}
           onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
         >

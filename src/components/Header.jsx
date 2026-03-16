@@ -26,9 +26,9 @@ export default function Header() {
         {/* PC nav */}
         <nav className="hidden md:block">
           <ul className="flex items-center gap-8">
-            {['Home', 'About', 'Join', 'Contact'].map((item) => (
+            {['Home', 'About', 'Report', 'Join', 'Contact'].map((item) => (
               <li key={item}>
-                <a href="#" className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
+                <a href={item === 'Report' ? '#report' : '#'} className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
                   {item}
                 </a>
               </li>
@@ -52,10 +52,10 @@ export default function Header() {
       {menuOpen && (
         <nav className="md:hidden bg-white border-t border-gray-100">
           <ul className="flex flex-col">
-            {['Home', 'About', 'Join', 'Contact'].map((item) => (
+            {['Home', 'About', 'Report', 'Join', 'Contact'].map((item) => (
               <li key={item}>
                 <a
-                  href="#"
+                  href={item === 'Report' ? '#report' : '#'}
                   className="block px-6 py-4 text-sm text-gray-700 border-b border-gray-100 hover:bg-gray-50"
                   onClick={() => setMenuOpen(false)}
                 >

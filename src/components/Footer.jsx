@@ -17,9 +17,9 @@ export default function Footer() {
           </div>
           <nav>
             <ul className="flex flex-wrap gap-4">
-              {['Home', 'About', 'Join', 'Contact', 'プライバシーポリシー'].map((item) => (
+              {['Home', 'About', 'Report', 'Join', 'Contact', 'プライバシーポリシー'].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-xs text-gray-600 hover:underline">
+                  <a href={item === 'Report' ? '#report' : '#'} className="text-xs text-gray-600 hover:underline">
                     {item}
                   </a>
                 </li>

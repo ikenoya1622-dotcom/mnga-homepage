@@ -10,7 +10,7 @@ import Message from './components/Message'
 import Board from './components/Board'
 import Partners from './components/Partners'
 import Value from './components/Value'
-import Join from './components/Join'
+import CtaSection from './components/CtaSection'
 import Footer from './components/Footer'
 import Report from './pages/Report'
 
@@ -52,7 +52,7 @@ function Home() {
         <Board />
         <Partners />
         <Value />
-        <Join />
+        <CtaSection />
       </main>
       <Footer />
     </div>

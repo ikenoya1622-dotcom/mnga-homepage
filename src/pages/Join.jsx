@@ -102,7 +102,7 @@ export default function JoinPage() {
 
         {/* 1. 入会の流れ */}
         <div ref={flowRef} className="container" style={{ paddingTop: '40px', paddingBottom: '100px' }}>
-          <h2 className="text-sm text-gray-500 font-bold" style={{ marginBottom: '48px', fontSize: '16px', paddingLeft: '120px' }}>
+          <h2 className="text-sm text-gray-500 font-bold" style={{ marginBottom: '48px', fontSize: '16px', paddingLeft: '60px' }}>
             1. 入会の流れ
           </h2>
           <div className="join-steps">
@@ -165,7 +165,7 @@ export default function JoinPage() {
 
         {/* 2. 入会金 */}
         <div ref={feeRef} className="container" style={{ paddingTop: '40px', paddingBottom: '100px' }}>
-          <h2 className="text-sm text-gray-500 font-bold" style={{ marginBottom: '48px', fontSize: '16px', paddingLeft: '120px' }}>
+          <h2 className="text-sm text-gray-500 font-bold" style={{ marginBottom: '48px', fontSize: '16px', paddingLeft: '60px' }}>
             2. 入会金
           </h2>
           <div className="join-plans">

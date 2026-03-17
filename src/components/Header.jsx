@@ -28,7 +28,7 @@ export default function Header() {
           <ul className="flex items-center gap-8">
             {[
               { label: 'Home', href: '/' },
-              { label: 'About', href: '#' },
+              { label: 'About', href: '/about' },
               { label: 'Report', href: '/report' },
               { label: 'Join', href: '#' },
               { label: 'Contact', href: '#' },
@@ -60,7 +60,7 @@ export default function Header() {
           <ul className="flex flex-col">
             {[
               { label: 'Home', href: '/' },
-              { label: 'About', href: '#' },
+              { label: 'About', href: '/about' },
               { label: 'Report', href: '/report' },
               { label: 'Join', href: '#' },
               { label: 'Contact', href: '#' },

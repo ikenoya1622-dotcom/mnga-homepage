@@ -18,7 +18,7 @@ export default function Footer() {
           <nav>
             <ul className="flex flex-wrap gap-4">
               {[
-                { label: 'About', href: '#' },
+                { label: 'About', href: '/about' },
                 { label: 'Report', href: '/report' },
                 { label: 'Join', href: '#' },
                 { label: 'Contact', href: '#' },

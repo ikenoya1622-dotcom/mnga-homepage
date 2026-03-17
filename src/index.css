@@ -84,6 +84,22 @@ body {
 }
 
 /* =============================
+   About News
+============================= */
+.about-news-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.about-news-category {
+  padding-top: 4px;
+}
+.about-news-articles {
+  flex: 1;
+}
+
+/* =============================
    Mobile ( ~768px )
 ============================= */
 @media (max-width: 768px) {
@@ -134,6 +150,12 @@ body {
   /* Report */
   .report-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* About News */
+  .about-news-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 

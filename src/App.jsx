@@ -16,6 +16,7 @@ import Report from './pages/Report'
 import AboutPage from './pages/About'
 import JoinPage from './pages/Join'
 import Admin from './pages/Admin'
+import ReportDetail from './pages/ReportDetail'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -69,6 +70,7 @@ function App() {
       <Route path="/report" element={<Report />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/join" element={<JoinPage />} />
+      <Route path="/report/:id" element={<ReportDetail />} />
       <Route path="/admin" element={<Admin />} />
     </Routes>
   )

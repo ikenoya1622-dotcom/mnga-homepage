@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Header from '../components/Header'
@@ -98,34 +99,40 @@ export default function Report() {
           ) : (
             <div className="report-grid">
               {articles.map((article) => (
-                <article key={article.id}>
-                  {/* サムネイル */}
-                  <div
-                    style={{
-                      background: '#d0d0d0',
-                      aspectRatio: '4/3',
-                      width: '100%',
-                      marginBottom: '16px',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    {article.thumbnail_url && (
-                      <img
-                        src={article.thumbnail_url}
-                        alt={article.title}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                    )}
-                  </div>
-                  {/* タイトル */}
-                  <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '8px' }}>
-                    {article.title}
-                  </p>
-                  {/* 日付 */}
-                  <p style={{ fontSize: '14px', textAlign: 'right', letterSpacing: '0.05em' }}>
-                    {formatDate(article.published_at)}
-                  </p>
-                </article>
+                <Link
+                  key={article.id}
+                  to={`/report/${article.id}`}
+                  style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
+                >
+                  <article>
+                    {/* サムネイル */}
+                    <div
+                      style={{
+                        background: '#d0d0d0',
+                        aspectRatio: '4/3',
+                        width: '100%',
+                        marginBottom: '16px',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {article.thumbnail_url && (
+                        <img
+                          src={article.thumbnail_url}
+                          alt={article.title}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                      )}
+                    </div>
+                    {/* タイトル */}
+                    <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '8px' }}>
+                      {article.title}
+                    </p>
+                    {/* 日付 */}
+                    <p style={{ fontSize: '14px', textAlign: 'right', letterSpacing: '0.05em' }}>
+                      {formatDate(article.published_at)}
+                    </p>
+                  </article>
+                </Link>
               ))}
             </div>
           )}

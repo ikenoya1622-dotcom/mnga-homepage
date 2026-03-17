@@ -26,10 +26,16 @@ export default function Header() {
         {/* PC nav */}
         <nav className="hidden md:block">
           <ul className="flex items-center gap-8">
-            {['Home', 'About', 'Report', 'Join', 'Contact'].map((item) => (
-              <li key={item}>
-                <a href={item === 'Report' ? '#report' : '#'} className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
-                  {item}
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'About', href: '#' },
+              { label: 'Report', href: '/report' },
+              { label: 'Join', href: '#' },
+              { label: 'Contact', href: '#' },
+            ].map((item) => (
+              <li key={item.label}>
+                <a href={item.href} className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
+                  {item.label}
                 </a>
               </li>
             ))}
@@ -52,14 +58,20 @@ export default function Header() {
       {menuOpen && (
         <nav className="md:hidden bg-white border-t border-gray-100">
           <ul className="flex flex-col">
-            {['Home', 'About', 'Report', 'Join', 'Contact'].map((item) => (
-              <li key={item}>
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'About', href: '#' },
+              { label: 'Report', href: '/report' },
+              { label: 'Join', href: '#' },
+              { label: 'Contact', href: '#' },
+            ].map((item) => (
+              <li key={item.label}>
                 <a
-                  href={item === 'Report' ? '#report' : '#'}
+                  href={item.href}
                   className="block px-6 py-4 text-sm text-gray-700 border-b border-gray-100 hover:bg-gray-50"
                   onClick={() => setMenuOpen(false)}
                 >
-                  {item}
+                  {item.label}
                 </a>
               </li>
             ))}

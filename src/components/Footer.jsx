@@ -17,10 +17,16 @@ export default function Footer() {
           </div>
           <nav>
             <ul className="flex flex-wrap gap-4">
-              {['Home', 'About', 'Report', 'Join', 'Contact', 'プライバシーポリシー'].map((item) => (
-                <li key={item}>
-                  <a href={item === 'Report' ? '#report' : '#'} className="text-xs text-gray-600 hover:underline">
-                    {item}
+              {[
+                { label: 'About', href: '#' },
+                { label: 'Report', href: '/report' },
+                { label: 'Join', href: '#' },
+                { label: 'Contact', href: '#' },
+                { label: 'プライバシーポリシー', href: '#' },
+              ].map((item) => (
+                <li key={item.label}>
+                  <a href={item.href} className="text-xs text-gray-600 hover:underline">
+                    {item.label}
                   </a>
                 </li>
               ))}

@@ -75,6 +75,15 @@ body {
 }
 
 /* =============================
+   Report
+============================= */
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+
+/* =============================
    Mobile ( ~768px )
 ============================= */
 @media (max-width: 768px) {
@@ -120,6 +129,11 @@ body {
   }
   .membership-visual-wrap {
     width: 100%;
+  }
+
+  /* Report */
+  .report-grid {
+    grid-template-columns: 1fr;
   }
 }
 

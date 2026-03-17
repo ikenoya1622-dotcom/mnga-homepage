@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Header from './components/Header'
@@ -11,10 +12,11 @@ import Partners from './components/Partners'
 import Value from './components/Value'
 import Join from './components/Join'
 import Footer from './components/Footer'
+import Report from './pages/Report'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function App() {
+function Home() {
   useEffect(() => {
     const sections = gsap.utils.toArray('main > section')
     sections.forEach((section) => {
@@ -54,6 +56,15 @@ function App() {
       </main>
       <Footer />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/report" element={<Report />} />
+    </Routes>
   )
 }
 

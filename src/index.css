@@ -125,6 +125,7 @@ body {
 }
 .join-plans {
   display: flex;
+  justify-content: center;
   gap: 24px;
   max-width: 720px;
 }

@@ -18,6 +18,7 @@ export default function Report() {
 
   useEffect(() => {
     async function fetchArticles() {
+      if (!supabase) { setLoading(false); return }
       const { data, error } = await supabase
         .from('reports')
         .select('*')

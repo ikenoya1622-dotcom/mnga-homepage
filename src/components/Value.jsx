@@ -10,7 +10,7 @@ export default function Value() {
   return (
     <section className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
-        <p className="text-sm text-gray-500 mb-8">5. 提供価値</p>
+        <p className="text-sm text-gray-500 font-bold mb-8">5. 提供価値</p>
         <div className="membership-inner">
           <div className="membership-visual-wrap">
             <div className="bg-gray-200" style={{aspectRatio: '3/4', height: 'auto'}} />

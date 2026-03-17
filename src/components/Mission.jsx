@@ -2,7 +2,7 @@ export default function Mission() {
   return (
     <section className="py-16 px-6 border-t border-gray-100">
       <div className="max-w-4xl mx-auto">
-        <p className="text-sm text-gray-500 mb-4">1. 目的</p>
+        <p className="text-sm text-gray-500 font-bold mb-4">1. 目的</p>
         <h2 className="text-2xl font-bold leading-tight mb-6">
           大手企業とベンチャーの<br />
           本質的な協業を加速させ、日本を復活させる。

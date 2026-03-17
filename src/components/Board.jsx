@@ -9,7 +9,7 @@ export default function Board() {
   return (
     <section className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
-        <p className="text-sm text-gray-500 mb-8">3. 理事体制</p>
+        <p className="text-sm text-gray-500 font-bold mb-8">3. 理事体制</p>
         <div className="board-grid grid grid-cols-2 md:grid-cols-4 gap-6" style={{marginTop: '80px'}}>
           {members.map((m, i) => (
             <div key={i} className="text-center">

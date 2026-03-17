@@ -71,7 +71,7 @@ export default function AboutPage() {
 
         {/* 1. Mission */}
         <div ref={refs[1]} className="container" style={{ paddingTop: '60px', paddingBottom: '80px' }}>
-          <p className="text-sm text-gray-500" style={{ marginBottom: '24px' }}>1. Mission</p>
+          <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '24px' }}>1. Mission</p>
           <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '24px', lineHeight: '1.6' }}>
             「いなくてはならない日本」の実現
           </h2>
@@ -84,7 +84,7 @@ export default function AboutPage() {
 
         {/* 2. Core Value */}
         <div ref={refs[2]} className="container" style={{ paddingTop: '60px', paddingBottom: '80px' }}>
-          <p className="text-sm text-gray-500" style={{ marginBottom: '24px' }}>2. Core Value</p>
+          <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '24px' }}>2. Core Value</p>
           <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '24px', lineHeight: '1.6' }}>
             Make Nippon Great Again（日本新復活）
           </h2>
@@ -97,7 +97,7 @@ export default function AboutPage() {
 
         {/* 3. 提供価値 */}
         <div ref={refs[3]} className="container" style={{ paddingTop: '60px', paddingBottom: '80px' }}>
-          <p className="text-sm text-gray-500" style={{ marginBottom: '24px' }}>3. 提供価値</p>
+          <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '24px' }}>3. 提供価値</p>
           <div className="membership-inner">
             <div className="membership-visual-wrap">
               <div style={{ background: '#d0d0d0', aspectRatio: '3/4', width: '100%' }} />
@@ -123,7 +123,7 @@ export default function AboutPage() {
         {/* 4. -News */}
         <div ref={refs[4]} style={{ background: '#f5f5f5', padding: '60px 0' }}>
           <div className="container">
-            <p className="text-sm text-gray-500" style={{ marginBottom: '40px' }}>4. -News</p>
+            <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '40px' }}>4. -News</p>
             <div className="about-news-inner">
               {news.map((group) => (
                 <div key={group.category} style={{ marginBottom: '48px' }}>

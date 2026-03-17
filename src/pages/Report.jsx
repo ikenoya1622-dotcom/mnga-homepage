@@ -54,13 +54,14 @@ export default function Report() {
         {/* ページタイトル */}
         <div
           ref={titleRef}
-          style={{ padding: '60px 60px 40px' }}
+          className="container"
+          style={{ paddingTop: '60px', paddingBottom: '40px' }}
         >
           <h1 style={{ fontSize: '28px', letterSpacing: '0.1em' }}>活動レポート</h1>
         </div>
 
         {/* 記事グリッド */}
-        <div ref={gridRef} style={{ padding: '0 60px 60px' }}>
+        <div ref={gridRef} className="container" style={{ paddingBottom: '60px' }}>
           <div className="report-grid">
             {articles.map((article) => (
               <article key={article.id}>
@@ -91,6 +92,7 @@ export default function Report() {
         {/* ページネーション */}
         <div
           ref={paginationRef}
+          className="container"
           style={{
             display: 'flex',
             justifyContent: 'center',

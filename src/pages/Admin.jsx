@@ -37,13 +37,20 @@ export default function Admin() {
   const [previewUrl, setPreviewUrl] = useState('')
 
   async function fetchArticles() {
+    if (!supabase) { setLoading(false); return }
     setLoading(true)
-    const { data } = await supabase
-      .from('reports')
-      .select('*')
-      .order('published_at', { ascending: false })
-    setArticles(data || [])
-    setLoading(false)
+    try {
+      const { data, error } = await supabase
+        .from('reports')
+        .select('*')
+        .order('published_at', { ascending: false })
+      if (error) throw error
+      setArticles(data || [])
+    } catch (err) {
+      alert('記事の取得に失敗しました: ' + err.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -81,36 +88,43 @@ export default function Admin() {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    if (!supabase) { alert('Supabaseの設定が完了していません'); return }
     if (!title.trim()) { alert('タイトルを入力してください'); return }
     setSubmitting(true)
 
-    let thumbnailUrl = previewUrl
-    if (file) {
-      const url = await uploadImage()
-      if (url) thumbnailUrl = url
-    }
+    try {
+      let thumbnailUrl = previewUrl
+      if (file) {
+        const url = await uploadImage()
+        if (url) thumbnailUrl = url
+      }
 
-    const payload = {
-      title: title.trim(),
-      body: body.trim(),
-      published_at: publishedAt || new Date().toISOString().slice(0, 10),
-      thumbnail_url: thumbnailUrl || null,
-    }
+      const payload = {
+        title: title.trim(),
+        body: body.trim(),
+        published_at: publishedAt || new Date().toISOString().slice(0, 10),
+        thumbnail_url: thumbnailUrl || null,
+      }
 
-    if (editId) {
-      const { error } = await supabase.from('reports').update(payload).eq('id', editId)
-      if (error) alert('更新失敗: ' + error.message)
-    } else {
-      const { error } = await supabase.from('reports').insert([payload])
-      if (error) alert('投稿失敗: ' + error.message)
-    }
+      if (editId) {
+        const { error } = await supabase.from('reports').update(payload).eq('id', editId)
+        if (error) throw new Error('更新失敗: ' + error.message)
+      } else {
+        const { error } = await supabase.from('reports').insert([payload])
+        if (error) throw new Error('投稿失敗: ' + error.message)
+      }
 
-    resetForm()
-    await fetchArticles()
-    setSubmitting(false)
+      resetForm()
+      await fetchArticles()
+    } catch (err) {
+      alert(err.message)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   async function handleDelete(id) {
+    if (!supabase) { alert('Supabaseの設定が完了していません'); return }
     if (!window.confirm('この記事を削除しますか？')) return
     const { error } = await supabase.from('reports').delete().eq('id', id)
     if (error) alert('削除失敗: ' + error.message)

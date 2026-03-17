@@ -1,28 +1,35 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import CtaSection from '../components/CtaSection'
+import { supabase } from '../lib/supabase'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const articles = [
-  { id: 1, title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', date: '20xx 1.1' },
-  { id: 2, title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', date: '20xx 1.1' },
-  { id: 3, title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', date: '20xx 1.1' },
-  { id: 4, title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', date: '20xx 1.1' },
-  { id: 5, title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', date: '20xx 1.1' },
-  { id: 6, title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', date: '20xx 1.1' },
-]
 
 export default function Report() {
   const titleRef = useRef(null)
   const gridRef = useRef(null)
   const paginationRef = useRef(null)
-  const ctaRef = useRef(null)
+
+  const [articles, setArticles] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    async function fetchArticles() {
+      const { data, error } = await supabase
+        .from('reports')
+        .select('*')
+        .order('published_at', { ascending: false })
+      if (!error && data) setArticles(data)
+      setLoading(false)
+    }
+    fetchArticles()
+  }, [])
+
+  useEffect(() => {
+    if (loading) return
     const targets = [titleRef.current, gridRef.current, paginationRef.current]
     const anims = targets.map((el) =>
       gsap.fromTo(
@@ -45,7 +52,13 @@ export default function Report() {
       anims.forEach((a) => a.kill())
       ScrollTrigger.getAll().forEach((t) => t.kill())
     }
-  }, [])
+  }, [loading])
+
+  function formatDate(dateStr) {
+    if (!dateStr) return ''
+    const d = new Date(dateStr)
+    return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`
+  }
 
   return (
     <div className="min-h-screen">
@@ -62,31 +75,59 @@ export default function Report() {
 
         {/* 記事グリッド */}
         <div ref={gridRef} className="container" style={{ paddingBottom: '60px' }}>
-          <div className="report-grid">
-            {articles.map((article) => (
-              <article key={article.id}>
-                {/* サムネイル */}
-                <div
-                  style={{
-                    background: '#d0d0d0',
-                    aspectRatio: '4/3',
-                    width: '100%',
-                    marginBottom: '16px',
-                  }}
-                />
-                {/* タイトル */}
-                <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '8px' }}>
-                  {article.title}
-                  <br />
-                  xxxxxxxxxxxxxxxxxx
-                </p>
-                {/* 日付 */}
-                <p style={{ fontSize: '14px', textAlign: 'right', letterSpacing: '0.05em' }}>
-                  {article.date}
-                </p>
-              </article>
-            ))}
-          </div>
+          {loading ? (
+            <div className="report-grid">
+              {[...Array(6)].map((_, i) => (
+                <div key={i}>
+                  <div
+                    style={{
+                      background: '#e8e8e8',
+                      aspectRatio: '4/3',
+                      width: '100%',
+                      marginBottom: '16px',
+                      animation: 'pulse 1.5s ease-in-out infinite',
+                    }}
+                  />
+                  <div style={{ height: '20px', background: '#e8e8e8', marginBottom: '8px', borderRadius: '2px' }} />
+                  <div style={{ height: '20px', background: '#e8e8e8', width: '60%', marginBottom: '8px', borderRadius: '2px' }} />
+                  <div style={{ height: '14px', background: '#e8e8e8', width: '30%', marginLeft: 'auto', borderRadius: '2px' }} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="report-grid">
+              {articles.map((article) => (
+                <article key={article.id}>
+                  {/* サムネイル */}
+                  <div
+                    style={{
+                      background: '#d0d0d0',
+                      aspectRatio: '4/3',
+                      width: '100%',
+                      marginBottom: '16px',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {article.thumbnail_url && (
+                      <img
+                        src={article.thumbnail_url}
+                        alt={article.title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    )}
+                  </div>
+                  {/* タイトル */}
+                  <p style={{ fontSize: '16px', lineHeight: '1.8', marginBottom: '8px' }}>
+                    {article.title}
+                  </p>
+                  {/* 日付 */}
+                  <p style={{ fontSize: '14px', textAlign: 'right', letterSpacing: '0.05em' }}>
+                    {formatDate(article.published_at)}
+                  </p>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* ページネーション */}
@@ -135,7 +176,6 @@ export default function Report() {
           </button>
         </div>
 
-        {/* CTAセクション */}
         <CtaSection />
       </main>
       <Footer />

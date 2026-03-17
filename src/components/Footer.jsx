@@ -20,7 +20,7 @@ export default function Footer() {
               {[
                 { label: 'About', href: '/about' },
                 { label: 'Report', href: '/report' },
-                { label: 'Join', href: '#' },
+                { label: 'Join', href: '/join' },
                 { label: 'Contact', href: '#' },
                 { label: 'プライバシーポリシー', href: '#' },
               ].map((item) => (

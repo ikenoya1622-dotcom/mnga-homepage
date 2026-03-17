@@ -30,7 +30,7 @@ export default function Header() {
               { label: 'Home', href: '/' },
               { label: 'About', href: '/about' },
               { label: 'Report', href: '/report' },
-              { label: 'Join', href: '#' },
+              { label: 'Join', href: '/join' },
               { label: 'Contact', href: '#' },
             ].map((item) => (
               <li key={item.label}>
@@ -62,7 +62,7 @@ export default function Header() {
               { label: 'Home', href: '/' },
               { label: 'About', href: '/about' },
               { label: 'Report', href: '/report' },
-              { label: 'Join', href: '#' },
+              { label: 'Join', href: '/join' },
               { label: 'Contact', href: '#' },
             ].map((item) => (
               <li key={item.label}>

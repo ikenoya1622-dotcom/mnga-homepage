@@ -14,6 +14,7 @@ import CtaSection from './components/CtaSection'
 import Footer from './components/Footer'
 import Report from './pages/Report'
 import AboutPage from './pages/About'
+import JoinPage from './pages/Join'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -66,6 +67,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/report" element={<Report />} />
       <Route path="/about" element={<AboutPage />} />
+      <Route path="/join" element={<JoinPage />} />
     </Routes>
   )
 }

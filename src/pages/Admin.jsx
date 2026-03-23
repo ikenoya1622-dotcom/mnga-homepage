@@ -349,6 +349,112 @@ function BlockItem({ block, isFirst, isLast, onUpdate, onRemove, onMove, onFileC
   )
 }
 
+// ── プレビュー用ヘルパー ────────────────────────────────────
+function renderBold(text) {
+  const parts = text.split(/\*\*(.*?)\*\*/g)
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+  )
+}
+
+function PreviewBodyText({ text }) {
+  if (!text) return null
+  const paragraphs = text.split(/\n\n+/)
+  return (
+    <>
+      {paragraphs.map((para, i) => (
+        <p key={i} style={{ fontSize: '18px', lineHeight: '2', letterSpacing: '0.05em', marginBottom: '32px', margin: '0 0 32px' }}>
+          {para.split('\n').map((line, j, arr) => (
+            <span key={j}>{renderBold(line)}{j < arr.length - 1 && <br />}</span>
+          ))}
+        </p>
+      ))}
+    </>
+  )
+}
+
+function PreviewContentBlock({ block }) {
+  switch (block.type) {
+    case 'heading':
+      return (
+        <h2 style={{ fontSize: '22px', fontWeight: '700', letterSpacing: '0.1em', lineHeight: '1.6', marginTop: '64px', marginBottom: '16px' }}>
+          {block.content}
+        </h2>
+      )
+    case 'subheading':
+      return (
+        <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#555', letterSpacing: '0.05em', lineHeight: '1.6', marginBottom: '12px' }}>
+          {block.content}
+        </h3>
+      )
+    case 'text':
+      return <PreviewBodyText text={block.content} />
+    case 'image': {
+      const src = block.previewUrl || block.url
+      return (
+        <div style={{ width: '65%', margin: '48px auto', aspectRatio: '4/3', background: '#d0d0d0', overflow: 'hidden' }}>
+          {src && <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
+        </div>
+      )
+    }
+    default:
+      return null
+  }
+}
+
+function PreviewModal({ title, publishedAt, thumbnailSrc, blocks, onClose }) {
+  function formatDate(str) {
+    if (!str) return ''
+    const d = new Date(str)
+    return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', zIndex: 500, overflowY: 'auto', fontFamily: 'Zen Old Mincho, serif' }}>
+      {/* プレビューヘッダー */}
+      <div style={{
+        position: 'fixed', top: 0, left: 0, right: 0, height: '48px',
+        background: '#fff', borderBottom: '1px solid #e5e7eb',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 32px', zIndex: 501,
+      }}>
+        <span style={{ fontSize: '13px', color: '#888', letterSpacing: '0.08em' }}>プレビュー</span>
+        <button
+          onClick={onClose}
+          style={{
+            background: 'transparent', border: '1px solid #d1d5db',
+            borderRadius: '4px', padding: '4px 16px',
+            fontSize: '13px', fontFamily: 'Zen Old Mincho, serif',
+            cursor: 'pointer', color: '#374151', letterSpacing: '0.05em',
+          }}
+        >
+          ✕ 閉じる
+        </button>
+      </div>
+
+      {/* 記事コンテンツ */}
+      <div style={{ paddingTop: '48px' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 40px' }}>
+          <h1 style={{ fontSize: '28px', fontWeight: '700', letterSpacing: '0.1em', lineHeight: '1.5', marginBottom: '12px' }}>
+            {title || 'タイトルなし'}
+          </h1>
+          <p style={{ textAlign: 'right', color: '#888', fontSize: '14px', letterSpacing: '0.05em', marginBottom: '32px' }}>
+            {formatDate(publishedAt) || '----/--/--'}
+          </p>
+          {thumbnailSrc && (
+            <div style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', background: '#d0d0d0', marginBottom: '48px' }}>
+              <img src={thumbnailSrc} alt="thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+          )}
+          {blocks.map((block, i) => (
+            <PreviewContentBlock key={block.id || i} block={block} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Admin ──────────────────────────────────────────────────
 export default function Admin() {
   const [view, setView] = useState('list')
@@ -362,6 +468,7 @@ export default function Admin() {
   const [file, setFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
   const [blocks, setBlocks] = useState([])
+  const [showPreview, setShowPreview] = useState(false)
 
   const thumbnailInputRef = useRef(null)
 
@@ -664,26 +771,55 @@ export default function Admin() {
         >
           ← 一覧に戻る
         </button>
-        <button
-          type="button"
-          onClick={handleSubmit}
-          disabled={submitting}
-          style={{
-            background: '#000',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '4px',
-            padding: '8px 24px',
-            fontSize: '14px',
-            fontFamily: 'Zen Old Mincho, serif',
-            letterSpacing: '0.08em',
-            cursor: submitting ? 'not-allowed' : 'pointer',
-            opacity: submitting ? 0.6 : 1,
-          }}
-        >
-          {submitting ? '保存中...' : '保存する'}
-        </button>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <button
+            type="button"
+            onClick={() => setShowPreview(true)}
+            style={{
+              background: 'transparent',
+              border: '1px solid #d1d5db',
+              borderRadius: '4px',
+              padding: '8px 20px',
+              fontSize: '14px',
+              fontFamily: 'Zen Old Mincho, serif',
+              letterSpacing: '0.08em',
+              cursor: 'pointer',
+              color: '#374151',
+            }}
+          >
+            プレビュー
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={submitting}
+            style={{
+              background: '#000',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '8px 24px',
+              fontSize: '14px',
+              fontFamily: 'Zen Old Mincho, serif',
+              letterSpacing: '0.08em',
+              cursor: submitting ? 'not-allowed' : 'pointer',
+              opacity: submitting ? 0.6 : 1,
+            }}
+          >
+            {submitting ? '保存中...' : '保存する'}
+          </button>
+        </div>
       </header>
+
+      {showPreview && (
+        <PreviewModal
+          title={title}
+          publishedAt={publishedAt}
+          thumbnailSrc={previewUrl}
+          blocks={blocks}
+          onClose={() => setShowPreview(false)}
+        />
+      )}
 
       {/* スクロールエリア */}
       <div style={{ paddingTop: '56px' }}>

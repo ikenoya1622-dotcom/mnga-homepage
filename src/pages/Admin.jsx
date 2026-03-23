@@ -56,6 +56,131 @@ function hydrateBlocks(blocks) {
   }))
 }
 
+function arrowBtnStyle(disabled) {
+  return {
+    padding: '4px 8px',
+    fontSize: '13px',
+    background: 'transparent',
+    border: '1px solid #d1d5db',
+    color: disabled ? '#d1d5db' : '#374151',
+    borderRadius: '4px',
+    cursor: disabled ? 'default' : 'pointer',
+    fontFamily: 'inherit',
+  }
+}
+
+// ── ブロックエディタ（Admin外に定義してre-mount防止）────
+function BlockEditor({ blocks, onAdd, onUpdate, onRemove, onMove, onFileChange }) {
+  return (
+    <div>
+      {blocks.length === 0 ? (
+        <p style={{ fontSize: '14px', color: '#aaa', marginBottom: '16px' }}>
+          ブロックがありません。下のボタンで追加してください。
+        </p>
+      ) : (
+        <div style={{ marginBottom: '16px' }}>
+          {blocks.map((block, idx) => (
+            <div
+              key={block.id}
+              style={{
+                border: '1px solid #e5e7eb',
+                borderLeft: `4px solid ${BLOCK_BORDER_COLORS[block.type] || '#ccc'}`,
+                borderRadius: '4px',
+                marginBottom: '8px',
+                background: '#fff',
+              }}
+            >
+              {/* ブロックヘッダー */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', borderBottom: '1px solid #f3f4f6', background: '#fafafa' }}>
+                <span style={{ fontSize: '12px', fontWeight: '700', color: BLOCK_BORDER_COLORS[block.type] || '#555', letterSpacing: '0.05em' }}>
+                  {BLOCK_TYPE_LABELS[block.type]}
+                </span>
+                <div style={{ display: 'flex', gap: '4px' }}>
+                  <button type="button" onClick={() => onMove(block.id, 'up')} disabled={idx === 0} style={arrowBtnStyle(idx === 0)}>↑</button>
+                  <button type="button" onClick={() => onMove(block.id, 'down')} disabled={idx === blocks.length - 1} style={arrowBtnStyle(idx === blocks.length - 1)}>↓</button>
+                  <button
+                    type="button"
+                    onClick={() => onRemove(block.id)}
+                    style={{ padding: '4px 8px', fontSize: '13px', background: 'transparent', border: '1px solid #fca5a5', color: '#dc2626', borderRadius: '4px', cursor: 'pointer', fontFamily: 'inherit' }}
+                  >
+                    削除
+                  </button>
+                </div>
+              </div>
+
+              {/* ブロックコンテンツ */}
+              <div style={{ padding: '12px' }}>
+                {block.type === 'image' ? (
+                  <div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => onFileChange(block.id, e)}
+                      style={{ fontSize: '14px', fontFamily: 'inherit', marginBottom: '8px' }}
+                    />
+                    {(block.previewUrl || block.url) && (
+                      <img
+                        src={block.previewUrl || block.url}
+                        alt="preview"
+                        style={{ width: '200px', aspectRatio: '4/3', objectFit: 'cover', border: '1px solid #e5e7eb', display: 'block', marginTop: '8px' }}
+                      />
+                    )}
+                  </div>
+                ) : block.type === 'text' ? (
+                  <div>
+                    <textarea
+                      value={block.content}
+                      onChange={(e) => onUpdate(block.id, { content: e.target.value })}
+                      placeholder="本文を入力。**テキスト** で太字になります"
+                      rows={5}
+                      style={{ ...inputStyle, resize: 'vertical', lineHeight: '1.8' }}
+                    />
+                    <p style={{ fontSize: '12px', color: '#aaa', marginTop: '4px' }}>
+                      **テキスト** で太字：例）**重要** → <strong>重要</strong>
+                    </p>
+                  </div>
+                ) : block.type === 'heading' || block.type === 'subheading' ? (
+                  <input
+                    type="text"
+                    value={block.content}
+                    onChange={(e) => onUpdate(block.id, { content: e.target.value })}
+                    placeholder={`${BLOCK_TYPE_LABELS[block.type]}を入力`}
+                    style={{ ...inputStyle }}
+                  />
+                ) : null}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ブロック追加ボタン */}
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        {Object.entries(BLOCK_TYPE_LABELS).map(([type, label]) => (
+          <button
+            key={type}
+            type="button"
+            onClick={() => onAdd(type)}
+            style={{
+              padding: '8px 16px',
+              fontSize: '13px',
+              fontFamily: 'inherit',
+              background: 'transparent',
+              border: `1px solid ${BLOCK_BORDER_COLORS[type]}`,
+              color: BLOCK_BORDER_COLORS[type],
+              borderRadius: '4px',
+              cursor: 'pointer',
+              letterSpacing: '0.05em',
+            }}
+          >
+            + {label}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Admin() {
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)
@@ -106,7 +231,6 @@ export default function Admin() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // ── ブロック操作 ──────────────────────────
   function addBlock(type) {
     setBlocks((prev) => [...prev, initBlock(type)])
   }
@@ -137,7 +261,6 @@ export default function Admin() {
     updateBlock(id, { file: f, previewUrl: URL.createObjectURL(f) })
   }
 
-  // ── アップロード ─────────────────────────
   async function uploadThumbnail() {
     if (!file) return null
     const ext = file.name.split('.').pop()
@@ -169,7 +292,6 @@ export default function Admin() {
     return result
   }
 
-  // ── 送信 ────────────────────────────────
   async function handleSubmit(e) {
     e.preventDefault()
     if (!supabase) { alert('Supabaseの設定が完了していません'); return }
@@ -224,179 +346,6 @@ export default function Admin() {
     setPreviewUrl(URL.createObjectURL(f))
   }
 
-  // ── ブロックエディタUI ────────────────────
-  function BlockEditor() {
-    return (
-      <div>
-        {/* ブロック一覧 */}
-        {blocks.length === 0 ? (
-          <p style={{ fontSize: '14px', color: '#aaa', marginBottom: '16px' }}>
-            ブロックがありません。下のボタンで追加してください。
-          </p>
-        ) : (
-          <div style={{ marginBottom: '16px' }}>
-            {blocks.map((block, idx) => (
-              <div
-                key={block.id}
-                style={{
-                  border: '1px solid #e5e7eb',
-                  borderLeft: `4px solid ${BLOCK_BORDER_COLORS[block.type] || '#ccc'}`,
-                  borderRadius: '4px',
-                  marginBottom: '8px',
-                  background: '#fff',
-                }}
-              >
-                {/* ブロックヘッダー */}
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '8px 12px',
-                    borderBottom: '1px solid #f3f4f6',
-                    background: '#fafafa',
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: '12px',
-                      fontWeight: '700',
-                      color: BLOCK_BORDER_COLORS[block.type] || '#555',
-                      letterSpacing: '0.05em',
-                    }}
-                  >
-                    {BLOCK_TYPE_LABELS[block.type]}
-                  </span>
-                  <div style={{ display: 'flex', gap: '4px' }}>
-                    <button
-                      type="button"
-                      onClick={() => moveBlock(block.id, 'up')}
-                      disabled={idx === 0}
-                      style={arrowBtnStyle(idx === 0)}
-                    >
-                      ↑
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => moveBlock(block.id, 'down')}
-                      disabled={idx === blocks.length - 1}
-                      style={arrowBtnStyle(idx === blocks.length - 1)}
-                    >
-                      ↓
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => removeBlock(block.id)}
-                      style={{
-                        padding: '4px 8px',
-                        fontSize: '13px',
-                        background: 'transparent',
-                        border: '1px solid #fca5a5',
-                        color: '#dc2626',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontFamily: 'inherit',
-                      }}
-                    >
-                      削除
-                    </button>
-                  </div>
-                </div>
-
-                {/* ブロックコンテンツ */}
-                <div style={{ padding: '12px' }}>
-                  {block.type === 'image' ? (
-                    <div>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleBlockFileChange(block.id, e)}
-                        style={{ fontSize: '14px', fontFamily: 'inherit', marginBottom: '8px' }}
-                      />
-                      {(block.previewUrl || block.url) && (
-                        <img
-                          src={block.previewUrl || block.url}
-                          alt="preview"
-                          style={{
-                            width: '200px',
-                            aspectRatio: '4/3',
-                            objectFit: 'cover',
-                            border: '1px solid #e5e7eb',
-                            display: 'block',
-                            marginTop: '8px',
-                          }}
-                        />
-                      )}
-                    </div>
-                  ) : block.type === 'text' ? (
-                    <div>
-                      <textarea
-                        value={block.content}
-                        onChange={(e) => updateBlock(block.id, { content: e.target.value })}
-                        placeholder="本文を入力。**テキスト** で太字になります"
-                        rows={5}
-                        style={{ ...inputStyle, resize: 'vertical', lineHeight: '1.8' }}
-                      />
-                      <p style={{ fontSize: '12px', color: '#aaa', marginTop: '4px' }}>
-                        ** テキスト ** で太字：例）<strong>**重要**</strong> → <strong>重要</strong>
-                      </p>
-                    </div>
-                  ) : block.type === 'heading' || block.type === 'subheading' ? (
-                    <input
-                      type="text"
-                      value={block.content}
-                      onChange={(e) => updateBlock(block.id, { content: e.target.value })}
-                      placeholder={`${BLOCK_TYPE_LABELS[block.type]}を入力`}
-                      style={{ ...inputStyle }}
-                    />
-                  ) : null}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* ブロック追加ボタン */}
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-          {Object.entries(BLOCK_TYPE_LABELS).map(([type, label]) => (
-            <button
-              key={type}
-              type="button"
-              onClick={() => addBlock(type)}
-              style={{
-                padding: '8px 16px',
-                fontSize: '13px',
-                fontFamily: 'inherit',
-                background: 'transparent',
-                border: `1px solid ${BLOCK_BORDER_COLORS[type]}`,
-                color: BLOCK_BORDER_COLORS[type],
-                borderRadius: '4px',
-                cursor: 'pointer',
-                letterSpacing: '0.05em',
-              }}
-            >
-              + {label}
-            </button>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  function arrowBtnStyle(disabled) {
-    return {
-      padding: '4px 8px',
-      fontSize: '13px',
-      background: 'transparent',
-      border: '1px solid #d1d5db',
-      color: disabled ? '#d1d5db' : '#374151',
-      borderRadius: '4px',
-      cursor: disabled ? 'default' : 'pointer',
-      fontFamily: 'inherit',
-    }
-  }
-
-  // ── レンダー ─────────────────────────────
   return (
     <div style={{ minHeight: '100vh', background: '#f9fafb', fontFamily: 'Zen Old Mincho, serif' }}>
       <header style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '0 60px', height: '64px', display: 'flex', alignItems: 'center' }}>
@@ -412,7 +361,6 @@ export default function Admin() {
           </h2>
           <form onSubmit={handleSubmit}>
 
-            {/* タイトル */}
             <div style={{ marginBottom: '20px' }}>
               <label style={labelStyle}>タイトル *</label>
               <input
@@ -424,7 +372,6 @@ export default function Admin() {
               />
             </div>
 
-            {/* サムネイル */}
             <div style={{ marginBottom: '20px' }}>
               <label style={labelStyle}>サムネイル画像</label>
               <input
@@ -435,16 +382,11 @@ export default function Admin() {
               />
               {previewUrl && (
                 <div style={{ marginTop: '12px' }}>
-                  <img
-                    src={previewUrl}
-                    alt="preview"
-                    style={{ width: '200px', aspectRatio: '4/3', objectFit: 'cover', border: '1px solid #e5e7eb' }}
-                  />
+                  <img src={previewUrl} alt="preview" style={{ width: '200px', aspectRatio: '4/3', objectFit: 'cover', border: '1px solid #e5e7eb' }} />
                 </div>
               )}
             </div>
 
-            {/* 公開日 */}
             <div style={{ marginBottom: '32px' }}>
               <label style={labelStyle}>公開日</label>
               <input
@@ -455,15 +397,20 @@ export default function Admin() {
               />
             </div>
 
-            {/* コンテンツブロック */}
             <div style={{ marginBottom: '32px' }}>
               <label style={{ ...labelStyle, marginBottom: '12px', fontSize: '16px', color: '#000', fontWeight: '700' }}>
                 本文コンテンツ
               </label>
-              <BlockEditor />
+              <BlockEditor
+                blocks={blocks}
+                onAdd={addBlock}
+                onUpdate={updateBlock}
+                onRemove={removeBlock}
+                onMove={moveBlock}
+                onFileChange={handleBlockFileChange}
+              />
             </div>
 
-            {/* 送信ボタン */}
             <div style={{ display: 'flex', gap: '12px' }}>
               <button
                 type="submit"
@@ -487,16 +434,7 @@ export default function Admin() {
                 <button
                   type="button"
                   onClick={resetForm}
-                  style={{
-                    padding: '12px 24px',
-                    background: 'transparent',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '16px',
-                    fontFamily: 'inherit',
-                    letterSpacing: '0.1em',
-                    cursor: 'pointer',
-                  }}
+                  style={{ padding: '12px 24px', background: 'transparent', border: '1px solid #ccc', borderRadius: '4px', fontSize: '16px', fontFamily: 'inherit', letterSpacing: '0.1em', cursor: 'pointer' }}
                 >
                   キャンセル
                 </button>
@@ -531,16 +469,10 @@ export default function Admin() {
                     {article.published_at ? article.published_at.slice(0, 10) : '—'}
                   </span>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <button
-                      onClick={() => startEdit(article)}
-                      style={{ padding: '6px 16px', background: 'transparent', border: '1px solid #000', borderRadius: '4px', fontSize: '13px', fontFamily: 'inherit', cursor: 'pointer', letterSpacing: '0.05em' }}
-                    >
+                    <button onClick={() => startEdit(article)} style={{ padding: '6px 16px', background: 'transparent', border: '1px solid #000', borderRadius: '4px', fontSize: '13px', fontFamily: 'inherit', cursor: 'pointer', letterSpacing: '0.05em' }}>
                       編集
                     </button>
-                    <button
-                      onClick={() => handleDelete(article.id)}
-                      style={{ padding: '6px 16px', background: 'transparent', border: '1px solid #c8392b', color: '#c8392b', borderRadius: '4px', fontSize: '13px', fontFamily: 'inherit', cursor: 'pointer', letterSpacing: '0.05em' }}
-                    >
+                    <button onClick={() => handleDelete(article.id)} style={{ padding: '6px 16px', background: 'transparent', border: '1px solid #c8392b', color: '#c8392b', borderRadius: '4px', fontSize: '13px', fontFamily: 'inherit', cursor: 'pointer', letterSpacing: '0.05em' }}>
                       削除
                     </button>
                   </div>

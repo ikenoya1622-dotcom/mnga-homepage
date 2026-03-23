@@ -188,6 +188,9 @@ body {
   .report-detail-body {
     padding: 0 20px 60px !important;
   }
+  .report-detail-insert-image {
+    width: 100% !important;
+  }
 
   /* About News */
   .about-news-row {

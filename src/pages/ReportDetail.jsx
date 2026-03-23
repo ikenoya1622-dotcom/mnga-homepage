@@ -18,25 +18,69 @@ function BodyText({ text }) {
   return (
     <>
       {paragraphs.map((para, i) => (
-        <p
-          key={i}
-          style={{
-            fontSize: '18px',
-            lineHeight: '2',
-            letterSpacing: '0.05em',
-            marginBottom: '32px',
-          }}
-        >
-          {para.split('\n').map((line, j) => (
-            <span key={j}>
-              {line}
-              {j < para.split('\n').length - 1 && <br />}
-            </span>
+        <p key={i} style={{ fontSize: '18px', lineHeight: '2', letterSpacing: '0.05em', marginBottom: '32px' }}>
+          {para.split('\n').map((line, j, arr) => (
+            <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
           ))}
         </p>
       ))}
     </>
   )
+}
+
+function ContentBlock({ block }) {
+  switch (block.type) {
+    case 'heading':
+      return (
+        <h2 style={{
+          fontSize: '22px',
+          fontWeight: '700',
+          letterSpacing: '0.1em',
+          lineHeight: '1.6',
+          marginTop: '64px',
+          marginBottom: '16px',
+        }}>
+          {block.content}
+        </h2>
+      )
+    case 'subheading':
+      return (
+        <h3 style={{
+          fontSize: '16px',
+          color: '#666',
+          letterSpacing: '0.05em',
+          lineHeight: '1.6',
+          marginBottom: '12px',
+        }}>
+          {block.content}
+        </h3>
+      )
+    case 'text':
+      return <BodyText text={block.content} />
+    case 'image':
+      return (
+        <div
+          className="report-detail-insert-image"
+          style={{
+            width: '65%',
+            margin: '48px auto',
+            aspectRatio: '4/3',
+            background: '#d0d0d0',
+            overflow: 'hidden',
+          }}
+        >
+          {block.url && (
+            <img
+              src={block.url}
+              alt=""
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          )}
+        </div>
+      )
+    default:
+      return null
+  }
 }
 
 export default function ReportDetail() {
@@ -76,6 +120,8 @@ export default function ReportDetail() {
     return () => anim.kill()
   }, [loading])
 
+  const hasBlocks = article && Array.isArray(article.content) && article.content.length > 0
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -113,14 +159,7 @@ export default function ReportDetail() {
 
             {/* サムネイル */}
             <div className="container" style={{ paddingBottom: '60px' }}>
-              <div
-                style={{
-                  width: '100%',
-                  aspectRatio: '16/9',
-                  background: '#d0d0d0',
-                  overflow: 'hidden',
-                }}
-              >
+              <div style={{ width: '100%', aspectRatio: '16/9', background: '#d0d0d0', overflow: 'hidden' }}>
                 {article.thumbnail_url && (
                   <img
                     src={article.thumbnail_url}
@@ -133,14 +172,16 @@ export default function ReportDetail() {
 
             {/* 本文エリア */}
             <div
-              style={{
-                maxWidth: '800px',
-                margin: '0 auto',
-                padding: '0 80px 80px',
-              }}
               className="report-detail-body"
+              style={{ maxWidth: '800px', margin: '0 auto', padding: '0 80px 80px' }}
             >
-              <BodyText text={article.body} />
+              {hasBlocks ? (
+                article.content.map((block, i) => (
+                  <ContentBlock key={i} block={block} />
+                ))
+              ) : (
+                <BodyText text={article.body} />
+              )}
 
               {/* 一覧に戻る */}
               <div style={{ marginTop: '60px' }}>

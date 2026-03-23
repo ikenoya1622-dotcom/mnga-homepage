@@ -726,8 +726,13 @@ export default function Admin() {
                     alignItems: 'center',
                   }}
                 >
-                  <span style={{ fontSize: '15px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <span style={{ fontSize: '15px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '8px' }}>
                     {article.title}
+                    {article.published_at > new Date().toISOString().slice(0, 10) && (
+                      <span style={{ fontSize: '11px', background: '#fef3c7', color: '#d97706', border: '1px solid #fcd34d', borderRadius: '3px', padding: '1px 6px', flexShrink: 0, letterSpacing: '0.04em' }}>
+                        予約中
+                      </span>
+                    )}
                   </span>
                   <span style={{ fontSize: '14px', color: '#555' }}>
                     {article.published_at ? article.published_at.slice(0, 10) : '—'}

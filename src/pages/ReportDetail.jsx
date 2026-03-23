@@ -107,7 +107,8 @@ export default function ReportDetail() {
           .select('*')
           .eq('id', id)
           .single()
-        if (error || !data) { setNotFound(true) }
+        const today = new Date().toISOString().slice(0, 10)
+        if (error || !data || data.published_at > today) { setNotFound(true) }
         else { setArticle(data) }
       } catch {
         setNotFound(true)

@@ -20,9 +20,11 @@ export default function Report() {
   useEffect(() => {
     async function fetchArticles() {
       if (!supabase) { setLoading(false); return }
+      const today = new Date().toISOString().slice(0, 10)
       const { data, error } = await supabase
         .from('reports')
         .select('*')
+        .lte('published_at', today)
         .order('published_at', { ascending: false })
       if (!error && data) setArticles(data)
       setLoading(false)

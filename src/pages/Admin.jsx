@@ -735,7 +735,7 @@ export default function Admin() {
                     )}
                   </span>
                   <span style={{ fontSize: '14px', color: '#555' }}>
-                    {article.published_at ? article.published_at.slice(0, 10) : '—'}
+                    {article.published_at ? article.published_at.slice(0, 16).replace('T', ' ') : '—'}
                   </span>
                   <div style={{ display: 'flex', gap: '8px' }}>
                     <button

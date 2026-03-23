@@ -373,6 +373,8 @@ function PreviewBodyText({ text }) {
   )
 }
 
+// ReportDetail.jsx の ContentBlock と完全に同じスタイル
+// image のみ previewUrl にも対応
 function PreviewContentBlock({ block }) {
   switch (block.type) {
     case 'heading':
@@ -383,7 +385,7 @@ function PreviewContentBlock({ block }) {
       )
     case 'subheading':
       return (
-        <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#555', letterSpacing: '0.05em', lineHeight: '1.6', marginBottom: '12px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#666', letterSpacing: '0.05em', lineHeight: '1.6', marginBottom: '12px' }}>
           {block.content}
         </h3>
       )
@@ -402,6 +404,7 @@ function PreviewContentBlock({ block }) {
   }
 }
 
+// ReportDetail.jsx のレイアウトを忠実に再現
 function PreviewModal({ title, publishedAt, thumbnailSrc, blocks, onClose }) {
   function formatDate(str) {
     if (!str) return ''
@@ -411,14 +414,15 @@ function PreviewModal({ title, publishedAt, thumbnailSrc, blocks, onClose }) {
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', zIndex: 500, overflowY: 'auto', fontFamily: 'Zen Old Mincho, serif' }}>
-      {/* プレビューヘッダー */}
+
+      {/* プレビューバー */}
       <div style={{
         position: 'fixed', top: 0, left: 0, right: 0, height: '48px',
         background: '#fff', borderBottom: '1px solid #e5e7eb',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '0 32px', zIndex: 501,
       }}>
-        <span style={{ fontSize: '13px', color: '#888', letterSpacing: '0.08em' }}>プレビュー</span>
+        <span style={{ fontSize: '13px', color: '#888', letterSpacing: '0.08em' }}>プレビュー（公開後の表示イメージ）</span>
         <button
           onClick={onClose}
           style={{
@@ -432,24 +436,35 @@ function PreviewModal({ title, publishedAt, thumbnailSrc, blocks, onClose }) {
         </button>
       </div>
 
-      {/* 記事コンテンツ */}
+      {/* 記事コンテンツ（ReportDetail と同じ構造） */}
       <div style={{ paddingTop: '48px' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '60px 40px' }}>
-          <h1 style={{ fontSize: '28px', fontWeight: '700', letterSpacing: '0.1em', lineHeight: '1.5', marginBottom: '12px' }}>
+
+        {/* 記事ヘッダー: container相当 (padding 0 80px) */}
+        <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '60px 80px 32px' }}>
+          <h1 style={{ fontSize: '28px', lineHeight: '1.6', letterSpacing: '0.1em', marginBottom: '12px' }}>
             {title || 'タイトルなし'}
           </h1>
-          <p style={{ textAlign: 'right', color: '#888', fontSize: '14px', letterSpacing: '0.05em', marginBottom: '32px' }}>
+          <p style={{ fontSize: '14px', color: '#888', letterSpacing: '0.05em', textAlign: 'right' }}>
             {formatDate(publishedAt) || '----/--/--'}
           </p>
-          {thumbnailSrc && (
-            <div style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', background: '#d0d0d0', marginBottom: '48px' }}>
-              <img src={thumbnailSrc} alt="thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-          )}
+        </div>
+
+        {/* サムネイル: container相当 */}
+        <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 80px 60px' }}>
+          <div style={{ width: '100%', aspectRatio: '16/9', background: '#d0d0d0', overflow: 'hidden' }}>
+            {thumbnailSrc && (
+              <img src={thumbnailSrc} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            )}
+          </div>
+        </div>
+
+        {/* 本文エリア: maxWidth 800px, padding 0 80px */}
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 80px 80px' }}>
           {blocks.map((block, i) => (
             <PreviewContentBlock key={block.id || i} block={block} />
           ))}
         </div>
+
       </div>
     </div>
   )

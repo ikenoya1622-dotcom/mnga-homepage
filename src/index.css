@@ -184,6 +184,11 @@ body {
     grid-template-columns: 1fr;
   }
 
+  /* Report Detail */
+  .report-detail-body {
+    padding: 0 20px 60px !important;
+  }
+
   /* About News */
   .about-news-row {
     grid-template-columns: 1fr;

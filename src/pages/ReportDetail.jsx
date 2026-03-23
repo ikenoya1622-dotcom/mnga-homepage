@@ -9,7 +9,34 @@ import { supabase } from '../lib/supabase'
 function formatDate(dateStr) {
   if (!dateStr) return ''
   const d = new Date(dateStr)
-  return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`
+  return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`
+}
+
+function BodyText({ text }) {
+  if (!text) return null
+  const paragraphs = text.split(/\n\n+/)
+  return (
+    <>
+      {paragraphs.map((para, i) => (
+        <p
+          key={i}
+          style={{
+            fontSize: '18px',
+            lineHeight: '2',
+            letterSpacing: '0.05em',
+            marginBottom: '32px',
+          }}
+        >
+          {para.split('\n').map((line, j) => (
+            <span key={j}>
+              {line}
+              {j < para.split('\n').length - 1 && <br />}
+            </span>
+          ))}
+        </p>
+      ))}
+    </>
+  )
 }
 
 export default function ReportDetail() {
@@ -54,14 +81,15 @@ export default function ReportDetail() {
       <Header />
       <main style={{ paddingTop: '80px' }}>
         {loading ? (
-          <div className="container" style={{ padding: '80px 80px' }}>
-            {/* スケルトン */}
-            <div style={{ height: '400px', background: '#e8e8e8', marginBottom: '32px', borderRadius: '2px' }} />
-            <div style={{ height: '16px', background: '#e8e8e8', width: '120px', marginBottom: '24px', borderRadius: '2px' }} />
-            <div style={{ height: '36px', background: '#e8e8e8', width: '60%', marginBottom: '32px', borderRadius: '2px' }} />
-            <div style={{ height: '20px', background: '#e8e8e8', marginBottom: '12px', borderRadius: '2px' }} />
-            <div style={{ height: '20px', background: '#e8e8e8', marginBottom: '12px', borderRadius: '2px' }} />
-            <div style={{ height: '20px', background: '#e8e8e8', width: '80%', borderRadius: '2px' }} />
+          <div className="container" style={{ padding: '60px 80px 80px' }}>
+            <div style={{ height: '40px', background: '#e8e8e8', width: '50%', marginBottom: '12px', borderRadius: '2px' }} />
+            <div style={{ height: '16px', background: '#e8e8e8', width: '120px', marginBottom: '32px', marginLeft: 'auto', borderRadius: '2px' }} />
+            <div style={{ aspectRatio: '16/9', background: '#e8e8e8', width: '100%', marginBottom: '60px', borderRadius: '2px' }} />
+            <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+              {[...Array(4)].map((_, i) => (
+                <div key={i} style={{ height: '20px', background: '#e8e8e8', marginBottom: '16px', borderRadius: '2px', width: i % 3 === 2 ? '70%' : '100%' }} />
+              ))}
+            </div>
           </div>
         ) : notFound ? (
           <div className="container" style={{ padding: '80px 80px', textAlign: 'center' }}>
@@ -72,61 +100,67 @@ export default function ReportDetail() {
           </div>
         ) : (
           <div ref={contentRef}>
-            {/* サムネイル */}
-            {article.thumbnail_url && (
-              <div style={{ width: '100%', maxHeight: '500px', overflow: 'hidden' }}>
-                <img
-                  src={article.thumbnail_url}
-                  alt={article.title}
-                  style={{ width: '100%', maxHeight: '500px', objectFit: 'cover', display: 'block' }}
-                />
-              </div>
-            )}
 
-            {/* 記事本文エリア */}
-            <div className="container" style={{ paddingTop: '60px', paddingBottom: '80px' }}>
-              {/* 公開日 */}
-              <p style={{ fontSize: '14px', color: '#888', letterSpacing: '0.05em', marginBottom: '16px' }}>
-                {formatDate(article.published_at)}
-              </p>
-
-              {/* タイトル */}
-              <h1 style={{ fontSize: '28px', lineHeight: '1.8', letterSpacing: '0.1em', marginBottom: '48px' }}>
+            {/* 記事ヘッダー */}
+            <div className="container" style={{ paddingTop: '60px', paddingBottom: '32px' }}>
+              <h1 style={{ fontSize: '28px', lineHeight: '1.6', letterSpacing: '0.1em', marginBottom: '12px' }}>
                 {article.title}
               </h1>
+              <p style={{ fontSize: '14px', color: '#888', letterSpacing: '0.05em', textAlign: 'right' }}>
+                {formatDate(article.published_at)}
+              </p>
+            </div>
 
-              {/* 本文 */}
-              {article.body && (
-                <div
-                  style={{
-                    fontSize: '18px',
-                    lineHeight: '2',
-                    letterSpacing: '0.1em',
-                    whiteSpace: 'pre-wrap',
-                    marginBottom: '80px',
-                    maxWidth: '800px',
-                  }}
-                >
-                  {article.body}
-                </div>
-              )}
-
-              {/* 一覧に戻る */}
-              <Link
-                to="/report"
+            {/* サムネイル */}
+            <div className="container" style={{ paddingBottom: '60px' }}>
+              <div
                 style={{
-                  display: 'inline-block',
-                  fontSize: '16px',
-                  color: '#000',
-                  letterSpacing: '0.1em',
-                  borderBottom: '1px solid #000',
-                  paddingBottom: '2px',
-                  textDecoration: 'none',
+                  width: '100%',
+                  aspectRatio: '16/9',
+                  background: '#d0d0d0',
+                  overflow: 'hidden',
                 }}
               >
-                ← 一覧に戻る
-              </Link>
+                {article.thumbnail_url && (
+                  <img
+                    src={article.thumbnail_url}
+                    alt={article.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                  />
+                )}
+              </div>
             </div>
+
+            {/* 本文エリア */}
+            <div
+              style={{
+                maxWidth: '800px',
+                margin: '0 auto',
+                padding: '0 80px 80px',
+              }}
+              className="report-detail-body"
+            >
+              <BodyText text={article.body} />
+
+              {/* 一覧に戻る */}
+              <div style={{ marginTop: '60px' }}>
+                <Link
+                  to="/report"
+                  style={{
+                    display: 'inline-block',
+                    fontSize: '16px',
+                    color: '#000',
+                    letterSpacing: '0.1em',
+                    borderBottom: '1px solid #000',
+                    paddingBottom: '2px',
+                    textDecoration: 'none',
+                  }}
+                >
+                  ← 一覧に戻る
+                </Link>
+              </div>
+            </div>
+
           </div>
         )}
 

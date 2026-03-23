@@ -12,6 +12,13 @@ function formatDate(dateStr) {
   return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`
 }
 
+function renderBold(text) {
+  const parts = text.split(/\*\*(.*?)\*\*/g)
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={i}>{part}</strong> : part
+  )
+}
+
 function BodyText({ text }) {
   if (!text) return null
   const paragraphs = text.split(/\n\n+/)
@@ -20,7 +27,7 @@ function BodyText({ text }) {
       {paragraphs.map((para, i) => (
         <p key={i} style={{ fontSize: '18px', lineHeight: '2', letterSpacing: '0.05em', marginBottom: '32px' }}>
           {para.split('\n').map((line, j, arr) => (
-            <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+            <span key={j}>{renderBold(line)}{j < arr.length - 1 && <br />}</span>
           ))}
         </p>
       ))}
@@ -46,7 +53,8 @@ function ContentBlock({ block }) {
     case 'subheading':
       return (
         <h3 style={{
-          fontSize: '16px',
+          fontSize: '20px',
+          fontWeight: '700',
           color: '#666',
           letterSpacing: '0.05em',
           lineHeight: '1.6',

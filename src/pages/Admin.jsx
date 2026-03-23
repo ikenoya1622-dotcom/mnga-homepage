@@ -328,6 +328,19 @@ export default function Admin() {
                         />
                       )}
                     </div>
+                  ) : block.type === 'text' ? (
+                    <div>
+                      <textarea
+                        value={block.content}
+                        onChange={(e) => updateBlock(block.id, { content: e.target.value })}
+                        placeholder="本文を入力。**テキスト** で太字になります"
+                        rows={5}
+                        style={{ ...inputStyle, resize: 'vertical', lineHeight: '1.8' }}
+                      />
+                      <p style={{ fontSize: '12px', color: '#aaa', marginTop: '4px' }}>
+                        ** テキスト ** で太字：例）<strong>**重要**</strong> → <strong>重要</strong>
+                      </p>
+                    </div>
                   ) : block.type === 'heading' || block.type === 'subheading' ? (
                     <input
                       type="text"
@@ -336,15 +349,7 @@ export default function Admin() {
                       placeholder={`${BLOCK_TYPE_LABELS[block.type]}を入力`}
                       style={{ ...inputStyle }}
                     />
-                  ) : (
-                    <textarea
-                      value={block.content}
-                      onChange={(e) => updateBlock(block.id, { content: e.target.value })}
-                      placeholder="本文を入力"
-                      rows={5}
-                      style={{ ...inputStyle, resize: 'vertical', lineHeight: '1.8' }}
-                    />
-                  )}
+                  ) : null}
                 </div>
               </div>
             ))}

@@ -528,7 +528,7 @@ export default function Admin() {
   function startEdit(article) {
     setEditId(article.id)
     setTitle(article.title || '')
-    setPublishedAt(article.published_at ? article.published_at.slice(0, 10) : '')
+    setPublishedAt(article.published_at ? article.published_at.slice(0, 16) : '')
     setPreviewUrl(article.thumbnail_url || '')
     setFile(null)
     setBlocks(hydrateBlocks(article.content))
@@ -624,7 +624,7 @@ export default function Admin() {
 
       const payload = {
         title: title.trim(),
-        published_at: publishedAt || new Date().toISOString().slice(0, 10),
+        published_at: publishedAt || new Date().toISOString().slice(0, 16),
         thumbnail_url: thumbnailUrl || null,
         content: processedBlocks,
       }
@@ -728,7 +728,7 @@ export default function Admin() {
                 >
                   <span style={{ fontSize: '15px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '8px' }}>
                     {article.title}
-                    {article.published_at > new Date().toISOString().slice(0, 10) && (
+                    {article.published_at > new Date().toISOString() && (
                       <span style={{ fontSize: '11px', background: '#fef3c7', color: '#d97706', border: '1px solid #fcd34d', borderRadius: '3px', padding: '1px 6px', flexShrink: 0, letterSpacing: '0.04em' }}>
                         予約中
                       </span>
@@ -848,7 +848,7 @@ export default function Admin() {
           {/* 公開日 */}
           <div style={{ marginBottom: '24px' }}>
             <input
-              type="date"
+              type="datetime-local"
               value={publishedAt}
               onChange={(e) => setPublishedAt(e.target.value)}
               style={{

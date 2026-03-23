@@ -235,44 +235,34 @@ function BlockItem({ block, isFirst, isLast, onUpdate, onRemove, onMove, onFileC
       {/* ブロックコンテンツ */}
       <div>
         {block.type === 'heading' && (
-          <input
-            type="text"
+          <AutoResizeTextarea
             value={block.content}
             onChange={(e) => onUpdate(block.id, { content: e.target.value })}
             placeholder="大見出しを入力"
             style={{
-              width: '100%',
               fontSize: '28px',
               fontWeight: '700',
-              border: 'none',
-              outline: 'none',
-              fontFamily: 'Zen Old Mincho, serif',
               letterSpacing: '0.05em',
-              boxSizing: 'border-box',
-              background: 'transparent',
+              lineHeight: '1.4',
               padding: '4px 0',
+              background: 'transparent',
             }}
           />
         )}
 
         {block.type === 'subheading' && (
-          <input
-            type="text"
+          <AutoResizeTextarea
             value={block.content}
             onChange={(e) => onUpdate(block.id, { content: e.target.value })}
             placeholder="小見出しを入力"
             style={{
-              width: '100%',
               fontSize: '20px',
               fontWeight: '700',
               color: '#444',
-              border: 'none',
-              outline: 'none',
-              fontFamily: 'Zen Old Mincho, serif',
               letterSpacing: '0.05em',
-              boxSizing: 'border-box',
-              background: 'transparent',
+              lineHeight: '1.5',
               padding: '4px 0',
+              background: 'transparent',
             }}
           />
         )}

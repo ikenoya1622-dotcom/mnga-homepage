@@ -760,21 +760,16 @@ export default function Admin() {
           </div>
 
           {/* タイトル */}
-          <input
-            type="text"
+          <AutoResizeTextarea
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="タイトルを入力"
             style={{
-              width: '100%',
               fontSize: '36px',
               fontWeight: '700',
-              border: 'none',
-              outline: 'none',
-              fontFamily: 'Zen Old Mincho, serif',
               letterSpacing: '0.05em',
+              lineHeight: '1.4',
               marginBottom: '24px',
-              boxSizing: 'border-box',
               background: 'transparent',
             }}
           />

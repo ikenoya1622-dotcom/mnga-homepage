@@ -35,6 +35,20 @@ function BodyText({ text }) {
   )
 }
 
+const ALLOWED_IMAGE_DOMAINS = [
+  'dqbbcnlsjqxeowfsmjwl.supabase.co',
+]
+
+function isSafeImageUrl(url) {
+  if (!url) return false
+  try {
+    const { hostname } = new URL(url)
+    return ALLOWED_IMAGE_DOMAINS.includes(hostname)
+  } catch {
+    return false
+  }
+}
+
 function ContentBlock({ block }) {
   switch (block.type) {
     case 'heading':
@@ -77,7 +91,7 @@ function ContentBlock({ block }) {
             overflow: 'hidden',
           }}
         >
-          {block.url && (
+          {isSafeImageUrl(block.url) && (
             <img
               src={block.url}
               alt=""

@@ -563,15 +563,30 @@ export default function Admin() {
     })
   }
 
+  function validateFile(f) {
+    const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+    if (!allowed.includes(f.type)) {
+      alert('JPEG・PNG・WebP・GIF のみアップロードできます')
+      return false
+    }
+    if (f.size > 5 * 1024 * 1024) {
+      alert('ファイルサイズは 5MB 以下にしてください')
+      return false
+    }
+    return true
+  }
+
   function handleBlockFileChange(id, e) {
     const f = e.target.files[0]
     if (!f) return
+    if (!validateFile(f)) { e.target.value = ''; return }
     updateBlock(id, { file: f, previewUrl: URL.createObjectURL(f) })
   }
 
   function handleThumbnailChange(e) {
     const f = e.target.files[0]
     if (!f) return
+    if (!validateFile(f)) { e.target.value = ''; return }
     setFile(f)
     setPreviewUrl(URL.createObjectURL(f))
   }
@@ -607,6 +622,20 @@ export default function Admin() {
     return result
   }
 
+  async function logAction(action, reportId, detail = {}) {
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      await supabase.from('admin_logs').insert([{
+        action,
+        report_id: reportId || null,
+        user_email: user?.email || null,
+        detail,
+      }])
+    } catch (_) {
+      // ログ失敗はサイレントに無視
+    }
+  }
+
   async function handleSubmit(e) {
     if (e && e.preventDefault) e.preventDefault()
     if (!supabase) { alert('Supabaseの設定が完了していません'); return }
@@ -632,9 +661,11 @@ export default function Admin() {
       if (editId) {
         const { error } = await supabase.from('reports').update(payload).eq('id', editId)
         if (error) throw new Error('更新失敗: ' + error.message)
+        await logAction('update', editId, { title: payload.title })
       } else {
-        const { error } = await supabase.from('reports').insert([payload])
+        const { data, error } = await supabase.from('reports').insert([payload]).select('id').single()
         if (error) throw new Error('投稿失敗: ' + error.message)
+        await logAction('create', data?.id, { title: payload.title })
       }
 
       resetForm()
@@ -651,8 +682,9 @@ export default function Admin() {
     if (!supabase) { alert('Supabaseの設定が完了していません'); return }
     if (!window.confirm('この記事を削除しますか？')) return
     const { error } = await supabase.from('reports').delete().eq('id', id)
-    if (error) alert('削除失敗: ' + error.message)
-    else await fetchArticles()
+    if (error) { alert('削除失敗: ' + error.message); return }
+    await logAction('delete', id)
+    await fetchArticles()
   }
 
   // ── 一覧ビュー ─────────────────────────────────────────────

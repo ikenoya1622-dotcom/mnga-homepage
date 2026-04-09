@@ -671,23 +671,42 @@ export default function Admin() {
           <span style={{ fontSize: '20px', fontWeight: '700', letterSpacing: '0.1em' }}>
             MNGA 管理画面
           </span>
-          <button
-            type="button"
-            onClick={goToNewEditor}
-            style={{
-              padding: '8px 20px',
-              background: '#000',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '14px',
-              fontFamily: 'Zen Old Mincho, serif',
-              letterSpacing: '0.08em',
-              cursor: 'pointer',
-            }}
-          >
-            新規投稿 ＋
-          </button>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <button
+              type="button"
+              onClick={async () => { await supabase.auth.signOut() }}
+              style={{
+                padding: '8px 16px',
+                background: 'transparent',
+                color: '#6b7280',
+                border: '1px solid #d1d5db',
+                borderRadius: '4px',
+                fontSize: '13px',
+                fontFamily: 'Zen Old Mincho, serif',
+                letterSpacing: '0.05em',
+                cursor: 'pointer',
+              }}
+            >
+              ログアウト
+            </button>
+            <button
+              type="button"
+              onClick={goToNewEditor}
+              style={{
+                padding: '8px 20px',
+                background: '#000',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                fontSize: '14px',
+                fontFamily: 'Zen Old Mincho, serif',
+                letterSpacing: '0.08em',
+                cursor: 'pointer',
+              }}
+            >
+              新規投稿 ＋
+            </button>
+          </div>
         </header>
 
         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '48px 24px' }}>

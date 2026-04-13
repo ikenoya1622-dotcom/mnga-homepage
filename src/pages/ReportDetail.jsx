@@ -182,7 +182,7 @@ export default function ReportDetail() {
             {/* サムネイル */}
             <div className="container" style={{ paddingBottom: '60px' }}>
               <div style={{ width: '100%', aspectRatio: '16/9', background: '#d0d0d0', overflow: 'hidden' }}>
-                {article.thumbnail_url && (
+                {isSafeImageUrl(article.thumbnail_url) && (
                   <img
                     src={article.thumbnail_url}
                     alt={article.title}

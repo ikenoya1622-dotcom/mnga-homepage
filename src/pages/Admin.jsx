@@ -631,8 +631,8 @@ export default function Admin() {
         user_email: user?.email || null,
         detail,
       }])
-    } catch (_) {
-      // ログ失敗はサイレントに無視
+    } catch (err) {
+      console.error('admin_logs への書き込みに失敗しました:', err)
     }
   }
 

@@ -4,11 +4,14 @@ export default function Message() {
       <div style={{maxWidth: '1100px', margin: '0 auto', padding: '0 24px'}}>
         <div className="message-inner">
           <div className="message-photo-wrap">
-            <div
+            <img
+              src="/images/board/会長.jpg"
+              alt="MNGA 会長 樋田謙吾"
               style={{
                 maxWidth: '300px',
+                width: '100%',
                 aspectRatio: '3/4',
-                backgroundColor: '#d1d5db',
+                objectFit: 'cover',
                 marginLeft: '15%',
               }}
             />

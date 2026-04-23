@@ -16,12 +16,13 @@ export default function Header() {
   return (
     <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200">
       <div className="h-16 md:h-20 flex items-center justify-between px-5 md:px-[60px]">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 md:w-8 md:h-8 rounded-sm flex items-center justify-center" style={{background: '#c8392b'}}>
-            <span className="text-white text-xs font-bold">M</span>
-          </div>
-          <span className="font-bold text-base md:text-lg tracking-wider">MNGA</span>
-        </div>
+        <a href="/" className="flex items-center">
+          <img
+            src="/images/mnga-logo.png"
+            alt="MNGA"
+            className="h-10 md:h-12 w-auto"
+          />
+        </a>
 
         {/* PC nav */}
         <nav className="hidden md:block">

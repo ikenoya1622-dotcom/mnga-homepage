@@ -4,11 +4,12 @@ export default function Footer() {
       <div style={{padding: '0 60px'}}>
         <div className="flex flex-col md:flex-row justify-between items-start gap-6">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-6 h-6 rounded-sm flex items-center justify-center" style={{background: '#c8392b'}}>
-                <span className="text-white text-xs font-bold">M</span>
-              </div>
-              <span className="font-bold">MNGA</span>
+            <div className="mb-2">
+              <img
+                src="/images/mnga-logo.png"
+                alt="MNGA"
+                className="h-10 w-auto"
+              />
             </div>
             <p className="text-xs text-gray-500">Make Nippon Great Again</p>
             <p className="text-xs text-gray-400 mt-2">

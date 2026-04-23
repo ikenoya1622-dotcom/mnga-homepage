@@ -640,6 +640,13 @@ export default function Admin() {
     if (e && e.preventDefault) e.preventDefault()
     if (!supabase) { alert('Supabaseの設定が完了していません'); return }
     if (!title.trim()) { alert('タイトルを入力してください'); return }
+    if (title.length > 200) { alert('タイトルは 200 文字以内で入力してください'); return }
+    for (const b of blocks) {
+      if (b.content && b.content.length > 10000) {
+        alert('本文は 1 ブロックあたり 10,000 文字以内で入力してください')
+        return
+      }
+    }
     setSubmitting(true)
 
     try {
@@ -969,8 +976,9 @@ export default function Admin() {
           {/* タイトル */}
           <AutoResizeTextarea
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value.slice(0, 200))}
             placeholder="タイトルを入力"
+            maxLength={200}
             style={{
               fontSize: '36px',
               fontWeight: '700',

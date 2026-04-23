@@ -1,8 +1,8 @@
 const members = [
   { role: '会長', name: '櫻田 謙悟', title: '会長', desc: 'xxxxxxxxxxxxxxxx', image: '/images/board/会長.jpg' },
   { role: '副会長', name: '山木 智史', title: '株式会社Re-grit Partners', desc: 'xxxxxxxxxxxxxxxx', image: '/images/board/副会長.jpg' },
-  { role: '仕事', name: 'XXX XXX', title: 'XXX  XXX', desc: '仕長  xxxxxxxxxxxxxxxx', image: null },
-  { role: '仕事', name: 'XXX XXX', title: 'XXX  XXX', desc: '仕長  xxxxxxxxxxxxxxxx', image: null },
+  { role: '仕事', name: 'XXX XXX', title: 'XXX  XXX', desc: '仕長  xxxxxxxxxxxxxxxx', image: '/images/board/会長.jpg' },
+  { role: '仕事', name: 'XXX XXX', title: 'XXX  XXX', desc: '仕長  xxxxxxxxxxxxxxxx', image: '/images/board/副会長.jpg' },
 ]
 
 export default function Board() {

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Header from '../components/Header'
@@ -156,6 +157,31 @@ export default function AboutPage() {
                               <p style={{ fontSize: '14px' }}>{item.title}</p>
                             </>
                           )
+
+                          const hasBlocks = Array.isArray(item.content) && item.content.length > 0
+                          // お知らせ: 本文ブロックがあれば詳細ページへ、なければ PDF or プレーン
+                          // 定款・事業報告: PDF があれば PDF へ、なければプレーン
+                          const internalHref =
+                            item.category === 'お知らせ' && hasBlocks
+                              ? `/news/${item.id}`
+                              : null
+                          const externalHref = !internalHref && item.file_url ? item.file_url : null
+
+                          let wrapped = body
+                          if (internalHref) {
+                            wrapped = (
+                              <Link to={internalHref} style={{ color: 'inherit', textDecoration: 'none' }}>
+                                {body}
+                              </Link>
+                            )
+                          } else if (externalHref) {
+                            wrapped = (
+                              <a href={externalHref} target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+                                {body}
+                              </a>
+                            )
+                          }
+
                           return (
                             <div
                               key={item.id}
@@ -165,16 +191,7 @@ export default function AboutPage() {
                                 marginBottom: '12px',
                               }}
                             >
-                              {item.file_url ? (
-                                <a
-                                  href={item.file_url}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  style={{ color: 'inherit', textDecoration: 'none' }}
-                                >
-                                  {body}
-                                </a>
-                              ) : body}
+                              {wrapped}
                             </div>
                           )
                         })}

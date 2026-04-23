@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import AdminHeader from '../components/AdminHeader'
+import BlockEditor, { hydrateBlocks } from '../components/BlockEditor'
 
 const CATEGORIES = ['定款', '事業報告', 'お知らせ']
-const BUCKET = 'news-files'
+const ANNOUNCEMENT_CATEGORY = 'お知らせ'
+const PDF_BUCKET = 'news-files'
+const IMAGE_BUCKET = 'report-thumbnails'
 
 function today() {
   const d = new Date()
@@ -43,6 +46,9 @@ export default function AdminNews() {
   const [fileUrl, setFileUrl] = useState('')
   const [pdfFile, setPdfFile] = useState(null)
   const [sortOrder, setSortOrder] = useState(0)
+  const [blocks, setBlocks] = useState([])
+
+  const isAnnouncement = category === ANNOUNCEMENT_CATEGORY
 
   useEffect(() => {
     fetchItems()
@@ -73,6 +79,7 @@ export default function AdminNews() {
     setFileUrl('')
     setPdfFile(null)
     setSortOrder(0)
+    setBlocks([])
   }
 
   function openNew() {
@@ -88,6 +95,7 @@ export default function AdminNews() {
     setFileUrl(item.file_url || '')
     setPdfFile(null)
     setSortOrder(item.sort_order || 0)
+    setBlocks(hydrateBlocks(item.content))
     setView('editor')
   }
 
@@ -102,13 +110,34 @@ export default function AdminNews() {
     if (!pdfFile) return null
     const safeName = pdfFile.name.replace(/[^\w.\-]/g, '_')
     const fileName = `${Date.now()}-${safeName}`
-    const { error } = await supabase.storage.from(BUCKET).upload(fileName, pdfFile)
+    const { error } = await supabase.storage.from(PDF_BUCKET).upload(fileName, pdfFile)
     if (error) {
       alert('PDF のアップロード失敗: ' + error.message)
       return null
     }
-    const { data } = supabase.storage.from(BUCKET).getPublicUrl(fileName)
+    const { data } = supabase.storage.from(PDF_BUCKET).getPublicUrl(fileName)
     return data.publicUrl
+  }
+
+  async function uploadBlockImages(blocksArr) {
+    const result = []
+    for (const block of blocksArr) {
+      if (block.type === 'image' && block.file) {
+        const ext = block.file.name.split('.').pop()
+        const fileName = `news-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+        const { error } = await supabase.storage.from(IMAGE_BUCKET).upload(fileName, block.file)
+        if (error) {
+          alert('挿入画像のアップロード失敗: ' + error.message)
+          result.push({ type: block.type, content: block.content, url: block.url })
+        } else {
+          const { data } = supabase.storage.from(IMAGE_BUCKET).getPublicUrl(fileName)
+          result.push({ type: block.type, content: block.content, url: data.publicUrl })
+        }
+      } else {
+        result.push({ type: block.type, content: block.content, url: block.url })
+      }
+    }
+    return result
   }
 
   async function logAction(action, itemId, detail = {}) {
@@ -131,6 +160,12 @@ export default function AdminNews() {
     if (!title.trim()) { alert('タイトルを入力してください'); return }
     if (title.length > 200) { alert('タイトルは 200 文字以内で入力してください'); return }
     if (!publishedAt) { alert('日付を入力してください'); return }
+    for (const b of blocks) {
+      if (b.content && b.content.length > 10000) {
+        alert('本文は 1 ブロックあたり 10,000 文字以内で入力してください')
+        return
+      }
+    }
 
     setSubmitting(true)
     try {
@@ -140,12 +175,15 @@ export default function AdminNews() {
         if (url) finalFileUrl = url
       }
 
+      const processedBlocks = isAnnouncement ? await uploadBlockImages(blocks) : []
+
       const payload = {
         category,
         published_at: publishedAt,
         title: title.trim(),
         file_url: finalFileUrl || null,
         sort_order: Number(sortOrder) || 0,
+        content: processedBlocks,
       }
 
       if (editId) {
@@ -190,15 +228,9 @@ export default function AdminNews() {
             <button
               onClick={openNew}
               style={{
-                padding: '8px 16px',
-                fontSize: '13px',
-                background: '#000',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontFamily: 'inherit',
-                letterSpacing: '0.05em',
+                padding: '8px 16px', fontSize: '13px', background: '#000',
+                color: '#fff', border: 'none', borderRadius: '4px',
+                cursor: 'pointer', fontFamily: 'inherit', letterSpacing: '0.05em',
               }}
             >
               + 新規作成
@@ -215,82 +247,80 @@ export default function AdminNews() {
             grouped.map((g) => (
               <section key={g.category} style={{ marginBottom: '40px' }}>
                 <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '12px' }}>
-                  {g.category} <span style={{ color: '#9ca3af', fontWeight: '400', marginLeft: '8px', fontSize: '13px' }}>{g.items.length}件</span>
+                  {g.category}
+                  <span style={{ color: '#9ca3af', fontWeight: '400', marginLeft: '8px', fontSize: '13px' }}>{g.items.length}件</span>
                 </h2>
                 {g.items.length === 0 ? (
                   <p style={{ color: '#9ca3af', fontSize: '14px' }}>なし</p>
                 ) : (
                   <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '6px' }}>
-                    {g.items.map((it, idx) => (
-                      <div
-                        key={it.id}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          padding: '16px 20px',
-                          borderBottom: idx < g.items.length - 1 ? '1px solid #e5e7eb' : 'none',
-                        }}
-                      >
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>
-                            {it.published_at}{it.file_url && ' ・ PDF'}
-                          </p>
-                          <p style={{ fontSize: '14px', fontWeight: '500', wordBreak: 'break-word' }}>
-                            {it.title}
-                          </p>
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px', marginLeft: '16px' }}>
-                          {it.file_url && (
-                            <a
-                              href={it.file_url}
-                              target="_blank"
-                              rel="noreferrer"
+                    {g.items.map((it, idx) => {
+                      const hasBlocks = Array.isArray(it.content) && it.content.length > 0
+                      return (
+                        <div
+                          key={it.id}
+                          style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                            padding: '16px 20px',
+                            borderBottom: idx < g.items.length - 1 ? '1px solid #e5e7eb' : 'none',
+                          }}
+                        >
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>
+                              {it.published_at}
+                              {it.file_url && ' ・ PDF'}
+                              {hasBlocks && ' ・ 本文あり'}
+                            </p>
+                            <p style={{ fontSize: '14px', fontWeight: '500', wordBreak: 'break-word' }}>
+                              {it.title}
+                            </p>
+                          </div>
+                          <div style={{ display: 'flex', gap: '8px', marginLeft: '16px' }}>
+                            {it.file_url && (
+                              <a href={it.file_url} target="_blank" rel="noreferrer"
+                                 style={{
+                                   padding: '6px 12px', fontSize: '12px',
+                                   border: '1px solid #d1d5db', borderRadius: '4px',
+                                   color: '#374151', textDecoration: 'none', fontFamily: 'inherit',
+                                 }}>
+                                PDF
+                              </a>
+                            )}
+                            {hasBlocks && (
+                              <a href={`/news/${it.id}`} target="_blank" rel="noreferrer"
+                                 style={{
+                                   padding: '6px 12px', fontSize: '12px',
+                                   border: '1px solid #d1d5db', borderRadius: '4px',
+                                   color: '#374151', textDecoration: 'none', fontFamily: 'inherit',
+                                 }}>
+                                プレビュー
+                              </a>
+                            )}
+                            <button
+                              onClick={() => openEdit(it)}
                               style={{
-                                padding: '6px 12px',
-                                fontSize: '12px',
-                                border: '1px solid #d1d5db',
-                                borderRadius: '4px',
-                                color: '#374151',
-                                textDecoration: 'none',
-                                fontFamily: 'inherit',
+                                padding: '6px 12px', fontSize: '12px',
+                                border: '1px solid #d1d5db', borderRadius: '4px',
+                                background: '#fff', cursor: 'pointer', fontFamily: 'inherit',
                               }}
                             >
-                              PDF
-                            </a>
-                          )}
-                          <button
-                            onClick={() => openEdit(it)}
-                            style={{
-                              padding: '6px 12px',
-                              fontSize: '12px',
-                              border: '1px solid #d1d5db',
-                              borderRadius: '4px',
-                              background: '#fff',
-                              cursor: 'pointer',
-                              fontFamily: 'inherit',
-                            }}
-                          >
-                            編集
-                          </button>
-                          <button
-                            onClick={() => handleDelete(it)}
-                            style={{
-                              padding: '6px 12px',
-                              fontSize: '12px',
-                              border: '1px solid #fca5a5',
-                              color: '#dc2626',
-                              borderRadius: '4px',
-                              background: '#fff',
-                              cursor: 'pointer',
-                              fontFamily: 'inherit',
-                            }}
-                          >
-                            削除
-                          </button>
+                              編集
+                            </button>
+                            <button
+                              onClick={() => handleDelete(it)}
+                              style={{
+                                padding: '6px 12px', fontSize: '12px',
+                                border: '1px solid #fca5a5', color: '#dc2626',
+                                borderRadius: '4px', background: '#fff',
+                                cursor: 'pointer', fontFamily: 'inherit',
+                              }}
+                            >
+                              削除
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 )}
               </section>
@@ -310,13 +340,9 @@ export default function AdminNews() {
             <button
               onClick={() => { resetForm(); setView('list') }}
               style={{
-                padding: '8px 16px',
-                fontSize: '13px',
-                border: '1px solid #d1d5db',
-                background: '#fff',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontFamily: 'inherit',
+                padding: '8px 16px', fontSize: '13px',
+                border: '1px solid #d1d5db', background: '#fff',
+                borderRadius: '4px', cursor: 'pointer', fontFamily: 'inherit',
               }}
             >
               戻る
@@ -325,15 +351,11 @@ export default function AdminNews() {
               onClick={handleSubmit}
               disabled={submitting}
               style={{
-                padding: '8px 16px',
-                fontSize: '13px',
-                background: submitting ? '#555' : '#000',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '4px',
+                padding: '8px 16px', fontSize: '13px',
+                background: submitting ? '#555' : '#000', color: '#fff',
+                border: 'none', borderRadius: '4px',
                 cursor: submitting ? 'not-allowed' : 'pointer',
-                fontFamily: 'inherit',
-                letterSpacing: '0.05em',
+                fontFamily: 'inherit', letterSpacing: '0.05em',
               }}
             >
               {submitting ? '保存中...' : editId ? '更新' : '公開'}
@@ -342,7 +364,7 @@ export default function AdminNews() {
         }
       />
 
-      <main style={{ padding: '40px', maxWidth: '720px', margin: '0 auto' }}>
+      <main style={{ padding: '40px', maxWidth: '760px', margin: '0 auto' }}>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '20px' }}>
             <label style={labelStyle}>カテゴリ</label>
@@ -353,6 +375,11 @@ export default function AdminNews() {
             >
               {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
+            {isAnnouncement && (
+              <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '6px' }}>
+                お知らせカテゴリは本文ブロック（見出し・本文・画像）を編集できます。
+              </p>
+            )}
           </div>
 
           <div style={{ marginBottom: '20px' }}>
@@ -380,7 +407,9 @@ export default function AdminNews() {
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>PDF ファイル（任意・10MB まで）</label>
+            <label style={labelStyle}>
+              PDF ファイル（任意・10MB まで{isAnnouncement ? '・本文と併用可' : ''}）
+            </label>
             <input
               type="file"
               accept="application/pdf"
@@ -409,6 +438,15 @@ export default function AdminNews() {
             />
           </div>
         </form>
+
+        {isAnnouncement && (
+          <div style={{ marginTop: '32px' }}>
+            <label style={labelStyle}>本文</label>
+            <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '24px' }}>
+              <BlockEditor blocks={blocks} onChange={setBlocks} />
+            </div>
+          </div>
+        )}
       </main>
     </div>
   )

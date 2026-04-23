@@ -19,6 +19,7 @@ import Admin from './pages/Admin'
 import AdminNews from './pages/AdminNews'
 import AdminLogin from './pages/AdminLogin'
 import ReportDetail from './pages/ReportDetail'
+import NewsDetail from './pages/NewsDetail'
 import PrivateRoute from './components/PrivateRoute'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -74,6 +75,7 @@ function App() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/join" element={<JoinPage />} />
       <Route path="/report/:id" element={<ReportDetail />} />
+      <Route path="/news/:id" element={<NewsDetail />} />
       <Route path="/mnga-console-7kx9a/login" element={<AdminLogin />} />
       <Route path="/mnga-console-7kx9a" element={<PrivateRoute><Admin /></PrivateRoute>} />
       <Route path="/mnga-console-7kx9a/news" element={<PrivateRoute><AdminNews /></PrivateRoute>} />

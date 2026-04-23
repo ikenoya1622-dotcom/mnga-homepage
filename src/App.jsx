@@ -16,6 +16,7 @@ import Report from './pages/Report'
 import AboutPage from './pages/About'
 import JoinPage from './pages/Join'
 import Admin from './pages/Admin'
+import AdminNews from './pages/AdminNews'
 import AdminLogin from './pages/AdminLogin'
 import ReportDetail from './pages/ReportDetail'
 import PrivateRoute from './components/PrivateRoute'
@@ -75,6 +76,7 @@ function App() {
       <Route path="/report/:id" element={<ReportDetail />} />
       <Route path="/mnga-console-7kx9a/login" element={<AdminLogin />} />
       <Route path="/mnga-console-7kx9a" element={<PrivateRoute><Admin /></PrivateRoute>} />
+      <Route path="/mnga-console-7kx9a/news" element={<PrivateRoute><AdminNews /></PrivateRoute>} />
     </Routes>
   )
 }

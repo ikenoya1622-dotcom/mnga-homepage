@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import AdminHeader from '../components/AdminHeader'
 
 const BUCKET = 'report-thumbnails'
 
@@ -706,36 +707,8 @@ export default function Admin() {
   if (view === 'list') {
     return (
       <div style={{ minHeight: '100vh', background: '#f9fafb', fontFamily: 'Zen Old Mincho, serif' }}>
-        <header style={{
-          background: '#fff',
-          borderBottom: '1px solid #e5e7eb',
-          padding: '0 40px',
-          height: '64px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          <span style={{ fontSize: '20px', fontWeight: '700', letterSpacing: '0.1em' }}>
-            MNGA 管理画面
-          </span>
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <button
-              type="button"
-              onClick={async () => { await supabase.auth.signOut() }}
-              style={{
-                padding: '8px 16px',
-                background: 'transparent',
-                color: '#6b7280',
-                border: '1px solid #d1d5db',
-                borderRadius: '4px',
-                fontSize: '13px',
-                fontFamily: 'Zen Old Mincho, serif',
-                letterSpacing: '0.05em',
-                cursor: 'pointer',
-              }}
-            >
-              ログアウト
-            </button>
+        <AdminHeader
+          right={
             <button
               type="button"
               onClick={goToNewEditor}
@@ -753,8 +726,8 @@ export default function Admin() {
             >
               新規投稿 ＋
             </button>
-          </div>
-        </header>
+          }
+        />
 
         <div style={{ maxWidth: '900px', margin: '0 auto', padding: '48px 24px' }}>
           {loading ? (

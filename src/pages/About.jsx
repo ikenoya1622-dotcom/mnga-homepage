@@ -1,11 +1,14 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import CtaSection from '../components/CtaSection'
+import { supabase } from '../lib/supabase'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const NEWS_CATEGORIES = ['定款', '事業報告', 'お知らせ']
 
 const values = [
   { title: '対等な関係', desc: '大企業にベンチャーがぶら下がるのではなく、相互に学びあう。' },
@@ -15,25 +18,34 @@ const values = [
   { title: '将来志向', desc: '過去の復活ではなく、世界の役に立つ日本の実現' },
 ]
 
-const news = [
-  {
-    category: '定款',
-    items: [
-      { date: '2020.12.25', title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
-      { date: '2020.12.25', title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
-    ],
-  },
-  {
-    category: '事業報告',
-    items: [
-      { date: '2020.12.25', title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
-      { date: '2020.12.25', title: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' },
-    ],
-  },
-]
+function formatNewsDate(iso) {
+  if (!iso) return ''
+  const [y, m, d] = iso.split('-')
+  return `${y}.${m}.${d}`
+}
 
 export default function AboutPage() {
   const refs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)]
+  const [news, setNews] = useState([])
+
+  useEffect(() => {
+    if (!supabase) return
+    supabase
+      .from('news_items')
+      .select('*')
+      .order('published_at', { ascending: false })
+      .order('sort_order', { ascending: true })
+      .then(({ data, error }) => {
+        if (error) { console.error('news_items の取得に失敗:', error); return }
+        const grouped = NEWS_CATEGORIES
+          .map((cat) => ({
+            category: cat,
+            items: (data || []).filter((x) => x.category === cat),
+          }))
+          .filter((g) => g.items.length > 0)
+        setNews(grouped)
+      })
+  }, [])
 
   useEffect(() => {
     const anims = refs.map((ref) =>
@@ -125,30 +137,52 @@ export default function AboutPage() {
           <div className="container">
             <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '40px' }}>4. -News</p>
             <div className="about-news-inner">
-              {news.map((group) => (
-                <div key={group.category} style={{ marginBottom: '48px' }}>
-                  <div className="about-news-row">
-                    <div className="about-news-category">
-                      <p style={{ fontWeight: 'bold', fontSize: '16px' }}>{group.category}</p>
-                    </div>
-                    <div className="about-news-articles">
-                      {group.items.map((item, i) => (
-                        <div
-                          key={i}
-                          style={{
-                            borderBottom: '1px solid #ccc',
-                            paddingBottom: '12px',
-                            marginBottom: '12px',
-                          }}
-                        >
-                          <p className="text-sm text-gray-500" style={{ marginBottom: '4px' }}>{item.date}</p>
-                          <p style={{ fontSize: '14px' }}>{item.title}</p>
-                        </div>
-                      ))}
+              {news.length === 0 ? (
+                <p style={{ color: '#888', fontSize: '14px' }}>お知らせはまだありません</p>
+              ) : (
+                news.map((group) => (
+                  <div key={group.category} style={{ marginBottom: '48px' }}>
+                    <div className="about-news-row">
+                      <div className="about-news-category">
+                        <p style={{ fontWeight: 'bold', fontSize: '16px' }}>{group.category}</p>
+                      </div>
+                      <div className="about-news-articles">
+                        {group.items.map((item) => {
+                          const body = (
+                            <>
+                              <p className="text-sm text-gray-500" style={{ marginBottom: '4px' }}>
+                                {formatNewsDate(item.published_at)}
+                              </p>
+                              <p style={{ fontSize: '14px' }}>{item.title}</p>
+                            </>
+                          )
+                          return (
+                            <div
+                              key={item.id}
+                              style={{
+                                borderBottom: '1px solid #ccc',
+                                paddingBottom: '12px',
+                                marginBottom: '12px',
+                              }}
+                            >
+                              {item.file_url ? (
+                                <a
+                                  href={item.file_url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  style={{ color: 'inherit', textDecoration: 'none' }}
+                                >
+                                  {body}
+                                </a>
+                              ) : body}
+                            </div>
+                          )
+                        })}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>

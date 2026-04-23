@@ -6,7 +6,7 @@ export default function Footer() {
           <div>
             <div className="mb-2">
               <img
-                src="/images/mnga-logo.png"
+                src="/images/MNGA_ヨコ.png"
                 alt="MNGA"
                 className="h-10 w-auto"
               />

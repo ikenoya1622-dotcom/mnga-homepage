@@ -18,7 +18,7 @@ export default function Header() {
       <div className="h-16 md:h-20 flex items-center justify-between px-5 md:px-[60px]">
         <a href="/" className="flex items-center">
           <img
-            src="/images/mnga-logo.png"
+            src="/images/MNGA_ヨコ.png"
             alt="MNGA"
             className="h-10 md:h-12 w-auto"
           />

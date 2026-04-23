@@ -1,8 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 
 export default function AdminLogin() {
+  useEffect(() => {
+    const meta = document.createElement('meta')
+    meta.name = 'robots'
+    meta.content = 'noindex, nofollow'
+    document.head.appendChild(meta)
+    return () => { document.head.removeChild(meta) }
+  }, [])
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -22,7 +30,7 @@ export default function AdminLogin() {
       setError('メールアドレスまたはパスワードが正しくありません')
       setLoading(false)
     } else {
-      navigate('/admin')
+      navigate('/mnga-console-7kx9a')
     }
   }
 

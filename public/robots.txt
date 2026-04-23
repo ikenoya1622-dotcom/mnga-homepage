@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /mnga-console-7kx9a
+Disallow: /mnga-console-7kx9a/
+Disallow: /admin
+Disallow: /admin/

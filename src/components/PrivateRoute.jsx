@@ -36,9 +36,9 @@ export default function PrivateRoute({ children }) {
     )
   }
 
-  // 未ログインなら /admin/login にリダイレクト
+  // 未ログインならログイン画面にリダイレクト
   if (!session) {
-    return <Navigate to="/admin/login" replace />
+    return <Navigate to="/mnga-console-7kx9a/login" replace />
   }
 
   return children

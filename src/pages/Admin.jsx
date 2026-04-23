@@ -472,6 +472,14 @@ function PreviewModal({ title, publishedAt, thumbnailSrc, blocks, onClose }) {
 
 // ── Admin ──────────────────────────────────────────────────
 export default function Admin() {
+  useEffect(() => {
+    const meta = document.createElement('meta')
+    meta.name = 'robots'
+    meta.content = 'noindex, nofollow'
+    document.head.appendChild(meta)
+    return () => { document.head.removeChild(meta) }
+  }, [])
+
   const [view, setView] = useState('list')
   const [articles, setArticles] = useState([])
   const [loading, setLoading] = useState(true)

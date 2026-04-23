@@ -73,8 +73,8 @@ function App() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/join" element={<JoinPage />} />
       <Route path="/report/:id" element={<ReportDetail />} />
-      <Route path="/admin/login" element={<AdminLogin />} />
-      <Route path="/admin" element={<PrivateRoute><Admin /></PrivateRoute>} />
+      <Route path="/mnga-console-7kx9a/login" element={<AdminLogin />} />
+      <Route path="/mnga-console-7kx9a" element={<PrivateRoute><Admin /></PrivateRoute>} />
     </Routes>
   )
 }

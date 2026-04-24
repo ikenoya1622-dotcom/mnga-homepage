@@ -6,7 +6,7 @@ export default function CtaSection() {
       className="py-20 px-6"
       style={{
         position: 'relative',
-        backgroundImage: "url('/images/東京タワー背景.webp')",
+        backgroundImage: "url('/images/tokyo-bg.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

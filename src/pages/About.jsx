@@ -113,7 +113,23 @@ export default function AboutPage() {
           <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '24px' }}>3. 提供価値</p>
           <div className="membership-inner">
             <div className="membership-visual-wrap">
-              <div style={{ background: '#d0d0d0', aspectRatio: '3/4', width: '100%' }} />
+              <div
+                style={{
+                  background: '#f3f4f6',
+                  aspectRatio: '3/4',
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden',
+                }}
+              >
+                <img
+                  src="/images/mnga-logo.png"
+                  alt="MNGA"
+                  style={{ width: '70%', height: 'auto', objectFit: 'contain' }}
+                />
+              </div>
             </div>
             <div>
               {values.map((v) => (

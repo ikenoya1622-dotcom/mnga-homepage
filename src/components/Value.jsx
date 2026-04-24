@@ -13,7 +13,23 @@ export default function Value() {
         <p className="text-sm text-gray-500 font-bold mb-8">5. 提供価値</p>
         <div className="membership-inner">
           <div className="membership-visual-wrap">
-            <div className="bg-gray-200" style={{aspectRatio: '3/4', height: 'auto'}} />
+            <div
+              style={{
+                aspectRatio: '3/4',
+                width: '100%',
+                background: '#f3f4f6',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'hidden',
+              }}
+            >
+              <img
+                src="/images/mnga-logo.png"
+                alt="MNGA"
+                style={{ width: '70%', height: 'auto', objectFit: 'contain' }}
+              />
+            </div>
           </div>
           <div className="space-y-6">
             {values.map((v) => (

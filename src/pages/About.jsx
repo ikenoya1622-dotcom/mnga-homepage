@@ -112,11 +112,11 @@ export default function AboutPage() {
         <div ref={refs[3]} className="container" style={{ paddingTop: '60px', paddingBottom: '80px' }}>
           <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '24px' }}>3. 提供価値</p>
           <div className="membership-inner">
-            <div className="membership-visual-wrap">
+            <div className="membership-visual-wrap" style={{ alignSelf: 'flex-start' }}>
               <div
                 style={{
                   background: '#f3f4f6',
-                  aspectRatio: '3/4',
+                  aspectRatio: '1 / 1',
                   width: '100%',
                   display: 'flex',
                   alignItems: 'center',

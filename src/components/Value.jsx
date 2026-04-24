@@ -12,10 +12,10 @@ export default function Value() {
       <div className="max-w-4xl mx-auto">
         <p className="text-sm text-gray-500 font-bold mb-8">5. 提供価値</p>
         <div className="membership-inner">
-          <div className="membership-visual-wrap">
+          <div className="membership-visual-wrap" style={{ alignSelf: 'flex-start' }}>
             <div
               style={{
-                aspectRatio: '3/4',
+                aspectRatio: '1 / 1',
                 width: '100%',
                 background: '#f3f4f6',
                 display: 'flex',

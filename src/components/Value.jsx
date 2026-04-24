@@ -12,7 +12,7 @@ export default function Value() {
       <div className="max-w-4xl mx-auto">
         <p className="text-sm text-gray-500 font-bold mb-8">5. 提供価値</p>
         <div className="membership-inner">
-          <div className="membership-visual-wrap" style={{ alignSelf: 'flex-start' }}>
+          <div className="membership-visual-wrap">
             <div
               style={{
                 aspectRatio: '1 / 1',

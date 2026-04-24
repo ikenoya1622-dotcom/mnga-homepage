@@ -68,6 +68,7 @@ body {
   display: flex;
   flex-direction: row;
   gap: 48px;
+  align-items: center;
 }
 .membership-visual-wrap {
   width: 40%;

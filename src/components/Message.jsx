@@ -6,7 +6,7 @@ export default function Message() {
           <div className="message-photo-wrap">
             <img
               src="/images/board/会長.jpg"
-              alt="MNGA 会長 樋田謙吾"
+              alt="MNGA 会長 櫻田謙悟"
               style={{
                 maxWidth: '300px',
                 width: '100%',
@@ -23,7 +23,7 @@ export default function Message() {
             </h2>
             <p style={{fontSize: '14px', color: '#6b7280', marginBottom: '16px'}}>
               Make Nippon Great Again 会長<br />
-              <span style={{fontWeight: 'bold', color: '#374151'}}>樋田謙吾</span>
+              <span style={{fontWeight: 'bold', color: '#374151'}}>櫻田謙悟</span>
             </p>
             <p style={{fontSize: '14px', color: '#4b5563', lineHeight: '1.8'}}>
               xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

@@ -16,8 +16,8 @@ export default function Header() {
 
   useEffect(() => {
     const anim = gsap.fromTo(headerRef.current,
-      { opacity: 0, y: -20 },
-      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
+      { opacity: 0, y: -10 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }
     )
     return () => anim.kill()
   }, [])
@@ -31,44 +31,61 @@ export default function Header() {
         left: 0,
         right: 0,
         zIndex: 50,
-        background: 'rgba(255,255,255,0.96)',
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
-        borderBottom: '1px solid rgba(0,0,0,0.06)',
+        background: '#fff',
+        height: '64px',
       }}
     >
       <div
         style={{
           maxWidth: '1440px',
           margin: '0 auto',
-          padding: '0 40px',
-          height: '72px',
+          padding: '0 48px',
+          height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
       >
-        <a href="/" style={{ display: 'flex', alignItems: 'center' }}>
+        {/* Logo */}
+        <a
+          href="/"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            textDecoration: 'none',
+          }}
+        >
           <img
             src="/images/MNGA_ヨコ.png"
             alt="MNGA"
-            style={{ height: '40px', width: 'auto' }}
+            style={{ height: '32px', width: 'auto', display: 'block' }}
           />
         </a>
 
         {/* PC nav */}
         <nav className="hidden md:block">
-          <ul style={{ display: 'flex', alignItems: 'center', gap: '40px', margin: 0, padding: 0, listStyle: 'none' }}>
+          <ul
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '48px',
+              margin: 0,
+              padding: 0,
+              listStyle: 'none',
+            }}
+          >
             {NAV_ITEMS.map((item) => (
               <li key={item.label}>
                 <a
                   href={item.href}
                   style={{
-                    fontSize: '14px',
+                    fontSize: '13px',
                     color: '#1a1a1a',
-                    letterSpacing: '0.08em',
+                    letterSpacing: '0.05em',
                     textDecoration: 'none',
+                    fontWeight: 400,
                     transition: 'color 0.2s',
+                    fontFamily: "'Zen Old Mincho', serif",
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#d63b2d')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#1a1a1a')}
@@ -85,19 +102,28 @@ export default function Header() {
           onClick={toggleVersion}
           className="hidden md:flex"
           style={{
+            position: 'absolute',
+            right: '12px',
+            top: '12px',
             alignItems: 'center',
-            gap: '6px',
-            padding: '6px 12px',
-            marginLeft: '24px',
-            fontSize: '11px',
-            border: '1px solid #d1d5db',
-            borderRadius: '4px',
+            gap: '4px',
+            padding: '3px 8px',
+            fontSize: '10px',
+            border: '1px solid #e5e5e5',
+            borderRadius: '3px',
             background: '#fff',
             cursor: 'pointer',
             transition: 'background 0.2s',
+            opacity: 0.7,
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = '#f9fafb')}
-          onMouseLeave={(e) => (e.currentTarget.style.background = '#fff')}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = '1'
+            e.currentTarget.style.background = '#f9fafb'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = '0.7'
+            e.currentTarget.style.background = '#fff'
+          }}
           title={`現在: ${version}  クリックで${version === 'v1' ? 'v2(新)' : 'v1(現行)'}に切替`}
         >
           <span style={{ fontFamily: 'monospace', color: '#9ca3af' }}>{version === 'v1' ? 'v2' : 'v1'}</span>
@@ -120,9 +146,9 @@ export default function Header() {
             cursor: 'pointer',
           }}
         >
-          <span style={{ display: 'block', width: '24px', height: '2px', background: '#111', transform: menuOpen ? 'rotate(45deg) translate(5px, 6px)' : 'none', transition: 'transform 0.2s' }} />
-          <span style={{ display: 'block', width: '24px', height: '2px', background: '#111', opacity: menuOpen ? 0 : 1, transition: 'opacity 0.2s' }} />
-          <span style={{ display: 'block', width: '24px', height: '2px', background: '#111', transform: menuOpen ? 'rotate(-45deg) translate(5px, -6px)' : 'none', transition: 'transform 0.2s' }} />
+          <span style={{ display: 'block', width: '22px', height: '1.5px', background: '#111', transform: menuOpen ? 'rotate(45deg) translate(4px, 5px)' : 'none', transition: 'transform 0.2s' }} />
+          <span style={{ display: 'block', width: '22px', height: '1.5px', background: '#111', opacity: menuOpen ? 0 : 1, transition: 'opacity 0.2s' }} />
+          <span style={{ display: 'block', width: '22px', height: '1.5px', background: '#111', transform: menuOpen ? 'rotate(-45deg) translate(4px, -5px)' : 'none', transition: 'transform 0.2s' }} />
         </button>
       </div>
 
@@ -137,11 +163,12 @@ export default function Header() {
                   onClick={() => setMenuOpen(false)}
                   style={{
                     display: 'block',
-                    padding: '16px 24px',
-                    fontSize: '14px',
+                    padding: '14px 24px',
+                    fontSize: '13px',
                     color: '#1a1a1a',
                     borderBottom: '1px solid #f3f4f6',
                     textDecoration: 'none',
+                    fontFamily: "'Zen Old Mincho', serif",
                   }}
                 >
                   {item.label}
@@ -154,8 +181,8 @@ export default function Header() {
                 style={{
                   width: '100%',
                   textAlign: 'left',
-                  padding: '16px 24px',
-                  fontSize: '14px',
+                  padding: '14px 24px',
+                  fontSize: '13px',
                   color: '#1a1a1a',
                   borderBottom: '1px solid #f3f4f6',
                   background: 'transparent',
@@ -169,7 +196,7 @@ export default function Header() {
                 <span style={{ fontFamily: 'monospace', fontWeight: 700, color: '#d63b2d' }}>{version}</span>
                 <span style={{ color: '#9ca3af' }}>→</span>
                 <span style={{ fontFamily: 'monospace' }}>{version === 'v1' ? 'v2' : 'v1'}</span>
-                <span style={{ fontSize: '12px', color: '#6b7280', marginLeft: '8px' }}>に切替</span>
+                <span style={{ fontSize: '11px', color: '#6b7280', marginLeft: '8px' }}>に切替</span>
               </button>
             </li>
           </ul>

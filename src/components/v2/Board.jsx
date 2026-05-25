@@ -1,19 +1,54 @@
+const BRAND_RED = '#d63b2d'
+
 const members = [
-  { role: '会長', name: '櫻田 謙悟', title: '会長', desc: 'xxxxxxxxxxxxxxxx', image: '/images/board/櫻田.jpg' },
-  { role: '副会長', name: '山木 智史', title: '株式会社Re-grit Partners', desc: 'xxxxxxxxxxxxxxxx', image: '/images/board/副会長.jpg' },
-  { role: '仕事', name: 'XXX XXX', title: 'XXX  XXX', desc: '仕長  xxxxxxxxxxxxxxxx', image: '/images/board/会長.jpg' },
-  { role: '仕事', name: 'XXX XXX', title: 'XXX  XXX', desc: '仕長  xxxxxxxxxxxxxxxx', image: '/images/board/副会長.jpg' },
+  { role: '会長', name: '櫻田 謙悟', company: '株式会社○○', image: '/images/board/櫻田.jpg' },
+  { role: '副会長', name: '山木 智史', company: '株式会社Re-grit Partners', image: '/images/board/副会長.jpg' },
+  { role: '理事', name: 'XXX XXX', company: '株式会社○○', image: '/images/board/会長.jpg' },
+  { role: '理事', name: 'XXX XXX', company: '株式会社○○', image: '/images/board/副会長.jpg' },
 ]
 
 export default function Board() {
   return (
-    <section className="py-20 px-6">
-      <div className="max-w-4xl mx-auto">
-        <p className="text-sm text-gray-500 font-bold mb-8">3. 理事体制</p>
-        <div className="board-grid grid grid-cols-2 md:grid-cols-4 gap-6" style={{marginTop: '80px'}}>
+    <section style={{ padding: '120px 0', background: '#fff' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
+        {/* セクションヘッダー */}
+        <div style={{ textAlign: 'center', marginBottom: '72px' }}>
+          <h2
+            style={{
+              fontFamily: "'Zen Old Mincho', serif",
+              fontSize: '48px',
+              color: BRAND_RED,
+              letterSpacing: '0.1em',
+              margin: 0,
+              fontWeight: 500,
+            }}
+          >
+            Member
+          </h2>
+          <p style={{ fontSize: '13px', color: '#1a1a1a', letterSpacing: '0.3em', marginTop: '4px' }}>
+            理事体制
+          </p>
+        </div>
+
+        <div
+          className="v2-member-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '32px',
+          }}
+        >
           {members.map((m, i) => (
-            <div key={i} className="text-center">
-              <div className="bg-gray-300 w-full mb-3 overflow-hidden" style={{aspectRatio: '3/4'}}>
+            <div key={i} style={{ textAlign: 'left' }}>
+              <div
+                style={{
+                  width: '100%',
+                  aspectRatio: '3/4',
+                  background: '#e5e5e5',
+                  overflow: 'hidden',
+                  marginBottom: '16px',
+                }}
+              >
                 {m.image && (
                   <img
                     src={m.image}
@@ -22,14 +57,26 @@ export default function Board() {
                   />
                 )}
               </div>
-              <p className="text-xs text-gray-500">{m.role}</p>
-              <p className="font-bold text-sm">{m.name}</p>
-              <p className="text-xs text-gray-500 mt-1">{m.title}</p>
-              <p className="text-xs text-gray-400">{m.desc}</p>
+              <p style={{ fontSize: '11px', color: '#888', letterSpacing: '0.15em', margin: 0 }}>
+                {m.role}
+              </p>
+              <p style={{ fontSize: '15px', fontWeight: 700, color: '#1a1a1a', marginTop: '4px' }}>
+                {m.name}
+              </p>
+              <p style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>{m.company}</p>
             </div>
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .v2-member-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 24px !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }

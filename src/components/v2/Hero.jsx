@@ -4,54 +4,94 @@ import { gsap } from 'gsap'
 export default function Hero() {
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
-  const btnRef = useRef(null)
 
   useEffect(() => {
     const tl = gsap.timeline({ delay: 0.2 })
     tl.fromTo(titleRef.current,
       { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }
-    )
-    .fromTo(subtitleRef.current,
-      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1.0, ease: 'power2.out' }
+    ).fromTo(subtitleRef.current,
+      { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
-      '-=0.55'
-    )
-    .fromTo(btnRef.current,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' },
-      '-=0.55'
+      '-=0.5'
     )
     return () => tl.kill()
   }, [])
 
   return (
     <section
-      className="hero-section pt-16 flex items-center justify-center relative"
       style={{
+        position: 'relative',
+        height: '92vh',
+        minHeight: '620px',
         backgroundImage: 'url(/images/tokyo-bg.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
       }}
     >
-      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)' }} />
-      <div className="text-center relative z-10 px-6">
-        <h1 ref={titleRef} className="font-bold mb-3 hero-title" style={{color: '#ffffff'}}>
-          いなくてはならない日本へ
-        </h1>
-        <p ref={subtitleRef} className="mb-10 hero-subtitle" style={{color: '#ffffff'}}>
-          -Make Nippon Great Again-
-        </p>
-        <button
-          ref={btnRef}
-          className="px-8 md:px-12 py-3 text-sm transition-colors"
-          style={{ color: '#ffffff', border: '1px solid #ffffff', background: 'transparent' }}
-          onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}
-          onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-        >
-          詳しく見る
-        </button>
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.40) 100%)',
+        }}
+      />
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          maxWidth: '1440px',
+          margin: '0 auto',
+          padding: '0 80px',
+          height: '100%',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <div>
+          <h1
+            ref={titleRef}
+            style={{
+              color: '#fff',
+              fontSize: 'clamp(48px, 7vw, 96px)',
+              fontFamily: "'Zen Old Mincho', serif",
+              fontWeight: 500,
+              lineHeight: 1.15,
+              letterSpacing: '0.04em',
+              margin: 0,
+            }}
+          >
+            <span style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+              <span>Make</span>
+              <span
+                aria-hidden
+                style={{
+                  width: 'clamp(22px, 2.6vw, 38px)',
+                  height: 'clamp(22px, 2.6vw, 38px)',
+                  borderRadius: '50%',
+                  background: '#d63b2d',
+                  display: 'inline-block',
+                  flexShrink: 0,
+                }}
+              />
+            </span>
+            <span style={{ display: 'block' }}>Nippon</span>
+            <span style={{ display: 'block' }}>Great Again</span>
+          </h1>
+          <p
+            ref={subtitleRef}
+            style={{
+              color: '#fff',
+              fontSize: 'clamp(14px, 1.4vw, 18px)',
+              letterSpacing: '0.15em',
+              marginTop: '32px',
+              fontWeight: 400,
+            }}
+          >
+            いなくてはならない日本へ
+          </p>
+        </div>
       </div>
     </section>
   )

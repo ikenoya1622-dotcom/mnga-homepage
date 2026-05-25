@@ -20,7 +20,7 @@ export default function Home() {
     sections.forEach((section) => {
       gsap.fromTo(
         section,
-        { opacity: 0, y: 60 },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
@@ -28,7 +28,7 @@ export default function Home() {
           ease: 'power2.out',
           scrollTrigger: {
             trigger: section,
-            start: 'top 80%',
+            start: 'top 85%',
             once: true,
           },
         }
@@ -40,7 +40,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="min-h-screen">
+    <div style={{ minHeight: '100vh', background: '#fff' }}>
       <Header />
       <main>
         <Hero />

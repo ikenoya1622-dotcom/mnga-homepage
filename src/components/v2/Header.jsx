@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
-import { useDesignVersion } from '../context/ThemeContext'
+import { useDesignVersion } from '../../context/ThemeContext'
 
 export default function Header() {
   const headerRef = useRef(null)
@@ -52,9 +52,9 @@ export default function Header() {
           aria-label="デザイン切替"
           title={`現在: ${version}  クリックで${version === 'v1' ? 'v2(新)' : 'v1(現行)'}に切替`}
         >
-          <span className="font-mono font-bold" style={{ color: '#c8392b' }}>{version}</span>
-          <span className="text-gray-400">↔</span>
           <span className="font-mono text-gray-400">{version === 'v1' ? 'v2' : 'v1'}</span>
+          <span className="text-gray-400">↔</span>
+          <span className="font-mono font-bold" style={{ color: '#c8392b' }}>{version}</span>
         </button>
 
         {/* ハンバーガーボタン */}

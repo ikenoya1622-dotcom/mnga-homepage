@@ -5,7 +5,7 @@ export default function Message() {
         <div className="message-inner">
           <div className="message-photo-wrap">
             <img
-              src="/images/board/会長.jpg"
+              src="/images/board/櫻田.jpg"
               alt="MNGA 理事長 櫻田謙悟"
               style={{
                 maxWidth: '300px',

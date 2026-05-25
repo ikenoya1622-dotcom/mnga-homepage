@@ -9,14 +9,46 @@ import { supabase } from '../../lib/supabase'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const BRAND_RED = '#d63b2d'
+
 const NEWS_CATEGORIES = ['定款', '事業報告', 'お知らせ']
 
-const values = [
-  { title: '対等な関係', desc: '大企業にベンチャーがぶら下がるのではなく、相互に学びあう。' },
-  { title: '会員の質', desc: '会員数ではなく、参加者の質と関係性の深さを重視' },
-  { title: '本質的な協業', desc: '単なるネットワーキングではなく、具体的な協業プロジェクトの創出' },
-  { title: '経営スキル', desc: '経営者からの相談、ナレッジの共有による経営スキルの育成' },
-  { title: '将来志向', desc: '過去の復活ではなく、世界の役に立つ日本の実現' },
+const ACTIVITIES = [
+  {
+    no: '01',
+    en: 'Forum',
+    jp: 'フォーラム',
+    desc:
+      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  },
+  {
+    no: '02',
+    en: 'Chapter Meetup',
+    jp: 'チャプターミートアップ',
+    desc:
+      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  },
+  {
+    no: '03',
+    en: 'Mentor Ship',
+    jp: 'メンターシップ',
+    desc:
+      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  },
+  {
+    no: '04',
+    en: 'My EO',
+    jp: 'My EO',
+    desc:
+      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  },
+  {
+    no: '05',
+    en: 'Strategic Alliance',
+    jp: 'ストラテジックアライアンス',
+    desc:
+      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  },
 ]
 
 function formatNewsDate(iso) {
@@ -25,8 +57,83 @@ function formatNewsDate(iso) {
   return `${y}.${m}.${d}`
 }
 
+function ActivityItem({ activity, refEl }) {
+  return (
+    <div
+      ref={refEl}
+      className="v2-activity-item"
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1.05fr',
+        gap: '56px',
+        alignItems: 'center',
+        padding: '40px 0',
+      }}
+    >
+      {/* 画像プレースホルダー */}
+      <div
+        style={{
+          width: '100%',
+          aspectRatio: '16 / 10',
+          background: '#e5e5e5',
+          borderRadius: '2px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <span style={{ fontSize: '11px', color: '#999', letterSpacing: '0.2em' }}>
+          画像準備中
+        </span>
+      </div>
+
+      {/* テキスト */}
+      <div>
+        <p
+          style={{
+            fontSize: '11px',
+            color: '#888',
+            letterSpacing: '0.2em',
+            margin: 0,
+            marginBottom: '12px',
+            fontFamily: "'Helvetica Neue', Arial, sans-serif",
+          }}
+        >
+          {activity.no}　─　{activity.en}
+        </p>
+        <h3
+          style={{
+            fontSize: '24px',
+            fontWeight: 700,
+            color: '#1a1a1a',
+            margin: 0,
+            marginBottom: '20px',
+            letterSpacing: '0.05em',
+          }}
+        >
+          {activity.jp}
+        </h3>
+        <p
+          style={{
+            fontSize: '13px',
+            color: '#444',
+            lineHeight: 2,
+            margin: 0,
+            letterSpacing: '0.03em',
+            wordBreak: 'break-all',
+          }}
+        >
+          {activity.desc}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 export default function AboutPage() {
-  const refs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)]
+  const headerRef = useRef(null)
+  const newsRef = useRef(null)
+  const activityRefs = useRef(ACTIVITIES.map(() => null))
   const [news, setNews] = useState([])
 
   useEffect(() => {
@@ -37,32 +144,30 @@ export default function AboutPage() {
       .order('published_at', { ascending: false })
       .order('sort_order', { ascending: true })
       .then(({ data, error }) => {
-        if (error) { console.error('news_items の取得に失敗:', error); return }
-        const grouped = NEWS_CATEGORIES
-          .map((cat) => ({
-            category: cat,
-            items: (data || []).filter((x) => x.category === cat),
-          }))
-          .filter((g) => g.items.length > 0)
+        if (error) {
+          console.error('news_items の取得に失敗:', error)
+          return
+        }
+        const grouped = NEWS_CATEGORIES.map((cat) => ({
+          category: cat,
+          items: (data || []).filter((x) => x.category === cat),
+        })).filter((g) => g.items.length > 0)
         setNews(grouped)
       })
   }, [])
 
   useEffect(() => {
-    const anims = refs.map((ref) =>
+    const targets = [headerRef.current, ...activityRefs.current, newsRef.current].filter(Boolean)
+    const anims = targets.map((el) =>
       gsap.fromTo(
-        ref.current,
-        { opacity: 0, y: 60 },
+        el,
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
           duration: 0.8,
           ease: 'power2.out',
-          scrollTrigger: {
-            trigger: ref.current,
-            start: 'top 80%',
-            once: true,
-          },
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true },
         }
       )
     )
@@ -73,157 +178,177 @@ export default function AboutPage() {
   }, [])
 
   return (
-    <div className="min-h-screen">
+    <div style={{ minHeight: '100vh', background: '#fff' }}>
       <Header />
-      <main style={{ paddingTop: '80px' }}>
-
-        {/* ページタイトル */}
-        <div ref={refs[0]} className="container" style={{ paddingTop: '60px', paddingBottom: '40px' }}>
-          <h1 style={{ fontSize: '28px', letterSpacing: '0.05em' }}>About MNGA</h1>
-        </div>
-
-        {/* 1. Mission */}
-        <div ref={refs[1]} className="container" style={{ paddingTop: '60px', paddingBottom: '80px' }}>
-          <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '24px' }}>1. Mission</p>
-          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '24px', lineHeight: '1.6' }}>
-            「いなくてはならない日本」の実現
-          </h2>
-          <div style={{ fontSize: '16px', lineHeight: '2', color: '#333' }}>
-            <p>「いてほしい国」ではなく「いなくてはならない国・日本」</p>
-            <p>世界にとって価値のある、世界の役に立つ日本を目指す</p>
-            <p>軍国主義的な復活ではなく、将来志向の日本復活</p>
+      <main style={{ paddingTop: '64px' }}>
+        {/* ページヘッダー */}
+        <section style={{ padding: '100px 0 60px' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', textAlign: 'center' }} ref={headerRef}>
+            <h1
+              style={{
+                fontFamily: "'Zen Old Mincho', serif",
+                fontSize: '44px',
+                color: BRAND_RED,
+                letterSpacing: '0.1em',
+                margin: 0,
+                fontWeight: 500,
+                lineHeight: 1,
+              }}
+            >
+              Activities
+            </h1>
+            <p
+              style={{
+                fontSize: '12px',
+                color: '#1a1a1a',
+                letterSpacing: '0.35em',
+                marginTop: '12px',
+                fontWeight: 500,
+              }}
+            >
+              活動内容
+            </p>
           </div>
-        </div>
+        </section>
 
-        {/* 2. Core Value */}
-        <div ref={refs[2]} className="container" style={{ paddingTop: '60px', paddingBottom: '80px' }}>
-          <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '24px' }}>2. Core Value</p>
-          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '24px', lineHeight: '1.6' }}>
-            Make Nippon Great Again（日本新復活）
-          </h2>
-          <div style={{ fontSize: '16px', lineHeight: '2', color: '#333' }}>
-            <p>日本をより強い国にするために、大企業とベンチャー企業が協業する</p>
-            <p>コミュニティを構築する。日本を動かしていくビジョンを共有</p>
-            <p>し、業界の垣根を越えた革新的な協業を促進する。</p>
+        {/* 活動一覧 */}
+        <section style={{ padding: '20px 0 100px' }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 40px' }}>
+            {ACTIVITIES.map((a, i) => (
+              <ActivityItem
+                key={a.no}
+                activity={a}
+                refEl={(el) => (activityRefs.current[i] = el)}
+              />
+            ))}
           </div>
-        </div>
+        </section>
 
-        {/* 3. 提供価値 */}
-        <div ref={refs[3]} className="container" style={{ paddingTop: '60px', paddingBottom: '80px' }}>
-          <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '24px' }}>3. 提供価値</p>
-          <div className="membership-inner">
-            <div className="membership-visual-wrap">
-              <div
+        {/* News */}
+        <section ref={newsRef} style={{ background: '#f5f5f5', padding: '100px 0' }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 40px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+              <h2
                 style={{
-                  background: '#f3f4f6',
-                  aspectRatio: '1 / 1',
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  overflow: 'hidden',
+                  fontFamily: "'Zen Old Mincho', serif",
+                  fontSize: '44px',
+                  color: BRAND_RED,
+                  letterSpacing: '0.1em',
+                  margin: 0,
+                  fontWeight: 500,
+                  lineHeight: 1,
                 }}
               >
-                <img
-                  src="/images/mnga-logo.png"
-                  alt="MNGA"
-                  style={{ width: '70%', height: 'auto', objectFit: 'contain' }}
-                />
-              </div>
-            </div>
-            <div>
-              {values.map((v) => (
-                <div key={v.title} style={{ marginBottom: '24px' }}>
-                  <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '4px' }}>{v.title}</h3>
-                  <p className="text-sm text-gray-600">{v.desc}</p>
-                </div>
-              ))}
-              <a
-                href="#"
-                className="text-sm text-gray-700 hover:underline"
-                style={{ display: 'block', textAlign: 'right', marginTop: '16px' }}
+                News
+              </h2>
+              <p
+                style={{
+                  fontSize: '12px',
+                  color: '#1a1a1a',
+                  letterSpacing: '0.35em',
+                  marginTop: '12px',
+                  fontWeight: 500,
+                }}
               >
-                view more &gt;
-              </a>
+                お知らせ
+              </p>
             </div>
-          </div>
-        </div>
 
-        {/* 4. -News */}
-        <div ref={refs[4]} style={{ background: '#f5f5f5', padding: '60px 0' }}>
-          <div className="container">
-            <p className="text-sm text-gray-500 font-bold" style={{ marginBottom: '40px' }}>4. -News</p>
-            <div className="about-news-inner">
-              {news.length === 0 ? (
-                <p style={{ color: '#888', fontSize: '14px' }}>お知らせはまだありません</p>
-              ) : (
-                news.map((group) => (
-                  <div key={group.category} style={{ marginBottom: '48px' }}>
-                    <div className="about-news-row">
-                      <div className="about-news-category">
-                        <p style={{ fontWeight: 'bold', fontSize: '16px' }}>{group.category}</p>
-                      </div>
-                      <div className="about-news-articles">
-                        {group.items.map((item) => {
-                          const body = (
-                            <>
-                              <p className="text-sm text-gray-500" style={{ marginBottom: '4px' }}>
-                                {formatNewsDate(item.published_at)}
-                              </p>
-                              <p style={{ fontSize: '14px' }}>{item.title}</p>
-                            </>
+            {news.length === 0 ? (
+              <p style={{ color: '#888', fontSize: '14px', textAlign: 'center' }}>
+                お知らせはまだありません
+              </p>
+            ) : (
+              news.map((group) => (
+                <div key={group.category} style={{ marginBottom: '48px' }}>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: '140px 1fr',
+                      gap: '40px',
+                      alignItems: 'start',
+                    }}
+                    className="v2-news-row"
+                  >
+                    <div>
+                      <p style={{ fontWeight: 700, fontSize: '14px', color: BRAND_RED, letterSpacing: '0.1em' }}>
+                        {group.category}
+                      </p>
+                    </div>
+                    <div>
+                      {group.items.map((item) => {
+                        const body = (
+                          <>
+                            <p style={{ fontSize: '12px', color: '#888', marginBottom: '4px' }}>
+                              {formatNewsDate(item.published_at)}
+                            </p>
+                            <p style={{ fontSize: '14px', color: '#1a1a1a' }}>{item.title}</p>
+                          </>
+                        )
+
+                        const hasBlocks = Array.isArray(item.content) && item.content.length > 0
+                        const internalHref =
+                          item.category === 'お知らせ' && hasBlocks ? `/news/${item.id}` : null
+                        const externalHref = !internalHref && item.file_url ? item.file_url : null
+
+                        let wrapped = body
+                        if (internalHref) {
+                          wrapped = (
+                            <Link to={internalHref} style={{ color: 'inherit', textDecoration: 'none' }}>
+                              {body}
+                            </Link>
                           )
-
-                          const hasBlocks = Array.isArray(item.content) && item.content.length > 0
-                          // お知らせ: 本文ブロックがあれば詳細ページへ、なければ PDF or プレーン
-                          // 定款・事業報告: PDF があれば PDF へ、なければプレーン
-                          const internalHref =
-                            item.category === 'お知らせ' && hasBlocks
-                              ? `/news/${item.id}`
-                              : null
-                          const externalHref = !internalHref && item.file_url ? item.file_url : null
-
-                          let wrapped = body
-                          if (internalHref) {
-                            wrapped = (
-                              <Link to={internalHref} style={{ color: 'inherit', textDecoration: 'none' }}>
-                                {body}
-                              </Link>
-                            )
-                          } else if (externalHref) {
-                            wrapped = (
-                              <a href={externalHref} target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
-                                {body}
-                              </a>
-                            )
-                          }
-
-                          return (
-                            <div
-                              key={item.id}
-                              style={{
-                                borderBottom: '1px solid #ccc',
-                                paddingBottom: '12px',
-                                marginBottom: '12px',
-                              }}
+                        } else if (externalHref) {
+                          wrapped = (
+                            <a
+                              href={externalHref}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{ color: 'inherit', textDecoration: 'none' }}
                             >
-                              {wrapped}
-                            </div>
+                              {body}
+                            </a>
                           )
-                        })}
-                      </div>
+                        }
+
+                        return (
+                          <div
+                            key={item.id}
+                            style={{
+                              borderBottom: '1px solid #d1d5db',
+                              paddingBottom: '14px',
+                              marginBottom: '14px',
+                            }}
+                          >
+                            {wrapped}
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
-                ))
-              )}
-            </div>
+                </div>
+              ))
+            )}
           </div>
-        </div>
+        </section>
 
-        {/* CTA */}
         <CtaSection />
       </main>
       <Footer />
+
+      <style>{`
+        @media (max-width: 768px) {
+          .v2-activity-item {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+            padding: 28px 0 !important;
+          }
+          .v2-news-row {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }

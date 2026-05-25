@@ -1,18 +1,6 @@
 export default function Footer() {
   return (
     <>
-      {/* 都市背景バナー */}
-      <div
-        style={{
-          width: '100%',
-          height: '280px',
-          backgroundImage: "url('/images/tokyo-bg.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-        aria-hidden
-      />
-
       {/* フッター本体 */}
       <footer style={{ background: '#fff', padding: '48px 0 32px' }}>
         <div

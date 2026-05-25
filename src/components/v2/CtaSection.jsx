@@ -7,29 +7,23 @@ export default function CtaSection() {
     <section
       style={{
         position: 'relative',
-        background: '#1a1a1a',
-        padding: '72px 0',
+        backgroundImage: "url('/images/tokyo-bg.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        padding: '120px 0',
         overflow: 'hidden',
       }}
     >
-      {/* 装飾的なメールアイコン（背景） */}
-      <svg
+      {/* 可読性確保のための暗幕オーバーレイ */}
+      <div
         aria-hidden
-        viewBox="0 0 200 140"
         style={{
           position: 'absolute',
-          right: '5%',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          width: '320px',
-          height: 'auto',
-          opacity: 0.08,
-          pointerEvents: 'none',
+          inset: 0,
+          background: 'linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.70))',
         }}
-      >
-        <rect x="10" y="20" width="180" height="100" rx="6" fill="none" stroke="#fff" strokeWidth="2" />
-        <path d="M 10 30 L 100 80 L 190 30" fill="none" stroke="#fff" strokeWidth="2" />
-      </svg>
+      />
 
       <div
         style={{

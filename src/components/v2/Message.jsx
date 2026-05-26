@@ -86,7 +86,7 @@ export default function Message() {
                 語ることではなく、事業を通じて結果を残す。<br />
                 志を共にする経営者と、ここで会いたい。
               </p>
-              <p style={{ fontWeight: 700, color: BRAND_RED, fontSize: '17px', letterSpacing: '0.1em' }}>
+              <p style={{ fontWeight: 700, color: HEADING_NAVY, fontSize: '17px', letterSpacing: '0.1em' }}>
                 言行一致。
               </p>
             </div>

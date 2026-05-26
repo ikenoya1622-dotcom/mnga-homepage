@@ -94,8 +94,8 @@ export default function Mission() {
                 display: 'inline-block',
                 padding: '14px 56px',
                 fontSize: '12px',
-                color: BRAND_RED,
-                border: `1px solid ${BRAND_RED}`,
+                color: HEADING_NAVY,
+                border: `1px solid ${HEADING_NAVY}`,
                 borderRadius: '2px',
                 textDecoration: 'none',
                 letterSpacing: '0.2em',
@@ -104,12 +104,12 @@ export default function Mission() {
                 background: '#fff',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = BRAND_RED
+                e.currentTarget.style.background = HEADING_NAVY
                 e.currentTarget.style.color = '#fff'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = '#fff'
-                e.currentTarget.style.color = BRAND_RED
+                e.currentTarget.style.color = HEADING_NAVY
               }}
             >
               MNGAについて

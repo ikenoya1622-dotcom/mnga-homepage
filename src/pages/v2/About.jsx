@@ -131,6 +131,7 @@ function ActivityItem({ activity, refEl }) {
 }
 
 export default function AboutPage() {
+  const aboutRef = useRef(null)
   const headerRef = useRef(null)
   const newsRef = useRef(null)
   const activityRefs = useRef(ACTIVITIES.map(() => null))
@@ -157,7 +158,7 @@ export default function AboutPage() {
   }, [])
 
   useEffect(() => {
-    const targets = [headerRef.current, ...activityRefs.current, newsRef.current].filter(Boolean)
+    const targets = [aboutRef.current, headerRef.current, ...activityRefs.current, newsRef.current].filter(Boolean)
     const anims = targets.map((el) =>
       gsap.fromTo(
         el,
@@ -181,9 +182,9 @@ export default function AboutPage() {
     <div style={{ minHeight: '100vh', background: '#fff' }}>
       <Header />
       <main style={{ paddingTop: '64px' }}>
-        {/* ページヘッダー */}
-        <section style={{ padding: '100px 0 60px' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', textAlign: 'center' }} ref={headerRef}>
+        {/* MNGAとは */}
+        <section ref={aboutRef} style={{ padding: '100px 0 80px' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', textAlign: 'center' }}>
             <h1
               style={{
                 fontFamily: "'Zen Old Mincho', serif",
@@ -195,8 +196,65 @@ export default function AboutPage() {
                 lineHeight: 1,
               }}
             >
-              Activities
+              About
             </h1>
+            <p
+              style={{
+                fontSize: '12px',
+                color: '#1a1a1a',
+                letterSpacing: '0.35em',
+                marginTop: '12px',
+                fontWeight: 500,
+              }}
+            >
+              MNGAとは
+            </p>
+          </div>
+          <div
+            style={{
+              maxWidth: '760px',
+              margin: '64px auto 0',
+              padding: '0 40px',
+              fontSize: '15px',
+              lineHeight: 2.2,
+              color: '#1a1a1a',
+              letterSpacing: '0.04em',
+            }}
+          >
+            <p style={{ margin: '0 0 28px' }}>
+              MNGAは、日本企業の構想を結果に「<span style={{ color: BRAND_RED, fontWeight: 700 }}>接続</span>」する実装基盤として設立されました。
+            </p>
+            <p style={{ margin: '0 0 28px' }}>
+              その原点は、「失われた30年」と呼ばれる時代を経営者自身の責任として捉え直し、世界にとっていなくては困る日本を、語るのではなく事業を通じて取り戻したいという強い想いにあります。
+            </p>
+            <p style={{ margin: '0 0 28px' }}>
+              この目的のために、MNGAは「<span style={{ color: BRAND_RED, fontWeight: 700 }}>接続</span>」「<span style={{ color: BRAND_RED, fontWeight: 700 }}>案件運営</span>」「<span style={{ color: BRAND_RED, fontWeight: 700 }}>規律設計</span>」「<span style={{ color: BRAND_RED, fontWeight: 700 }}>仕組み化</span>」の4つを活動の軸に据えています。
+            </p>
+            <p style={{ margin: '0 0 28px' }}>
+              大企業の意思決定力・資産・顧客基盤と、ベンチャーの仮説検証速度・技術探索力を結びつけ、経営課題と事業機会の接点を設計します。構想を案件化し、PoCで終わらせず事業化・共同実装まで前進させます。評価基準・撤退ルール・共創規律を明示し、生活者価値や社会実装可能性まで含めた品質のもとで運営しています。
+            </p>
+            <p style={{ margin: 0 }}>
+              一過性の会合ではなく、継続的に案件を生み続ける場として、経営者の実践を結果に変える役割を担っていきます。
+            </p>
+          </div>
+        </section>
+
+        {/* 活動内容セクションヘッダー */}
+        <section style={{ padding: '40px 0 20px', borderTop: '1px solid #eee' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '60px 40px 0', textAlign: 'center' }} ref={headerRef}>
+            <h2
+              style={{
+                fontFamily: "'Zen Old Mincho', serif",
+                fontSize: '44px',
+                color: BRAND_RED,
+                letterSpacing: '0.1em',
+                margin: 0,
+                fontWeight: 500,
+                lineHeight: 1,
+              }}
+            >
+              Activities
+            </h2>
             <p
               style={{
                 fontSize: '12px',

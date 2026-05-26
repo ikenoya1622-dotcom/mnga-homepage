@@ -42,12 +42,25 @@ export default function Mission() {
           className="goal-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1.5fr',
+            gridTemplateColumns: '1.5fr 1fr',
             gap: '64px',
             alignItems: 'center',
           }}
         >
-          {/* 左: 説明 + ボタン */}
+          {/* 左: 図解画像 */}
+          <div>
+            <img
+              src="/images/goal-diagram.png"
+              alt="大手企業とベンチャー企業の本質的な協業を実現する MNGA の図解"
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+              }}
+            />
+          </div>
+
+          {/* 右: 説明 + ボタン */}
           <div>
             <h3
               style={{
@@ -101,19 +114,6 @@ export default function Mission() {
             >
               MNGAについて
             </Link>
-          </div>
-
-          {/* 右: 図解画像 */}
-          <div>
-            <img
-              src="/images/goal-diagram.png"
-              alt="大手企業とベンチャー企業の本質的な協業を実現する MNGA の図解"
-              style={{
-                width: '100%',
-                height: 'auto',
-                display: 'block',
-              }}
-            />
           </div>
         </div>
       </div>

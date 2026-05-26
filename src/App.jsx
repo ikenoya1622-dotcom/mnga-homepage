@@ -6,6 +6,8 @@ import HomeV1 from './pages/Home'
 import HomeV2 from './pages/v2/Home'
 import AboutPageV1 from './pages/About'
 import AboutPageV2 from './pages/v2/About'
+import ContactV2 from './pages/v2/Contact'
+import MembershipV2 from './pages/v2/Membership'
 import Report from './pages/Report'
 import JoinPage from './pages/Join'
 import Admin from './pages/Admin'
@@ -32,6 +34,8 @@ function App() {
     <Routes>
       <Route path="/" element={<VersionedHome />} />
       <Route path="/about" element={<VersionedAbout />} />
+      <Route path="/contact" element={<ContactV2 />} />
+      <Route path="/membership" element={<MembershipV2 />} />
       <Route path="/report" element={<Report />} />
       <Route path="/join" element={<JoinPage />} />
       <Route path="/report/:id" element={<ReportDetail />} />

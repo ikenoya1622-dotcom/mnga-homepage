@@ -1,7 +1,7 @@
 const BRAND_RED = '#d63b2d'
 
 // リリース時に Google Form の URL に差し替える
-const CONTACT_FORM_URL = '#'
+const CONTACT_FORM_URL = '/membership'
 
 export default function CtaSection() {
   return (

@@ -191,75 +191,96 @@ export default function AboutPage() {
       <main style={{ paddingTop: '64px' }}>
         {/* MNGAとは */}
         <section ref={aboutRef} style={{ padding: '140px 0 100px' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', textAlign: 'center' }}>
-            <h1
-              style={{
-                fontFamily: "'Zen Old Mincho', serif",
-                fontSize: '36px',
-                color: HEADING_NAVY,
-                letterSpacing: '0.15em',
-                margin: 0,
-                fontWeight: 500,
-                lineHeight: 1,
-              }}
-            >
-              About
-            </h1>
-            <div style={{ width: '32px', height: '1px', background: BRAND_RED, margin: '22px auto' }} />
-            <p
-              style={{
-                fontSize: '13px',
-                color: HEADING_MUTED,
-                letterSpacing: '0.4em',
-                margin: 0,
-                fontWeight: 500,
-              }}
-            >
-              MNGAとは
-            </p>
-          </div>
           <div
             style={{
-              maxWidth: '640px',
-              margin: '80px auto 0',
+              maxWidth: '880px',
+              margin: '0 auto',
               padding: '0 40px',
-              fontSize: '15px',
-              lineHeight: 2.2,
               color: HEADING_NAVY,
-              letterSpacing: '0.02em',
               wordBreak: 'normal',
               lineBreak: 'strict',
               overflowWrap: 'break-word',
               textWrap: 'pretty',
             }}
           >
-            <p style={{ margin: '0 0 28px' }}>
-              MNGAは、日本企業の構想を結果に「<span style={{ color: BRAND_RED, fontWeight: 700 }}>接続</span>」する実装基盤として設立されました。
-            </p>
-            <p style={{ margin: '0 0 28px' }}>
-              その原点は、「失われた30年」と呼ばれる時代を経営者自身の責任として捉え直し、
-              世界にとっていなくては困る日本を、語るのではなく事業を通じて取り戻したいという強い想いにあります。
-            </p>
-            <p style={{ margin: '0 0 28px' }}>
-              この目的のために、MNGAは
-              「<span style={{ color: BRAND_RED, fontWeight: 700 }}>接続</span>」
-              「<span style={{ color: BRAND_RED, fontWeight: 700 }}>案件運営</span>」
-              「<span style={{ color: BRAND_RED, fontWeight: 700 }}>規律設計</span>」
-              「<span style={{ color: BRAND_RED, fontWeight: 700 }}>仕組み化</span>」
-              の4つを活動の軸に据えています。
-            </p>
-            <p style={{ margin: '0 0 28px' }}>
-              大企業の意思決定力・資産・顧客基盤と、ベンチャーの仮説検証速度・技術探索力を結びつけ、
-              経営課題と事業機会の接点を設計します。
-            </p>
-            <p style={{ margin: '0 0 28px' }}>
-              構想を案件化し、PoCで終わらせず事業化・共同実装まで前進させます。
-              評価基準・撤退ルール・共創規律を明示し、生活者価値や社会実装可能性まで含めた品質のもとで運営しています。
-            </p>
-            <p style={{ margin: 0 }}>
-              一過性の会合ではなく、継続的に案件を生み続ける場として、
-              経営者の実践を結果に変える役割を担っていきます。
-            </p>
+            {/* 小見出しラベル */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '48px' }}>
+              <span
+                style={{
+                  fontFamily: "'Zen Old Mincho', serif",
+                  fontSize: '20px',
+                  color: HEADING_NAVY,
+                  letterSpacing: '0.15em',
+                  fontWeight: 500,
+                }}
+              >
+                About
+              </span>
+              <span style={{ width: '24px', height: '1px', background: BRAND_RED }} />
+              <span
+                style={{
+                  fontSize: '12px',
+                  color: HEADING_MUTED,
+                  letterSpacing: '0.3em',
+                  fontWeight: 500,
+                }}
+              >
+                MNGAとは
+              </span>
+            </div>
+
+            {/* 見出し（文章） */}
+            <h1
+              style={{
+                fontFamily: "'Zen Old Mincho', serif",
+                fontSize: 'clamp(24px, 3.0vw, 34px)',
+                fontWeight: 500,
+                color: HEADING_NAVY,
+                lineHeight: 1.7,
+                letterSpacing: '0.06em',
+                margin: 0,
+                marginBottom: '56px',
+              }}
+            >
+              MNGAは、日本企業の構想を結果に
+              <span style={{ color: BRAND_RED }}>「接続」</span>する
+              実装基盤として設立されました。
+            </h1>
+
+            {/* 本文 */}
+            <div
+              style={{
+                fontSize: '15px',
+                lineHeight: 2.2,
+                color: HEADING_NAVY,
+                letterSpacing: '0.02em',
+              }}
+            >
+              <p style={{ margin: '0 0 28px' }}>
+                その原点は、「失われた30年」と呼ばれる時代を経営者自身の責任として捉え直し、
+                世界にとっていなくては困る日本を、語るのではなく事業を通じて取り戻したいという強い想いにあります。
+              </p>
+              <p style={{ margin: '0 0 28px' }}>
+                この目的のために、MNGAは
+                「<span style={{ color: BRAND_RED, fontWeight: 700 }}>接続</span>」
+                「<span style={{ color: BRAND_RED, fontWeight: 700 }}>案件運営</span>」
+                「<span style={{ color: BRAND_RED, fontWeight: 700 }}>規律設計</span>」
+                「<span style={{ color: BRAND_RED, fontWeight: 700 }}>仕組み化</span>」
+                の4つを活動の軸に据えています。
+              </p>
+              <p style={{ margin: '0 0 28px' }}>
+                大企業の意思決定力・資産・顧客基盤と、ベンチャーの仮説検証速度・技術探索力を結びつけ、
+                経営課題と事業機会の接点を設計します。
+              </p>
+              <p style={{ margin: '0 0 28px' }}>
+                構想を案件化し、PoCで終わらせず事業化・共同実装まで前進させます。
+                評価基準・撤退ルール・共創規律を明示し、生活者価値や社会実装可能性まで含めた品質のもとで運営しています。
+              </p>
+              <p style={{ margin: 0 }}>
+                一過性の会合ではなく、継続的に案件を生み続ける場として、
+                経営者の実践を結果に変える役割を担っていきます。
+              </p>
+            </div>
           </div>
         </section>
 

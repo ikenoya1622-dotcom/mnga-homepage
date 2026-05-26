@@ -234,7 +234,7 @@ export default function AboutPage() {
             }}
           >
             <p style={{ margin: '0 0 28px' }}>
-              MNGAは、日本企業の構想を結果に「<span style={{ color: BRAND_RED, fontWeight: 700 }}>接続</span>」する実装基盤として設立されました。
+              MNGAは、日本企業の構想を結果に「<span style={{ fontWeight: 700 }}>接続</span>」する実装基盤として設立されました。
             </p>
             <p style={{ margin: '0 0 28px' }}>
               その原点は、「失われた30年」と呼ばれる時代を経営者自身の責任として捉え直し、
@@ -242,10 +242,10 @@ export default function AboutPage() {
             </p>
             <p style={{ margin: '0 0 28px' }}>
               この目的のために、MNGAは
-              「<span style={{ color: BRAND_RED, fontWeight: 700 }}>接続</span>」
-              「<span style={{ color: BRAND_RED, fontWeight: 700 }}>案件運営</span>」
-              「<span style={{ color: BRAND_RED, fontWeight: 700 }}>規律設計</span>」
-              「<span style={{ color: BRAND_RED, fontWeight: 700 }}>仕組み化</span>」
+              「<span style={{ fontWeight: 700 }}>接続</span>」
+              「<span style={{ fontWeight: 700 }}>案件運営</span>」
+              「<span style={{ fontWeight: 700 }}>規律設計</span>」
+              「<span style={{ fontWeight: 700 }}>仕組み化</span>」
               の4つを活動の軸に据えています。
             </p>
             <p style={{ margin: '0 0 28px' }}>

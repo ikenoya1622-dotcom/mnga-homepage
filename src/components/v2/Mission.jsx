@@ -74,7 +74,7 @@ export default function Mission() {
               }}
             >
               大手企業とベンチャー企業の<br />
-              <span style={{ color: BRAND_RED }}>本質的な協業</span>を加速させる
+              <span style={{ fontWeight: 700 }}>本質的な協業</span>を加速させる
             </h3>
             <p
               style={{

@@ -39,13 +39,6 @@ const ACTIVITIES = [
   },
   {
     no: '04',
-    en: 'My EO',
-    jp: 'My EO',
-    desc:
-      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-  },
-  {
-    no: '05',
     en: 'Strategic Alliance',
     jp: 'ストラテジックアライアンス',
     desc:

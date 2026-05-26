@@ -10,7 +10,7 @@ export default function Partners() {
         <div style={{ textAlign: 'center', marginBottom: '72px' }}>
           <h2
             style={{
-              fontFamily: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif",
+              fontFamily: "'Zen Old Mincho', serif",
               fontSize: '48px',
               color: BRAND_RED,
               letterSpacing: '0.1em',

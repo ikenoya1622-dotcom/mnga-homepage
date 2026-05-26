@@ -194,7 +194,7 @@ export default function AboutPage() {
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', textAlign: 'center' }}>
             <h1
               style={{
-                fontFamily: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif",
+                fontFamily: "'Zen Old Mincho', serif",
                 fontSize: '36px',
                 color: HEADING_NAVY,
                 letterSpacing: '0.15em',
@@ -268,7 +268,7 @@ export default function AboutPage() {
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px 0', textAlign: 'center' }} ref={headerRef}>
             <h2
               style={{
-                fontFamily: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif",
+                fontFamily: "'Zen Old Mincho', serif",
                 fontSize: '36px',
                 color: HEADING_NAVY,
                 letterSpacing: '0.15em',
@@ -313,7 +313,7 @@ export default function AboutPage() {
             <div style={{ textAlign: 'center', marginBottom: '88px' }}>
               <h2
                 style={{
-                  fontFamily: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif",
+                  fontFamily: "'Zen Old Mincho', serif",
                   fontSize: '36px',
                   color: HEADING_NAVY,
                   letterSpacing: '0.15em',

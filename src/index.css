@@ -26,11 +26,6 @@ body {
   color: #000000;
 }
 
-/* 見出しはゴシック体 */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-}
-
 /* =============================
    Hero
 ============================= */

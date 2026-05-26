@@ -43,7 +43,7 @@ export default function CtaSection() {
         <div>
           <h2
             style={{
-              fontFamily: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif",
+              fontFamily: "'Zen Old Mincho', serif",
               fontSize: '32px',
               color: '#f5f1e8',
               letterSpacing: '0.18em',

@@ -5,8 +5,7 @@ import { useDesignVersion } from '../../context/ThemeContext'
 const NAV_ITEMS = [
   { label: 'トップ', href: '/' },
   { label: 'MNGAについて', href: '/about' },
-  { label: '活動内容', href: '/report' },
-  { label: '入会案内', href: '/join' },
+  { label: '問い合わせ', href: '#' },
 ]
 
 export default function Header() {

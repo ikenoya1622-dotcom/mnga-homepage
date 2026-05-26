@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom'
-
 const BRAND_RED = '#d63b2d'
+
+// リリース時に Google Form の URL に差し替える
+const CONTACT_FORM_URL = '#'
 
 export default function CtaSection() {
   return (
@@ -57,8 +58,10 @@ export default function CtaSection() {
           </p>
         </div>
 
-        <Link
-          to="/join"
+        <a
+          href={CONTACT_FORM_URL}
+          target={CONTACT_FORM_URL === '#' ? undefined : '_blank'}
+          rel={CONTACT_FORM_URL === '#' ? undefined : 'noopener noreferrer'}
           style={{
             width: '64px',
             height: '64px',
@@ -84,7 +87,7 @@ export default function CtaSection() {
           aria-label="入会申し込み"
         >
           →
-        </Link>
+        </a>
       </div>
 
       <style>{`

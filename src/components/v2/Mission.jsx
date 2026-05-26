@@ -1,19 +1,21 @@
 import { Link } from 'react-router-dom'
 
 const BRAND_RED = '#d63b2d'
+const HEADING_NAVY = '#1a2438'
+const HEADING_MUTED = '#5a6478'
 
 export default function Mission() {
   return (
-    <section style={{ padding: '120px 0 140px', background: '#fff' }}>
+    <section style={{ padding: '160px 0', background: '#fff' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 40px' }}>
         {/* セクションヘッダー */}
-        <div style={{ textAlign: 'center', marginBottom: '72px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '88px' }}>
           <h2
             style={{
               fontFamily: "'Zen Old Mincho', serif",
-              fontSize: '44px',
-              color: BRAND_RED,
-              letterSpacing: '0.1em',
+              fontSize: '36px',
+              color: HEADING_NAVY,
+              letterSpacing: '0.15em',
               margin: 0,
               fontWeight: 500,
               lineHeight: 1,
@@ -21,12 +23,13 @@ export default function Mission() {
           >
             Goal
           </h2>
+          <div style={{ width: '32px', height: '1px', background: BRAND_RED, margin: '22px auto' }} />
           <p
             style={{
-              fontSize: '12px',
-              color: '#1a1a1a',
-              letterSpacing: '0.35em',
-              marginTop: '12px',
+              fontSize: '13px',
+              color: HEADING_MUTED,
+              letterSpacing: '0.4em',
+              margin: 0,
               fontWeight: 500,
             }}
           >
@@ -49,35 +52,24 @@ export default function Mission() {
             <h3
               style={{
                 fontSize: '22px',
-                fontWeight: 700,
-                lineHeight: 1.7,
-                color: BRAND_RED,
-                marginBottom: '6px',
-                letterSpacing: '0.03em',
-              }}
-            >
-              大手企業とベンチャー企業の
-            </h3>
-            <h3
-              style={{
-                fontSize: '22px',
-                fontWeight: 700,
-                lineHeight: 1.7,
-                color: BRAND_RED,
+                fontWeight: 600,
+                lineHeight: 1.8,
+                color: HEADING_NAVY,
                 marginTop: 0,
-                marginBottom: '32px',
-                letterSpacing: '0.03em',
+                marginBottom: '36px',
+                letterSpacing: '0.04em',
               }}
             >
-              本質的な協業を加速させる
+              大手企業とベンチャー企業の<br />
+              <span style={{ color: BRAND_RED }}>本質的な協業</span>を加速させる
             </h3>
             <p
               style={{
                 fontSize: '14px',
-                color: '#444',
-                lineHeight: 2.1,
-                marginBottom: '40px',
-                letterSpacing: '0.03em',
+                color: '#444c5e',
+                lineHeight: 2.2,
+                marginBottom: '48px',
+                letterSpacing: '0.04em',
               }}
             >
               日本を強い国にするために、大企業とベンチャー企業が協業する経営者コミュニティを構築する。
@@ -88,12 +80,12 @@ export default function Mission() {
               style={{
                 display: 'inline-block',
                 padding: '14px 56px',
-                fontSize: '13px',
+                fontSize: '12px',
                 color: BRAND_RED,
-                border: `1.5px solid ${BRAND_RED}`,
-                borderRadius: '4px',
+                border: `1px solid ${BRAND_RED}`,
+                borderRadius: '2px',
                 textDecoration: 'none',
-                letterSpacing: '0.15em',
+                letterSpacing: '0.2em',
                 fontWeight: 500,
                 transition: 'all 0.2s',
                 background: '#fff',

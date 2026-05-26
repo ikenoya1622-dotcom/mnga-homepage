@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <>
       {/* フッター本体 */}
-      <footer style={{ background: '#fff', padding: '48px 0 32px' }}>
+      <footer style={{ background: '#fff', padding: '64px 0 40px' }}>
         <div
           style={{
             maxWidth: '1200px',
@@ -17,7 +17,7 @@ export default function Footer() {
               justifyContent: 'space-between',
               alignItems: 'flex-start',
               gap: '40px',
-              paddingBottom: '32px',
+              paddingBottom: '40px',
             }}
           >
             {/* 左: ロゴ + 団体名 */}
@@ -25,19 +25,19 @@ export default function Footer() {
               <img
                 src="/images/MNGA_ヨコ.png"
                 alt="MNGA"
-                style={{ height: '48px', width: 'auto', display: 'block', marginBottom: '12px' }}
+                style={{ height: '44px', width: 'auto', display: 'block', marginBottom: '16px' }}
               />
-              <p style={{ fontSize: '13px', color: '#1a1a1a', fontWeight: 700, margin: 0 }}>
+              <p style={{ fontSize: '12px', color: '#1a2438', fontWeight: 600, margin: 0, letterSpacing: '0.08em' }}>
                 Make Nippon Great Again
               </p>
-              <p style={{ fontSize: '11px', color: '#888', marginTop: '4px' }}>
+              <p style={{ fontSize: '11px', color: '#5a6478', marginTop: '6px', letterSpacing: '0.05em' }}>
                 一般社団法人 日本新復活
               </p>
             </div>
 
             {/* 右: 住所 */}
             <div style={{ textAlign: 'right' }}>
-              <p style={{ fontSize: '12px', color: '#666', margin: 0, lineHeight: 1.8 }}>
+              <p style={{ fontSize: '11px', color: '#5a6478', margin: 0, lineHeight: 2, letterSpacing: '0.05em' }}>
                 東京都港区赤坂1丁目8番1号<br />
                 赤坂インターシティAIR 4階
               </p>
@@ -48,15 +48,16 @@ export default function Footer() {
           <p
             style={{
               textAlign: 'center',
-              fontSize: '11px',
-              color: '#999',
-              marginTop: '24px',
-              paddingTop: '24px',
-              borderTop: '1px solid #eee',
-              letterSpacing: '0.05em',
+              fontSize: '10px',
+              color: '#9ca0ab',
+              marginTop: '32px',
+              paddingTop: '32px',
+              borderTop: '1px solid #e8e8e8',
+              letterSpacing: '0.15em',
+              fontFamily: "'Helvetica Neue', Arial, sans-serif",
             }}
           >
-            Copyright(C) Make Nippon Great Again. All rights reserved.
+            Copyright © Make Nippon Great Again. All rights reserved.
           </p>
         </div>
       </footer>

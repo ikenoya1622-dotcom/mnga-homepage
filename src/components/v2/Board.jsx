@@ -1,4 +1,6 @@
 const BRAND_RED = '#d63b2d'
+const HEADING_NAVY = '#1a2438'
+const HEADING_MUTED = '#5a6478'
 
 const members = [
   { role: '会長', name: '櫻田 謙悟', company: '株式会社○○', image: '/images/board/櫻田.jpg' },
@@ -9,23 +11,25 @@ const members = [
 
 export default function Board() {
   return (
-    <section style={{ padding: '120px 0', background: '#fff' }}>
+    <section style={{ padding: '160px 0', background: '#fff' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         {/* セクションヘッダー */}
-        <div style={{ textAlign: 'center', marginBottom: '72px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '88px' }}>
           <h2
             style={{
               fontFamily: "'Zen Old Mincho', serif",
-              fontSize: '48px',
-              color: BRAND_RED,
-              letterSpacing: '0.1em',
+              fontSize: '36px',
+              color: HEADING_NAVY,
+              letterSpacing: '0.15em',
               margin: 0,
               fontWeight: 500,
+              lineHeight: 1,
             }}
           >
             Member
           </h2>
-          <p style={{ fontSize: '13px', color: '#1a1a1a', letterSpacing: '0.3em', marginTop: '4px' }}>
+          <div style={{ width: '32px', height: '1px', background: BRAND_RED, margin: '22px auto' }} />
+          <p style={{ fontSize: '13px', color: HEADING_MUTED, letterSpacing: '0.4em', margin: 0, fontWeight: 500 }}>
             理事体制
           </p>
         </div>
@@ -57,13 +61,13 @@ export default function Board() {
                   />
                 )}
               </div>
-              <p style={{ fontSize: '11px', color: '#888', letterSpacing: '0.15em', margin: 0 }}>
+              <p style={{ fontSize: '11px', color: HEADING_MUTED, letterSpacing: '0.2em', margin: 0 }}>
                 {m.role}
               </p>
-              <p style={{ fontSize: '15px', fontWeight: 700, color: '#1a1a1a', marginTop: '4px' }}>
+              <p style={{ fontSize: '15px', fontWeight: 600, color: HEADING_NAVY, marginTop: '6px', letterSpacing: '0.05em' }}>
                 {m.name}
               </p>
-              <p style={{ fontSize: '11px', color: '#666', marginTop: '2px' }}>{m.company}</p>
+              <p style={{ fontSize: '11px', color: '#666', marginTop: '4px' }}>{m.company}</p>
             </div>
           ))}
         </div>

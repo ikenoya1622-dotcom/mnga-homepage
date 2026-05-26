@@ -10,6 +10,8 @@ import { supabase } from '../../lib/supabase'
 gsap.registerPlugin(ScrollTrigger)
 
 const BRAND_RED = '#d63b2d'
+const HEADING_NAVY = '#1a2438'
+const HEADING_MUTED = '#5a6478'
 
 const NEWS_CATEGORIES = ['定款', '事業報告', 'お知らせ']
 
@@ -92,10 +94,10 @@ function ActivityItem({ activity, refEl }) {
         <p
           style={{
             fontSize: '11px',
-            color: '#888',
-            letterSpacing: '0.2em',
+            color: '#9ca0ab',
+            letterSpacing: '0.25em',
             margin: 0,
-            marginBottom: '12px',
+            marginBottom: '14px',
             fontFamily: "'Helvetica Neue', Arial, sans-serif",
           }}
         >
@@ -103,12 +105,12 @@ function ActivityItem({ activity, refEl }) {
         </p>
         <h3
           style={{
-            fontSize: '24px',
-            fontWeight: 700,
-            color: '#1a1a1a',
+            fontSize: '22px',
+            fontWeight: 600,
+            color: '#1a2438',
             margin: 0,
-            marginBottom: '20px',
-            letterSpacing: '0.05em',
+            marginBottom: '22px',
+            letterSpacing: '0.08em',
           }}
         >
           {activity.jp}
@@ -116,10 +118,10 @@ function ActivityItem({ activity, refEl }) {
         <p
           style={{
             fontSize: '13px',
-            color: '#444',
-            lineHeight: 2,
+            color: '#444c5e',
+            lineHeight: 2.1,
             margin: 0,
-            letterSpacing: '0.03em',
+            letterSpacing: '0.04em',
             wordBreak: 'break-all',
           }}
         >
@@ -183,14 +185,14 @@ export default function AboutPage() {
       <Header />
       <main style={{ paddingTop: '64px' }}>
         {/* MNGAとは */}
-        <section ref={aboutRef} style={{ padding: '100px 0 80px' }}>
+        <section ref={aboutRef} style={{ padding: '140px 0 100px' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px', textAlign: 'center' }}>
             <h1
               style={{
                 fontFamily: "'Zen Old Mincho', serif",
-                fontSize: '44px',
-                color: BRAND_RED,
-                letterSpacing: '0.1em',
+                fontSize: '36px',
+                color: HEADING_NAVY,
+                letterSpacing: '0.15em',
                 margin: 0,
                 fontWeight: 500,
                 lineHeight: 1,
@@ -198,12 +200,13 @@ export default function AboutPage() {
             >
               About
             </h1>
+            <div style={{ width: '32px', height: '1px', background: BRAND_RED, margin: '22px auto' }} />
             <p
               style={{
-                fontSize: '12px',
-                color: '#1a1a1a',
-                letterSpacing: '0.35em',
-                marginTop: '12px',
+                fontSize: '13px',
+                color: HEADING_MUTED,
+                letterSpacing: '0.4em',
+                margin: 0,
                 fontWeight: 500,
               }}
             >
@@ -213,12 +216,12 @@ export default function AboutPage() {
           <div
             style={{
               maxWidth: '760px',
-              margin: '64px auto 0',
+              margin: '80px auto 0',
               padding: '0 40px',
               fontSize: '15px',
-              lineHeight: 2.2,
-              color: '#1a1a1a',
-              letterSpacing: '0.04em',
+              lineHeight: 2.3,
+              color: HEADING_NAVY,
+              letterSpacing: '0.05em',
             }}
           >
             <p style={{ margin: '0 0 28px' }}>
@@ -240,14 +243,14 @@ export default function AboutPage() {
         </section>
 
         {/* 活動内容セクションヘッダー */}
-        <section style={{ padding: '40px 0 20px', borderTop: '1px solid #eee' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '60px 40px 0', textAlign: 'center' }} ref={headerRef}>
+        <section style={{ padding: '40px 0 20px', borderTop: '1px solid #e8e8e8' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 40px 0', textAlign: 'center' }} ref={headerRef}>
             <h2
               style={{
                 fontFamily: "'Zen Old Mincho', serif",
-                fontSize: '44px',
-                color: BRAND_RED,
-                letterSpacing: '0.1em',
+                fontSize: '36px',
+                color: HEADING_NAVY,
+                letterSpacing: '0.15em',
                 margin: 0,
                 fontWeight: 500,
                 lineHeight: 1,
@@ -255,12 +258,13 @@ export default function AboutPage() {
             >
               Activities
             </h2>
+            <div style={{ width: '32px', height: '1px', background: BRAND_RED, margin: '22px auto' }} />
             <p
               style={{
-                fontSize: '12px',
-                color: '#1a1a1a',
-                letterSpacing: '0.35em',
-                marginTop: '12px',
+                fontSize: '13px',
+                color: HEADING_MUTED,
+                letterSpacing: '0.4em',
+                margin: 0,
                 fontWeight: 500,
               }}
             >
@@ -283,15 +287,15 @@ export default function AboutPage() {
         </section>
 
         {/* News */}
-        <section ref={newsRef} style={{ background: '#f5f5f5', padding: '100px 0' }}>
+        <section ref={newsRef} style={{ background: '#f5f5f5', padding: '140px 0' }}>
           <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 40px' }}>
-            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '88px' }}>
               <h2
                 style={{
                   fontFamily: "'Zen Old Mincho', serif",
-                  fontSize: '44px',
-                  color: BRAND_RED,
-                  letterSpacing: '0.1em',
+                  fontSize: '36px',
+                  color: HEADING_NAVY,
+                  letterSpacing: '0.15em',
                   margin: 0,
                   fontWeight: 500,
                   lineHeight: 1,
@@ -299,12 +303,13 @@ export default function AboutPage() {
               >
                 News
               </h2>
+              <div style={{ width: '32px', height: '1px', background: BRAND_RED, margin: '22px auto' }} />
               <p
                 style={{
-                  fontSize: '12px',
-                  color: '#1a1a1a',
-                  letterSpacing: '0.35em',
-                  marginTop: '12px',
+                  fontSize: '13px',
+                  color: HEADING_MUTED,
+                  letterSpacing: '0.4em',
+                  margin: 0,
                   fontWeight: 500,
                 }}
               >
@@ -328,8 +333,9 @@ export default function AboutPage() {
                     }}
                     className="v2-news-row"
                   >
-                    <div>
-                      <p style={{ fontWeight: 700, fontSize: '14px', color: BRAND_RED, letterSpacing: '0.1em' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ width: '6px', height: '6px', background: BRAND_RED, borderRadius: '50%', flexShrink: 0 }} />
+                      <p style={{ fontWeight: 600, fontSize: '14px', color: HEADING_NAVY, letterSpacing: '0.12em', margin: 0 }}>
                         {group.category}
                       </p>
                     </div>
@@ -337,10 +343,10 @@ export default function AboutPage() {
                       {group.items.map((item) => {
                         const body = (
                           <>
-                            <p style={{ fontSize: '12px', color: '#888', marginBottom: '4px' }}>
+                            <p style={{ fontSize: '11px', color: HEADING_MUTED, marginBottom: '6px', letterSpacing: '0.08em', fontFamily: "'Helvetica Neue', Arial, sans-serif" }}>
                               {formatNewsDate(item.published_at)}
                             </p>
-                            <p style={{ fontSize: '14px', color: '#1a1a1a' }}>{item.title}</p>
+                            <p style={{ fontSize: '14px', color: HEADING_NAVY, letterSpacing: '0.04em' }}>{item.title}</p>
                           </>
                         )
 

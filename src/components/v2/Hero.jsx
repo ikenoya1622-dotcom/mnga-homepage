@@ -82,10 +82,10 @@ export default function Hero() {
           <p
             ref={subtitleRef}
             style={{
-              color: '#fff',
-              fontSize: 'clamp(14px, 1.4vw, 18px)',
-              letterSpacing: '0.15em',
-              marginTop: '32px',
+              color: '#f5f1e8',
+              fontSize: 'clamp(13px, 1.2vw, 16px)',
+              letterSpacing: '0.3em',
+              marginTop: '40px',
               fontWeight: 400,
             }}
           >

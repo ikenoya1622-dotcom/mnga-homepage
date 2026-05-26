@@ -45,15 +45,17 @@ export default function CtaSection() {
             style={{
               fontFamily: "'Zen Old Mincho', serif",
               fontSize: '32px',
-              color: BRAND_RED,
-              letterSpacing: '0.1em',
+              color: '#f5f1e8',
+              letterSpacing: '0.18em',
               margin: 0,
               fontWeight: 500,
+              lineHeight: 1,
             }}
           >
             Membership
           </h2>
-          <p style={{ fontSize: '24px', color: '#fff', marginTop: '12px', letterSpacing: '0.1em' }}>
+          <div style={{ width: '28px', height: '1px', background: BRAND_RED, marginTop: '18px' }} />
+          <p style={{ fontSize: '20px', color: '#fff', marginTop: '16px', letterSpacing: '0.15em', fontWeight: 400 }}>
             入会はこちらから
           </p>
         </div>

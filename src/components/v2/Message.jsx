@@ -1,24 +1,28 @@
 const BRAND_RED = '#d63b2d'
+const HEADING_NAVY = '#1a2438'
+const HEADING_MUTED = '#5a6478'
 
 export default function Message() {
   return (
-    <section style={{ padding: '120px 0', background: '#f5f5f5' }}>
+    <section style={{ padding: '160px 0', background: '#f5f5f5' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         {/* セクションヘッダー */}
-        <div style={{ textAlign: 'center', marginBottom: '72px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '88px' }}>
           <h2
             style={{
               fontFamily: "'Zen Old Mincho', serif",
-              fontSize: '48px',
-              color: BRAND_RED,
-              letterSpacing: '0.1em',
+              fontSize: '36px',
+              color: HEADING_NAVY,
+              letterSpacing: '0.15em',
               margin: 0,
               fontWeight: 500,
+              lineHeight: 1,
             }}
           >
             Message
           </h2>
-          <p style={{ fontSize: '13px', color: '#1a1a1a', letterSpacing: '0.3em', marginTop: '4px' }}>
+          <div style={{ width: '32px', height: '1px', background: BRAND_RED, margin: '22px auto' }} />
+          <p style={{ fontSize: '13px', color: HEADING_MUTED, letterSpacing: '0.4em', margin: 0, fontWeight: 500 }}>
             代表メッセージ
           </p>
         </div>
@@ -53,10 +57,11 @@ export default function Message() {
             <h3
               style={{
                 fontSize: '26px',
-                fontWeight: 700,
-                lineHeight: 1.6,
-                marginBottom: '32px',
-                color: '#1a1a1a',
+                fontWeight: 600,
+                lineHeight: 1.7,
+                marginBottom: '40px',
+                color: HEADING_NAVY,
+                letterSpacing: '0.04em',
               }}
             >
               失ったのは、われわれだ。<br />接続を、取り戻す。

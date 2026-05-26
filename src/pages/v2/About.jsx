@@ -20,6 +20,7 @@ const ACTIVITIES = [
     no: '01',
     en: 'Forum',
     jp: 'フォーラム',
+    image: '/images/フォーラム.png',
     desc:
       '月1回開催する会員限定の本会です。NDAを前提とした閉じた環境のもと、大企業CxOとベンチャーCxOが業界動向と経営課題を率直に議論し、各社の意思決定に直結する洞察と、立場を越えた信頼関係を深めていきます。',
   },
@@ -27,6 +28,7 @@ const ACTIVITIES = [
     no: '02',
     en: 'Chapter Meetup',
     jp: 'チャプターミートアップ',
+    image: '/images/チャプターミートアップ.png',
     desc:
       'パーパス経営、介護・医療など、社会的意義の高いテーマごとに開かれる分科会です。会員に加えて非会員の経営者にも開かれ、業界の垣根を越えた継続的な議論と、本会への新たな接点を生み出します。',
   },
@@ -34,6 +36,7 @@ const ACTIVITIES = [
     no: '03',
     en: 'Mentor Ship',
     jp: 'メンターシップ',
+    image: '/images/メンターシップ.png',
     desc:
       '次代の経営者の視座と覚悟を磨く「櫻田塾」を中心としたリーダーシップ基盤の場です。第一線で日本の経営を担ってきた先達が長期にわたって伴走し、短期的な助言ではなく経営者としての判断軸そのものを共に鍛えていきます。',
   },
@@ -41,6 +44,7 @@ const ACTIVITIES = [
     no: '04',
     en: 'Strategic Alliance',
     jp: 'ストラテジックアライアンス',
+    image: '/images/ストラテジックアライアンス.png',
     desc:
       '大企業の意思決定力・資産・顧客基盤と、ベンチャーの仮説検証速度・技術探索力を結びつける実装支援です。マッチングセッションと案件運営を通じ、構想を案件へ、案件を事業へ。検討で終わらせず、共同実装まで責任を持って前進させます。',
   },
@@ -65,21 +69,26 @@ function ActivityItem({ activity, refEl }) {
         padding: '40px 0',
       }}
     >
-      {/* 画像プレースホルダー */}
+      {/* 画像 */}
       <div
         style={{
           width: '100%',
           aspectRatio: '16 / 10',
           background: '#e5e5e5',
           borderRadius: '2px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          overflow: 'hidden',
         }}
       >
-        <span style={{ fontSize: '11px', color: '#999', letterSpacing: '0.2em' }}>
-          画像準備中
-        </span>
+        <img
+          src={activity.image}
+          alt={activity.jp}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
+        />
       </div>
 
       {/* テキスト */}

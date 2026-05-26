@@ -18,7 +18,7 @@
 }
 
 body {
-  font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  font-family: 'Zen Old Mincho', serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 2;
@@ -26,9 +26,9 @@ body {
   color: #000000;
 }
 
-/* 見出しは明朝体（松下政経塾のスタイルに準拠） */
+/* 見出しはゴシック体 */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Zen Old Mincho', 'YuMincho', 'Hiragino Mincho ProN', serif;
+  font-family: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
 }
 
 /* =============================

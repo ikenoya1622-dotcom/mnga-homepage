@@ -55,7 +55,7 @@ export default function Hero() {
             style={{
               color: '#fff',
               fontSize: 'clamp(48px, 7vw, 96px)',
-              fontFamily: "'Zen Old Mincho', serif",
+              fontFamily: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif",
               fontWeight: 500,
               lineHeight: 1.15,
               letterSpacing: '0.04em',

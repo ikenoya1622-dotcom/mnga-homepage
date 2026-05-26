@@ -48,7 +48,7 @@ export default function Membership() {
           >
             <h1
               style={{
-                fontFamily: "'Zen Old Mincho', serif",
+                fontFamily: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif",
                 fontSize: '28px',
                 color: '#1a1a1a',
                 margin: 0,

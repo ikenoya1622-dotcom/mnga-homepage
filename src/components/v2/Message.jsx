@@ -10,7 +10,7 @@ export default function Message() {
         <div style={{ textAlign: 'center', marginBottom: '88px' }}>
           <h2
             style={{
-              fontFamily: "'Zen Old Mincho', serif",
+              fontFamily: "'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif",
               fontSize: '36px',
               color: HEADING_NAVY,
               letterSpacing: '0.15em',

@@ -84,6 +84,7 @@ export default function Header() {
                     textDecoration: 'none',
                     fontWeight: 400,
                     transition: 'color 0.2s',
+                    fontFamily: "'Zen Old Mincho', serif",
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.color = '#d63b2d')}
                   onMouseLeave={(e) => (e.currentTarget.style.color = '#1a1a1a')}
@@ -166,6 +167,7 @@ export default function Header() {
                     color: '#1a1a1a',
                     borderBottom: '1px solid #f3f4f6',
                     textDecoration: 'none',
+                    fontFamily: "'Zen Old Mincho', serif",
                   }}
                 >
                   {item.label}

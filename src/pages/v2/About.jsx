@@ -21,28 +21,28 @@ const ACTIVITIES = [
     en: 'Forum',
     jp: 'フォーラム',
     desc:
-      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      '月1回開催する会員限定の本会です。NDAを前提とした閉じた環境のもと、大企業CxOとベンチャーCxOが業界動向と経営課題を率直に議論し、各社の意思決定に直結する洞察と、立場を越えた信頼関係を深めていきます。',
   },
   {
     no: '02',
     en: 'Chapter Meetup',
     jp: 'チャプターミートアップ',
     desc:
-      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      'パーパス経営、介護・医療など、社会的意義の高いテーマごとに開かれる分科会です。会員に加えて非会員の経営者にも開かれ、業界の垣根を越えた継続的な議論と、本会への新たな接点を生み出します。',
   },
   {
     no: '03',
     en: 'Mentor Ship',
     jp: 'メンターシップ',
     desc:
-      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      '次代の経営者の視座と覚悟を磨く「櫻田塾」を中心としたリーダーシップ基盤の場です。第一線で日本の経営を担ってきた先達が長期にわたって伴走し、短期的な助言ではなく経営者としての判断軸そのものを共に鍛えていきます。',
   },
   {
     no: '04',
     en: 'Strategic Alliance',
     jp: 'ストラテジックアライアンス',
     desc:
-      'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+      '大企業の意思決定力・資産・顧客基盤と、ベンチャーの仮説検証速度・技術探索力を結びつける実装支援です。マッチングセッションと案件運営を通じ、構想を案件へ、案件を事業へ。検討で終わらせず、共同実装まで責任を持って前進させます。',
   },
 ]
 
@@ -115,7 +115,6 @@ function ActivityItem({ activity, refEl }) {
             lineHeight: 2.1,
             margin: 0,
             letterSpacing: '0.04em',
-            wordBreak: 'break-all',
           }}
         >
           {activity.desc}

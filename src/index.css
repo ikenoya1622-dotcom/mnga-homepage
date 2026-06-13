@@ -26,6 +26,12 @@ body {
   color: #000000;
 }
 
+/* MNGA mock-faithful pages take over the viewport with a warm-charcoal canvas;
+   match the document background so overscroll never flashes white. */
+body.mnga-active {
+  background: #232220;
+}
+
 /* =============================
    Hero
 ============================= */

@@ -1,49 +1,55 @@
-import { Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useDesignVersion } from './context/ThemeContext'
-import HomeV1 from './pages/Home'
-import HomeV2 from './pages/v2/Home'
-import AboutPageV1 from './pages/About'
-import AboutPageV2 from './pages/v2/About'
-import ContactV2 from './pages/v2/Contact'
-import MembershipV2 from './pages/v2/Membership'
-import Report from './pages/Report'
-import JoinPage from './pages/Join'
+import Home from './pages/mnga/Home'
+import About from './pages/mnga/About'
+import Activities from './pages/mnga/Activities'
+import Reports from './pages/mnga/Reports'
+import ReportDetail from './pages/mnga/ReportDetail'
+import NewsDetail from './pages/mnga/NewsDetail'
 import Admin from './pages/Admin'
 import AdminNews from './pages/AdminNews'
 import AdminLogin from './pages/AdminLogin'
-import ReportDetail from './pages/ReportDetail'
-import NewsDetail from './pages/NewsDetail'
 import PrivateRoute from './components/PrivateRoute'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function VersionedHome() {
-  const { version } = useDesignVersion()
-  return version === 'v2' ? <HomeV2 /> : <HomeV1 />
-}
-
-function VersionedAbout() {
-  const { version } = useDesignVersion()
-  return version === 'v2' ? <AboutPageV2 /> : <AboutPageV1 />
+// On navigation: jump to top for new pages, or scroll to the hash target.
+function ScrollManager() {
+  const { pathname, hash } = useLocation()
+  useEffect(() => {
+    if (hash) {
+      const id = hash.slice(1)
+      const tryScroll = (attempt = 0) => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+        else if (attempt < 10) setTimeout(() => tryScroll(attempt + 1), 80)
+      }
+      tryScroll()
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [pathname, hash])
+  return null
 }
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<VersionedHome />} />
-      <Route path="/about" element={<VersionedAbout />} />
-      <Route path="/contact" element={<ContactV2 />} />
-      <Route path="/membership" element={<MembershipV2 />} />
-      <Route path="/report" element={<Report />} />
-      <Route path="/join" element={<JoinPage />} />
-      <Route path="/report/:id" element={<ReportDetail />} />
-      <Route path="/news/:id" element={<NewsDetail />} />
-      <Route path="/mnga-console-7kx9a/login" element={<AdminLogin />} />
-      <Route path="/mnga-console-7kx9a" element={<PrivateRoute><Admin /></PrivateRoute>} />
-      <Route path="/mnga-console-7kx9a/news" element={<PrivateRoute><AdminNews /></PrivateRoute>} />
-    </Routes>
+    <>
+      <ScrollManager />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/activities" element={<Activities />} />
+        <Route path="/report" element={<Reports />} />
+        <Route path="/report/:id" element={<ReportDetail />} />
+        <Route path="/news/:id" element={<NewsDetail />} />
+        <Route path="/mnga-console-7kx9a/login" element={<AdminLogin />} />
+        <Route path="/mnga-console-7kx9a" element={<PrivateRoute><Admin /></PrivateRoute>} />
+        <Route path="/mnga-console-7kx9a/news" element={<PrivateRoute><AdminNews /></PrivateRoute>} />
+      </Routes>
+    </>
   )
 }
 

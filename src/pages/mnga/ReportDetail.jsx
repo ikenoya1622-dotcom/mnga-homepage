@@ -4,6 +4,7 @@ import { gsap, ScrollTrigger, prefersReduced, loadLenis, observeSplitLines } fro
 import { supabase } from '../../lib/supabase'
 import { isSafeImageUrl } from '../../components/BlockRenderer'
 import { Preloader, Vignette, SplitLines } from '../../components/mnga/parts'
+import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/report-detail.css'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
@@ -210,6 +211,7 @@ export default function ReportDetail() {
     <div className="mnga-report-detail js" ref={rootRef}>
       <Vignette />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
+      <MobileNav current="/report" />
 
       <header className="site-header" id="ahdr">
         <nav className="site-nav">

@@ -12,6 +12,7 @@ import Admin from './pages/Admin'
 import AdminNews from './pages/AdminNews'
 import AdminLogin from './pages/AdminLogin'
 import PrivateRoute from './components/PrivateRoute'
+import './styles/mnga/mobile-nav.css'
 
 gsap.registerPlugin(ScrollTrigger)
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { gsap, ScrollTrigger, prefersReduced, loadLenis, observeSplitLines } from '../../lib/mngaMotion'
 import { supabase } from '../../lib/supabase'
 import { Preloader, Vignette } from '../../components/mnga/parts'
+import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/report.css'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
@@ -175,6 +176,7 @@ export default function Reports() {
     <div className="mnga-report js" ref={rootRef}>
       <Vignette />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
+      <MobileNav current="/report" />
 
       <header className="site-header" id="ahdr">
         <nav className="site-nav">

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap, ScrollTrigger, prefersReduced, loadLenis, observeSplitLines } from '../../lib/mngaMotion'
 import { SplitLines, Preloader } from '../../components/mnga/parts'
+import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/activities.css'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
@@ -112,6 +113,7 @@ export default function Activities() {
   return (
     <div className="mnga-activities js" ref={rootRef}>
       <Preloader variant="mark" caption="Activities" />
+      <MobileNav current="/activities" />
 
       <header className="nav" id="hdr">
         <Link className="nav__brand" to="/" aria-label="MNGA トップ"><img className="nav__logo" src="/mnga-horizontal-white.png" alt="MNGA" /></Link>

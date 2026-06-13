@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap, ScrollTrigger, prefersReduced, loadLenis } from '../../lib/mngaMotion'
 import { Preloader, Vignette } from '../../components/mnga/parts'
+import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/about.css'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
@@ -140,6 +141,7 @@ export default function About() {
     <div className="mnga-about js" ref={rootRef}>
       <Vignette />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
+      <MobileNav current="/about" />
 
       <header className="site-header" id="ahdr">
         <nav className="site-nav">

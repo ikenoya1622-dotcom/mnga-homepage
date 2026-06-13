@@ -1,0 +1,118 @@
+/* Shared MNGA smartphone navigation (hamburger + full-screen drawer).
+   Global on purpose — identical on every page. On-brand: warm charcoal canvas,
+   cream type, Mincho links + Cormorant CTA. */
+
+.mnav-burger { display: none; }
+.mnav { display: none; }
+
+@media (max-width: 820px) {
+  .mnav-burger {
+    display: flex;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 1300;
+    width: 46px;
+    height: 46px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(22, 20, 16, 0.55);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(245, 243, 234, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 0;
+  }
+  .mnav-burger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #f5f3ea;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+  .mnav-burger.is-open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .mnav-burger.is-open span:nth-child(2) { opacity: 0; }
+  .mnav-burger.is-open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+  .mnav {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 1290;
+    align-items: center;
+    justify-content: center;
+    background: rgba(18, 16, 13, 0.97);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .mnav.is-open { opacity: 1; pointer-events: auto; }
+
+  .mnav__links { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+  .mnav__links a {
+    font-family: 'Zen Old Mincho', serif;
+    font-size: 26px;
+    letter-spacing: 0.14em;
+    color: #f5f3ea;
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+  }
+  .mnav.is-open .mnav__links a { opacity: 0.92; transform: none; }
+  .mnav.is-open .mnav__links a:nth-child(2) { transition-delay: 0.05s; }
+  .mnav.is-open .mnav__links a:nth-child(3) { transition-delay: 0.1s; }
+  .mnav.is-open .mnav__links a:nth-child(4) { transition-delay: 0.15s; }
+  .mnav.is-open .mnav__links a:nth-child(5) { transition-delay: 0.2s; }
+  .mnav__links a.is-current { text-decoration: underline; text-underline-offset: 0.3em; text-decoration-color: rgba(245, 243, 234, 0.5); }
+
+  .mnav__cta {
+    margin-top: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    background: #f5f3ea;
+    color: #26261c !important;
+    padding: 13px 34px;
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.45s ease 0.24s, transform 0.45s ease 0.24s;
+  }
+  .mnav.is-open .mnav__cta { opacity: 1; transform: none; }
+
+  /* Suppress the mocks' built-in desktop nav / inert burgers on mobile so the
+     shared drawer is the single source of navigation. */
+  .mnga-top .nav__links,
+  .mnga-top .burger,
+  .mnga-activities .nav__links,
+  .mnga-activities .nav__burger,
+  .mnga-about .site-nav__cta,
+  .mnga-report .site-nav__cta,
+  .mnga-report-detail .site-nav__cta,
+  .mnga-news-detail .site-nav__cta { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mnav__links a, .mnav__cta { transition: none !important; opacity: 0.92; transform: none; }
+  .mnav__cta { opacity: 1; }
+}
+
+/* ── Smartphone refinements ───────────────────────────────────────────
+   The TOP hero headline (clamp min 2.4rem) is too large for ~375–430px and
+   the keep-all quoted segment overflowed the viewport. Scale it down and allow
+   a last-resort wrap so nothing ever spills off-screen. */
+@media (max-width: 600px) {
+  .mnga-top .hero__jp {
+    font-size: clamp(1.55rem, 6.2vw, 2.1rem) !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.02em !important;
+    overflow-wrap: anywhere;
+  }
+  .mnga-top .hero__en { font-size: 1rem !important; margin-top: 20px !important; }
+  .mnga-top .hero__meta { margin-top: 26px !important; }
+}

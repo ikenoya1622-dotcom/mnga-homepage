@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { gsap, ScrollTrigger, prefersReduced, loadLenis, observeSplitLines } from '../../lib/mngaMotion'
 import { supabase } from '../../lib/supabase'
 import { SplitLines, Preloader } from '../../components/mnga/parts'
+import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/top.css'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
@@ -168,6 +169,7 @@ export default function Home() {
   return (
     <div className="mnga-top js" ref={rootRef}>
       <Preloader variant="logo" caption="Make Nippon Great Again" />
+      <MobileNav current="/" />
 
       <header id="hdr">
         <nav className="nav">

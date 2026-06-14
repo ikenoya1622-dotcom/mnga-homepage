@@ -22,7 +22,7 @@
     background:
       radial-gradient(58% 42% at 82% -4%, rgba(120,150,210,.12), rgba(0,0,0,0) 60%),
       radial-gradient(52% 50% at -4% 104%, rgba(196,150,110,.09), rgba(0,0,0,0) 60%); }
-.mnga-top::after{ content:''; position:fixed; inset:0; z-index:200; pointer-events:none; opacity:.04; mix-blend-mode:soft-light;
+.mnga-top::after{ content:''; position:fixed; inset:0; z-index:200; pointer-events:none; opacity:.055; mix-blend-mode:soft-light;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .mnga-top .en{ font-family:var(--f-en); }
 .mnga-top ::selection{ background:var(--cream); color:var(--ink-dark); }
@@ -89,8 +89,17 @@
 @media (max-width:900px){
 .mnga-top .hero__rail{ display:none; }
 }
-.mnga-top section.band{ padding:clamp(72px,12vh,160px) 0; scroll-margin-top:72px; }
-.mnga-top .band--a, .mnga-top .band--b{ background:transparent; }
+.mnga-top section.band{ padding:clamp(72px,12vh,160px) 0; scroll-margin-top:72px; position:relative; }
+/* セクションごとの奥行き：上部からの淡い採光＋トーン差で「のっぺり」を解消 */
+.mnga-top .band--a{ background:
+    radial-gradient(120% 78% at 50% 0%, rgba(245,243,234,.05), rgba(245,243,234,0) 52%),
+    linear-gradient(180deg, rgba(52,50,43,.45) 0%, rgba(35,34,32,0) 30%, rgba(26,25,23,.42) 100%); }
+.mnga-top .band--b{ background:
+    radial-gradient(120% 78% at 50% 0%, rgba(130,160,215,.055), rgba(0,0,0,0) 55%),
+    linear-gradient(180deg, rgba(28,27,25,.5) 0%, rgba(35,34,32,0) 35%, rgba(48,46,40,.4) 100%); }
+/* 隣接バンドの境界に薄いハイライト線を引き、面の切り替わりを明示 */
+.mnga-top section.band + section.band::after{ content:''; position:absolute; left:0; right:0; top:0; height:1px;
+    background:linear-gradient(90deg, rgba(245,243,234,0), rgba(245,243,234,.14) 50%, rgba(245,243,234,0)); pointer-events:none; }
 .mnga-top .shead{ display:flex; align-items:baseline; gap:14px; margin-bottom:48px; }
 .mnga-top .shead__no{ font-family:var(--f-en); font-weight:500; font-size:17px; letter-spacing:.04em; color:var(--cream); }
 .mnga-top .shead__kick{ position:relative; font-family:var(--f-en); font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--olive);

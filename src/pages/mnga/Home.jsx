@@ -210,13 +210,14 @@ export default function Home() {
         <span className="hero__scroll en">SCROLL</span>
       </section>
 
-      {/* 01 Purpose */}
+      {/* 01 What We Are */}
       <section className="band band--a" id="purpose">
         <div className="wrap">
-          <div className="shead reveal"><span className="shead__no en">01</span><span className="shead__kick en">Our Purpose<span className="shead__rule" aria-hidden="true" /></span></div>
-          <SplitLines className="stitle" lines={['この30年を、', '「<span class="accent">失われた</span>」とは呼ばない。']} />
-          <p className="lede reveal">奪われたのではありません。<strong>経営者であるわれわれ自身が、失った30年</strong>です。共通の将来像を描けず、計画を執行まで運べず、既存事業を守るために自己変革から逃げてきた。その結果、新しい産業が生まれず、停滞を招きました。</p>
-          <p className="lede reveal">停滞を招いたのが経営者の責任なら、それを変えられるのも、また経営者です。MNGAは、大企業とベンチャーを<strong>接続</strong>し、新産業を案件化・検証・事業化まで前進させる実装基盤です。</p>
+          <div className="shead reveal"><span className="shead__no en">01</span><span className="shead__kick en">What We Are<span className="shead__rule" aria-hidden="true" /></span></div>
+          <SplitLines className="stitle" lines={['協業を、', '検討で終わらせない。']} />
+          <p className="lede reveal">多くの団体は、交流や情報交換に留まり、取引の実行までは到達しません。MNGAは、構想を「実行」に落とし込み、<strong>ディールとして成立させること</strong>にこだわります。</p>
+          <p className="lede reveal">参加できるのは、自ら事業を起こし、動かし、意思決定できる立場の方に限ります。その結果、組織規模や知名度に依存しない形で、大企業とベンチャーが対等に向き合い、本気で協業できる環境が成立します。</p>
+          <p className="lede reveal">MNGAが目指すのは、個社の利益に閉じた営みではありません。実行とディールの連鎖によって産業の競争力を引き上げ、<strong>日本全体を再び前へ進める</strong>、具体的な成果を積み上げます。</p>
         </div>
       </section>
 

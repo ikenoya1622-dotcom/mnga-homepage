@@ -6,6 +6,7 @@ import BlockEditor, {
   hydrateBlocks,
   validateImageFile,
 } from '../components/BlockEditor'
+import '../styles/mnga/admin.css'
 
 const BUCKET = 'report-thumbnails'
 // Reports（活動レポート）のカテゴリ＝一覧フィルタ／カードのタグ（mock準拠）
@@ -332,87 +333,43 @@ export default function Admin() {
   // ── 一覧ビュー ─────────────────────────────────────────────
   if (view === 'list') {
     return (
-      <div style={{ minHeight: '100vh', background: '#f9fafb', fontFamily: 'Zen Old Mincho, serif' }}>
+      <div className="mnga-admin">
         <AdminHeader
           right={
-            <button
-              type="button"
-              onClick={goToNewEditor}
-              style={{
-                padding: '8px 20px',
-                background: '#000',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '4px',
-                fontSize: '14px',
-                fontFamily: 'Zen Old Mincho, serif',
-                letterSpacing: '0.08em',
-                cursor: 'pointer',
-              }}
-            >
+            <button type="button" onClick={goToNewEditor} className="adm-btn adm-btn--solid">
               新規投稿 ＋
             </button>
           }
         />
 
-        <div style={{ maxWidth: '900px', margin: '0 auto', padding: '48px 24px' }}>
+        <div className="adm-container">
           {loading ? (
-            <p style={{ color: '#888' }}>読み込み中...</p>
+            <p className="adm-muted">読み込み中...</p>
           ) : articles.length === 0 ? (
-            <p style={{ color: '#888' }}>記事がありません</p>
+            <p className="adm-muted">記事がありません</p>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 160px 180px',
-                gap: '16px',
-                padding: '12px 20px',
-                background: '#f3f4f6',
-                borderRadius: '4px',
-                fontSize: '13px',
-                color: '#666',
-                letterSpacing: '0.05em',
-              }}>
+            <div className="adm-list">
+              <div className="adm-list__head">
                 <span>タイトル</span>
                 <span>公開日</span>
                 <span>操作</span>
               </div>
               {articles.map((article) => (
-                <div
-                  key={article.id}
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 160px 180px',
-                    gap: '16px',
-                    padding: '16px 20px',
-                    background: '#fff',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '4px',
-                    alignItems: 'center',
-                  }}
-                >
-                  <span style={{ fontSize: '15px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    {article.title}
+                <div key={article.id} className="adm-row">
+                  <span className="adm-row__title">
+                    <span>{article.title}</span>
                     {article.published_at > new Date().toISOString() && (
-                      <span style={{ fontSize: '11px', background: '#fef3c7', color: '#d97706', border: '1px solid #fcd34d', borderRadius: '3px', padding: '1px 6px', flexShrink: 0, letterSpacing: '0.04em' }}>
-                        予約中
-                      </span>
+                      <span className="adm-pill adm-pill--reserved">予約中</span>
                     )}
                   </span>
-                  <span style={{ fontSize: '14px', color: '#555' }}>
+                  <span className="adm-row__date">
                     {article.published_at ? article.published_at.slice(0, 16).replace('T', ' ') : '—'}
                   </span>
-                  <div style={{ display: 'flex', gap: '8px' }}>
-                    <button
-                      onClick={() => startEdit(article)}
-                      style={{ padding: '6px 16px', background: 'transparent', border: '1px solid #000', borderRadius: '4px', fontSize: '13px', fontFamily: 'Zen Old Mincho, serif', cursor: 'pointer', letterSpacing: '0.05em' }}
-                    >
+                  <div className="adm-row__actions">
+                    <button onClick={() => startEdit(article)} className="adm-btn adm-btn--sm">
                       編集
                     </button>
-                    <button
-                      onClick={() => handleDelete(article.id)}
-                      style={{ padding: '6px 16px', background: 'transparent', border: '1px solid #c8392b', color: '#c8392b', borderRadius: '4px', fontSize: '13px', fontFamily: 'Zen Old Mincho, serif', cursor: 'pointer', letterSpacing: '0.05em' }}
-                    >
+                    <button onClick={() => handleDelete(article.id)} className="adm-btn adm-btn--sm adm-btn--danger">
                       削除
                     </button>
                   </div>
@@ -427,70 +384,17 @@ export default function Admin() {
 
   // ── エディタビュー ─────────────────────────────────────────
   return (
-    <div style={{ minHeight: '100vh', background: '#fff', fontFamily: 'Zen Old Mincho, serif' }}>
+    <div className="mnga-admin adm-editor">
       {/* 固定ヘッダー */}
-      <header style={{
-        position: 'fixed',
-        top: 0, left: 0, right: 0,
-        height: '56px',
-        background: '#fff',
-        borderBottom: '1px solid #e5e7eb',
-        zIndex: 100,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 32px',
-      }}>
-        <button
-          type="button"
-          onClick={goToList}
-          style={{
-            background: 'transparent',
-            border: 'none',
-            fontSize: '15px',
-            fontFamily: 'Zen Old Mincho, serif',
-            cursor: 'pointer',
-            color: '#374151',
-            letterSpacing: '0.05em',
-          }}
-        >
+      <header className="adm-editbar">
+        <button type="button" onClick={goToList} className="adm-btn adm-btn--ghost">
           ← 一覧に戻る
         </button>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-          <button
-            type="button"
-            onClick={() => setShowPreview(true)}
-            style={{
-              background: 'transparent',
-              border: '1px solid #d1d5db',
-              borderRadius: '4px',
-              padding: '8px 20px',
-              fontSize: '14px',
-              fontFamily: 'Zen Old Mincho, serif',
-              letterSpacing: '0.08em',
-              cursor: 'pointer',
-              color: '#374151',
-            }}
-          >
+        <div className="adm-editbar__actions">
+          <button type="button" onClick={() => setShowPreview(true)} className="adm-btn">
             プレビュー
           </button>
-          <button
-            type="button"
-            onClick={handleSubmit}
-            disabled={submitting}
-            style={{
-              background: '#000',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '4px',
-              padding: '8px 24px',
-              fontSize: '14px',
-              fontFamily: 'Zen Old Mincho, serif',
-              letterSpacing: '0.08em',
-              cursor: submitting ? 'not-allowed' : 'pointer',
-              opacity: submitting ? 0.6 : 1,
-            }}
-          >
+          <button type="button" onClick={handleSubmit} disabled={submitting} className="adm-btn adm-btn--solid">
             {submitting ? '保存中...' : '保存する'}
           </button>
         </div>
@@ -507,93 +411,59 @@ export default function Admin() {
       )}
 
       {/* スクロールエリア */}
-      <div style={{ paddingTop: '56px' }}>
-        <div style={{ maxWidth: '760px', margin: '0 auto', padding: '60px 40px' }}>
+      <div className="adm-editbody">
+        <div className="adm-editinner">
 
           {/* 公開日 */}
-          <div style={{ marginBottom: '24px' }}>
+          <div className="adm-field">
             <input
               type="datetime-local"
+              className="adm-input adm-input--inline"
               value={publishedAt}
               onChange={(e) => setPublishedAt(e.target.value)}
-              style={{
-                fontSize: '13px',
-                color: '#888',
-                border: '1px solid #e5e7eb',
-                borderRadius: '4px',
-                padding: '4px 10px',
-                fontFamily: 'Zen Old Mincho, serif',
-                outline: 'none',
-                background: 'transparent',
-              }}
             />
           </div>
 
           {/* カテゴリ（一覧フィルタ／カードのタグ） */}
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', fontSize: '12px', color: '#6b7280', marginBottom: '6px' }}>カテゴリ</label>
+          <div className="adm-field">
+            <label className="adm-label">カテゴリ</label>
             <select
+              className="adm-select"
+              style={{ width: 'auto' }}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              style={{ fontSize: '14px', color: '#333', border: '1px solid #e5e7eb', borderRadius: '4px', padding: '8px 10px', fontFamily: 'Zen Old Mincho, serif', background: '#fff', outline: 'none' }}
             >
               {REPORT_CATEGORIES.map((c) => <option key={c.key} value={c.key}>{c.key}（{c.ja}）</option>)}
             </select>
           </div>
 
           {/* 抜粋（リード文・任意） */}
-          <div style={{ marginBottom: '24px' }}>
-            <label style={{ display: 'block', fontSize: '12px', color: '#6b7280', marginBottom: '6px' }}>抜粋（カード／詳細のリード文・任意）</label>
+          <div className="adm-field">
+            <label className="adm-label">抜粋（カード／詳細のリード文・任意）</label>
             <textarea
+              className="adm-textarea"
               value={excerpt}
               onChange={(e) => setExcerpt(e.target.value.slice(0, 300))}
               placeholder="一覧カードと記事冒頭に表示される短い要約（未入力なら本文から自動生成）"
               rows={2}
-              style={{ width: '100%', fontSize: '14px', color: '#333', border: '1px solid #e5e7eb', borderRadius: '4px', padding: '10px', fontFamily: 'Zen Old Mincho, serif', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
             />
           </div>
 
           {/* サムネイル */}
           <div
+            className={`adm-thumb${previewUrl ? ' adm-thumb--filled' : ''}`}
             onClick={() => !previewUrl && thumbnailInputRef.current && thumbnailInputRef.current.click()}
-            style={{
-              width: '100%',
-              aspectRatio: previewUrl ? 'auto' : '16 / 6',
-              background: previewUrl ? 'transparent' : '#f3f4f6',
-              border: previewUrl ? 'none' : '2px dashed #d1d5db',
-              borderRadius: '6px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: previewUrl ? 'default' : 'pointer',
-              marginBottom: '32px',
-              position: 'relative',
-              overflow: 'hidden',
-            }}
           >
             {previewUrl ? (
               <>
-                <img src={previewUrl} alt="thumbnail" style={{ width: '100%', display: 'block' }} />
-                <label style={{
-                  position: 'absolute',
-                  bottom: '10px',
-                  right: '10px',
-                  background: 'rgba(0,0,0,0.55)',
-                  color: '#fff',
-                  padding: '4px 12px',
-                  fontSize: '12px',
-                  borderRadius: '3px',
-                  cursor: 'pointer',
-                  fontFamily: 'Zen Old Mincho, serif',
-                }}>
+                <img src={previewUrl} alt="thumbnail" />
+                <label className="adm-thumb__change">
                   変更
                   <input type="file" accept="image/*" onChange={handleThumbnailChange} style={{ display: 'none' }} />
                 </label>
               </>
             ) : (
-              <span style={{ color: '#9ca3af', fontSize: '15px' }}>
-                ＋ サムネイル画像を追加
-              </span>
+              <span className="adm-thumb__hint">＋ サムネイル画像を追加</span>
             )}
             <input
               ref={thumbnailInputRef}
@@ -610,17 +480,11 @@ export default function Admin() {
             onChange={(e) => setTitle(e.target.value.slice(0, 200))}
             placeholder="タイトルを入力"
             maxLength={200}
-            style={{
-              fontSize: '36px',
-              fontWeight: '700',
-              letterSpacing: '0.05em',
-              lineHeight: '1.4',
-              marginBottom: '24px',
-              background: 'transparent',
-            }}
+            className="adm-title-input"
+            style={{ marginBottom: '24px' }}
           />
 
-          <hr style={{ border: 'none', borderTop: '1px solid #e5e7eb', marginBottom: '16px' }} />
+          <hr className="adm-divider" />
 
           {/* ブロックエディタ */}
           <BlockEditor blocks={blocks} onChange={setBlocks} />

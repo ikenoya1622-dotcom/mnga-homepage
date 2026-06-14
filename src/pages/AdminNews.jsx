@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import AdminHeader from '../components/AdminHeader'
 import BlockEditor, { hydrateBlocks } from '../components/BlockEditor'
+import '../styles/mnga/admin.css'
 
 // News（お知らせ）の両立型タグ：編集系（お知らせ/プレス/イベント）＋情報公開（定款・事業報告のPDF）
 const CATEGORIES = ['お知らせ', 'プレス', 'イベント', '情報公開']
@@ -226,99 +227,58 @@ export default function AdminNews() {
       .filter((g) => g.items.length > 0 || CATEGORIES.includes(g.category))
 
     return (
-      <div style={{ minHeight: '100vh', background: '#f9fafb', fontFamily: 'Zen Old Mincho, serif' }}>
+      <div className="mnga-admin">
         <AdminHeader
           right={
-            <button
-              onClick={openNew}
-              style={{
-                padding: '8px 16px', fontSize: '13px', background: '#000',
-                color: '#fff', border: 'none', borderRadius: '4px',
-                cursor: 'pointer', fontFamily: 'inherit', letterSpacing: '0.05em',
-              }}
-            >
+            <button onClick={openNew} className="adm-btn adm-btn--solid">
               + 新規作成
             </button>
           }
         />
 
-        <main style={{ padding: '40px' }}>
+        <main className="adm-container adm-container--pad40">
           {loading ? (
-            <p style={{ color: '#888' }}>読み込み中...</p>
+            <p className="adm-muted">読み込み中...</p>
           ) : items.length === 0 ? (
-            <p style={{ color: '#888' }}>お知らせはまだありません。「新規作成」から追加してください。</p>
+            <p className="adm-muted">お知らせはまだありません。「新規作成」から追加してください。</p>
           ) : (
             grouped.map((g) => (
-              <section key={g.category} style={{ marginBottom: '40px' }}>
-                <h2 style={{ fontSize: '16px', fontWeight: '700', marginBottom: '12px' }}>
-                  {g.category}
-                  <span style={{ color: '#9ca3af', fontWeight: '400', marginLeft: '8px', fontSize: '13px' }}>{g.items.length}件</span>
+              <section key={g.category} className="adm-group">
+                <h2 className="adm-group__head">
+                  <span className="adm-group__name">{g.category}</span>
+                  <span className="adm-group__count en">{g.items.length}件</span>
                 </h2>
                 {g.items.length === 0 ? (
-                  <p style={{ color: '#9ca3af', fontSize: '14px' }}>なし</p>
+                  <p className="adm-empty">なし</p>
                 ) : (
-                  <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '6px' }}>
-                    {g.items.map((it, idx) => {
+                  <div className="adm-card">
+                    {g.items.map((it) => {
                       const hasBlocks = Array.isArray(it.content) && it.content.length > 0
                       return (
-                        <div
-                          key={it.id}
-                          style={{
-                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                            padding: '16px 20px',
-                            borderBottom: idx < g.items.length - 1 ? '1px solid #e5e7eb' : 'none',
-                          }}
-                        >
-                          <div style={{ flex: 1, minWidth: 0 }}>
-                            <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>
+                        <div key={it.id} className="adm-item">
+                          <div className="adm-item__main">
+                            <p className="adm-item__meta">
                               {it.published_at}
                               {it.file_url && ' ・ PDF'}
                               {hasBlocks && ' ・ 本文あり'}
                             </p>
-                            <p style={{ fontSize: '14px', fontWeight: '500', wordBreak: 'break-word' }}>
-                              {it.title}
-                            </p>
+                            <p className="adm-item__title">{it.title}</p>
                           </div>
-                          <div style={{ display: 'flex', gap: '8px', marginLeft: '16px' }}>
+                          <div className="adm-item__actions">
                             {it.file_url && (
-                              <a href={it.file_url} target="_blank" rel="noreferrer"
-                                 style={{
-                                   padding: '6px 12px', fontSize: '12px',
-                                   border: '1px solid #d1d5db', borderRadius: '4px',
-                                   color: '#374151', textDecoration: 'none', fontFamily: 'inherit',
-                                 }}>
+                              <a href={it.file_url} target="_blank" rel="noreferrer" className="adm-btn adm-btn--sm">
                                 PDF
                               </a>
                             )}
                             {hasBlocks && (
-                              <a href={`/news/${it.id}`} target="_blank" rel="noreferrer"
-                                 style={{
-                                   padding: '6px 12px', fontSize: '12px',
-                                   border: '1px solid #d1d5db', borderRadius: '4px',
-                                   color: '#374151', textDecoration: 'none', fontFamily: 'inherit',
-                                 }}>
+                              <a href={`/news/${it.id}`} target="_blank" rel="noreferrer" className="adm-btn adm-btn--sm">
                                 プレビュー
                               </a>
                             )}
-                            <button
-                              onClick={() => openEdit(it)}
-                              style={{
-                                padding: '6px 12px', fontSize: '12px',
-                                border: '1px solid #d1d5db', borderRadius: '4px',
-                                background: '#fff', cursor: 'pointer', fontFamily: 'inherit',
-                              }}
-                            >
+                            <button onClick={() => openEdit(it)} className="adm-btn adm-btn--sm">
                               編集
                             </button>
-                            <button
-                              onClick={() => handleDelete(it)}
-                              style={{
-                                padding: '6px 12px', fontSize: '12px',
-                                border: '1px solid #fca5a5', color: '#dc2626',
-                                borderRadius: '4px', background: '#fff',
-                                cursor: 'pointer', fontFamily: 'inherit',
-                              }}
-                            >
+                            <button onClick={() => handleDelete(it)} className="adm-btn adm-btn--sm adm-btn--danger">
                               削除
                             </button>
                           </div>
@@ -337,116 +297,96 @@ export default function AdminNews() {
 
   // ── エディタビュー ──
   return (
-    <div style={{ minHeight: '100vh', background: '#f9fafb', fontFamily: 'Zen Old Mincho, serif' }}>
+    <div className="mnga-admin">
       <AdminHeader
         right={
           <>
-            <button
-              onClick={() => { resetForm(); setView('list') }}
-              style={{
-                padding: '8px 16px', fontSize: '13px',
-                border: '1px solid #d1d5db', background: '#fff',
-                borderRadius: '4px', cursor: 'pointer', fontFamily: 'inherit',
-              }}
-            >
+            <button onClick={() => { resetForm(); setView('list') }} className="adm-btn adm-btn--sm">
               戻る
             </button>
-            <button
-              onClick={handleSubmit}
-              disabled={submitting}
-              style={{
-                padding: '8px 16px', fontSize: '13px',
-                background: submitting ? '#555' : '#000', color: '#fff',
-                border: 'none', borderRadius: '4px',
-                cursor: submitting ? 'not-allowed' : 'pointer',
-                fontFamily: 'inherit', letterSpacing: '0.05em',
-              }}
-            >
+            <button onClick={handleSubmit} disabled={submitting} className="adm-btn adm-btn--solid adm-btn--sm">
               {submitting ? '保存中...' : editId ? '更新' : '公開'}
             </button>
           </>
         }
       />
 
-      <main style={{ padding: '40px', maxWidth: '760px', margin: '0 auto' }}>
+      <main className="adm-container adm-container--narrow adm-container--pad40">
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>カテゴリ</label>
+          <div className="adm-field">
+            <label className="adm-label">カテゴリ</label>
             <select
+              className="adm-select"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              style={inputStyle}
             >
               {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
-            <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '6px' }}>
+            <p className="adm-hint">
               {isAnnouncement
                 ? '編集系カテゴリ（お知らせ／プレス／イベント）は本文ブロック（見出し・本文・画像）を編集できます。'
                 : '「情報公開」は定款・事業報告などのPDFを添付して公開します（本文ブロックは不要）。'}
             </p>
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>日付</label>
+          <div className="adm-field">
+            <label className="adm-label">日付</label>
             <input
               type="date"
+              className="adm-input"
               value={publishedAt}
               onChange={(e) => setPublishedAt(e.target.value)}
-              style={inputStyle}
               required
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>タイトル</label>
+          <div className="adm-field">
+            <label className="adm-label">タイトル</label>
             <input
               type="text"
+              className="adm-input"
               value={title}
               onChange={(e) => setTitle(e.target.value.slice(0, 200))}
               maxLength={200}
               placeholder="タイトルを入力"
-              style={inputStyle}
               required
             />
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>
+          <div className="adm-field">
+            <label className="adm-label">
               PDF ファイル（任意・10MB まで{isAnnouncement ? '・本文と併用可' : ''}）
             </label>
             <input
               type="file"
               accept="application/pdf"
               onChange={handlePdfChange}
-              style={{ fontSize: '14px' }}
             />
             {pdfFile && (
-              <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
-                選択中: {pdfFile.name}
-              </p>
+              <p className="adm-hint">選択中: {pdfFile.name}</p>
             )}
             {!pdfFile && fileUrl && (
-              <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
+              <p className="adm-hint">
                 現在の PDF: <a href={fileUrl} target="_blank" rel="noreferrer">{fileUrl}</a>
               </p>
             )}
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={labelStyle}>表示順（小さいほど上・同日付の中で効く）</label>
+          <div className="adm-field">
+            <label className="adm-label">表示順（小さいほど上・同日付の中で効く）</label>
             <input
               type="number"
+              className="adm-input adm-input--num"
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
-              style={{ ...inputStyle, width: '120px' }}
             />
           </div>
         </form>
 
         {isAnnouncement && (
           <div style={{ marginTop: '32px' }}>
-            <label style={labelStyle}>本文</label>
-            <div style={{ background: '#fff', border: '1px solid #e5e7eb', borderRadius: '6px', padding: '24px' }}>
+            <label className="adm-label">本文</label>
+            <div className="adm-card adm-card--pad">
               <BlockEditor blocks={blocks} onChange={setBlocks} />
             </div>
           </div>
@@ -454,25 +394,4 @@ export default function AdminNews() {
       </main>
     </div>
   )
-}
-
-const labelStyle = {
-  display: 'block',
-  fontSize: '13px',
-  fontWeight: '600',
-  color: '#374151',
-  marginBottom: '6px',
-  letterSpacing: '0.05em',
-}
-
-const inputStyle = {
-  width: '100%',
-  padding: '10px 12px',
-  fontSize: '15px',
-  fontFamily: 'inherit',
-  border: '1px solid #d1d5db',
-  borderRadius: '4px',
-  outline: 'none',
-  boxSizing: 'border-box',
-  background: '#fff',
 }

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 
 export const BLOCK_TYPES = [
-  { type: 'heading', label: '大見出し', color: '#7c3aed' },
-  { type: 'subheading', label: '小見出し', color: '#2563eb' },
-  { type: 'text', label: '本文', color: '#374151' },
-  { type: 'image', label: '画像', color: '#d97706' },
+  { type: 'heading', label: '大見出し' },
+  { type: 'subheading', label: '小見出し' },
+  { type: 'text', label: '本文' },
+  { type: 'image', label: '画像' },
 ]
 
 export function makeId() {
@@ -39,7 +39,7 @@ export function validateImageFile(f) {
   return true
 }
 
-export function AutoResizeTextarea({ value, onChange, placeholder, style, maxLength }) {
+export function AutoResizeTextarea({ value, onChange, placeholder, style, className = '', maxLength }) {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -56,13 +56,13 @@ export function AutoResizeTextarea({ value, onChange, placeholder, style, maxLen
       onChange={onChange}
       placeholder={placeholder}
       maxLength={maxLength}
+      className={`adm-autoresize${className ? ' ' + className : ''}`}
       style={{
         width: '100%',
         border: 'none',
         outline: 'none',
         resize: 'none',
         overflow: 'hidden',
-        fontFamily: 'Zen Old Mincho, serif',
         boxSizing: 'border-box',
         ...style,
       }}
@@ -74,45 +74,23 @@ function AddBlockButton({ onAdd }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div style={{ position: 'relative', margin: '4px 0' }}>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          style={{
-            width: '24px', height: '24px', borderRadius: '50%',
-            border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer',
-            fontSize: '16px', color: '#9ca3af',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0, padding: 0, fontFamily: 'Zen Old Mincho, serif',
-          }}
-        >
-          ＋
-        </button>
-        <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
+    <div className="adm-be__add">
+      <div className="adm-be__add-line">
+        <i />
+        <button type="button" className="adm-be__add-btn" onClick={() => setOpen((v) => !v)}>＋</button>
+        <i />
       </div>
 
       {open && (
         <>
-          <div onClick={() => setOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 200 }} />
-          <div style={{
-            position: 'absolute', left: '50%', transform: 'translateX(-50%)',
-            top: '30px', background: '#fff', border: '1px solid #e5e7eb',
-            borderRadius: '8px', boxShadow: '0 4px 16px rgba(0,0,0,0.10)',
-            zIndex: 201, display: 'flex', gap: '8px', padding: '10px 14px', whiteSpace: 'nowrap',
-          }}>
-            {BLOCK_TYPES.map(({ type, label, color }) => (
+          <div className="adm-be__overlay" onClick={() => setOpen(false)} />
+          <div className="adm-be__menu">
+            {BLOCK_TYPES.map(({ type, label }) => (
               <button
                 key={type}
                 type="button"
+                className="adm-be__menu-btn"
                 onClick={() => { onAdd(type); setOpen(false) }}
-                style={{
-                  padding: '6px 14px', fontSize: '13px',
-                  fontFamily: 'Zen Old Mincho, serif',
-                  background: 'transparent', border: `1px solid ${color}`, color,
-                  borderRadius: '4px', cursor: 'pointer', letterSpacing: '0.04em',
-                }}
               >
                 {label}
               </button>
@@ -125,61 +103,16 @@ function AddBlockButton({ onAdd }) {
 }
 
 function BlockItem({ block, isFirst, isLast, onUpdate, onRemove, onMove, onFileChange }) {
-  const [hovered, setHovered] = useState(false)
   const fileInputRef = useRef(null)
   const blockMeta = BLOCK_TYPES.find((b) => b.type === block.type) || {}
 
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{ position: 'relative', marginBottom: '4px' }}
-    >
-      <div style={{
-        opacity: hovered ? 1 : 0, transition: 'opacity 0.15s',
-        display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', height: '28px',
-      }}>
-        <span style={{
-          fontSize: '11px', fontWeight: '700', color: blockMeta.color || '#555',
-          letterSpacing: '0.04em', padding: '2px 8px',
-          border: `1px solid ${blockMeta.color || '#ccc'}`, borderRadius: '3px',
-        }}>
-          {blockMeta.label || block.type}
-        </span>
-        <button
-          type="button" onClick={() => onMove(block.id, 'up')} disabled={isFirst}
-          style={{
-            padding: '2px 8px', fontSize: '12px', background: 'transparent',
-            border: '1px solid #d1d5db', borderRadius: '3px',
-            cursor: isFirst ? 'default' : 'pointer',
-            color: isFirst ? '#d1d5db' : '#374151',
-            fontFamily: 'Zen Old Mincho, serif',
-          }}
-        >
-          ↑
-        </button>
-        <button
-          type="button" onClick={() => onMove(block.id, 'down')} disabled={isLast}
-          style={{
-            padding: '2px 8px', fontSize: '12px', background: 'transparent',
-            border: '1px solid #d1d5db', borderRadius: '3px',
-            cursor: isLast ? 'default' : 'pointer',
-            color: isLast ? '#d1d5db' : '#374151',
-            fontFamily: 'Zen Old Mincho, serif',
-          }}
-        >
-          ↓
-        </button>
-        <button
-          type="button" onClick={() => onRemove(block.id)}
-          style={{
-            padding: '2px 8px', fontSize: '12px', background: 'transparent',
-            border: '1px solid #fca5a5', color: '#dc2626', borderRadius: '3px',
-            cursor: 'pointer', fontFamily: 'Zen Old Mincho, serif',
-          }}
-        >
-          削除
-        </button>
+    <div className="adm-be__block">
+      <div className="adm-be__ctrl">
+        <span className="adm-be__tag">{blockMeta.label || block.type}</span>
+        <button type="button" className="adm-be__ctrl-btn" onClick={() => onMove(block.id, 'up')} disabled={isFirst}>↑</button>
+        <button type="button" className="adm-be__ctrl-btn" onClick={() => onMove(block.id, 'down')} disabled={isLast}>↓</button>
+        <button type="button" className="adm-be__ctrl-btn adm-be__ctrl-btn--danger" onClick={() => onRemove(block.id)}>削除</button>
       </div>
 
       <div>
@@ -188,7 +121,7 @@ function BlockItem({ block, isFirst, isLast, onUpdate, onRemove, onMove, onFileC
             value={block.content}
             onChange={(e) => onUpdate(block.id, { content: e.target.value })}
             placeholder="大見出しを入力"
-            style={{ fontSize: '28px', fontWeight: '700', letterSpacing: '0.05em', lineHeight: '1.4', padding: '4px 0', background: 'transparent' }}
+            className="adm-be__heading"
           />
         )}
         {block.type === 'subheading' && (
@@ -196,7 +129,7 @@ function BlockItem({ block, isFirst, isLast, onUpdate, onRemove, onMove, onFileC
             value={block.content}
             onChange={(e) => onUpdate(block.id, { content: e.target.value })}
             placeholder="小見出しを入力"
-            style={{ fontSize: '20px', fontWeight: '700', color: '#444', letterSpacing: '0.05em', lineHeight: '1.5', padding: '4px 0', background: 'transparent' }}
+            className="adm-be__subheading"
           />
         )}
         {block.type === 'text' && (
@@ -204,35 +137,21 @@ function BlockItem({ block, isFirst, isLast, onUpdate, onRemove, onMove, onFileC
             value={block.content}
             onChange={(e) => onUpdate(block.id, { content: e.target.value })}
             placeholder="本文を入力... (**テキスト** で太字)"
-            style={{ fontSize: '18px', lineHeight: '2', letterSpacing: '0.04em', background: 'transparent', padding: '4px 0' }}
+            className="adm-be__text"
           />
         )}
         {block.type === 'image' && (
-          <div style={{ marginBottom: '8px' }}>
+          <div className="adm-be__img">
             {block.previewUrl || block.url ? (
-              <div style={{ position: 'relative' }}>
-                <img src={block.previewUrl || block.url} alt="inserted" style={{ width: '100%', display: 'block', borderRadius: '4px' }} />
-                <label style={{
-                  position: 'absolute', bottom: '10px', right: '10px',
-                  background: 'rgba(0,0,0,0.55)', color: '#fff',
-                  padding: '4px 12px', fontSize: '12px', borderRadius: '3px',
-                  cursor: 'pointer', fontFamily: 'Zen Old Mincho, serif',
-                }}>
+              <div className="adm-be__imgwrap">
+                <img src={block.previewUrl || block.url} alt="inserted" />
+                <label className="adm-thumb__change">
                   変更
                   <input type="file" accept="image/*" onChange={(e) => onFileChange(block.id, e)} style={{ display: 'none' }} />
                 </label>
               </div>
             ) : (
-              <div
-                onClick={() => fileInputRef.current && fileInputRef.current.click()}
-                style={{
-                  width: '100%', aspectRatio: '16 / 9', border: '2px dashed #d1d5db',
-                  borderRadius: '6px', background: '#f9fafb',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer', color: '#9ca3af', fontSize: '15px',
-                  fontFamily: 'Zen Old Mincho, serif',
-                }}
-              >
+              <div className="adm-be__dropzone" onClick={() => fileInputRef.current && fileInputRef.current.click()}>
                 ＋ 画像を追加
                 <input
                   ref={fileInputRef} type="file" accept="image/*"

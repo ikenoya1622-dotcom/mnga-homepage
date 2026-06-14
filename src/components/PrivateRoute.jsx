@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import '../styles/mnga/admin.css'
 
 export default function PrivateRoute({ children }) {
   const [session, setSession] = useState(undefined) // undefined = 確認中
@@ -22,15 +23,7 @@ export default function PrivateRoute({ children }) {
   // セッション確認中はローディング表示
   if (session === undefined) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontFamily: 'Zen Old Mincho, serif',
-        color: '#888',
-        fontSize: '16px',
-      }}>
+      <div className="mnga-admin adm-loading">
         確認中...
       </div>
     )

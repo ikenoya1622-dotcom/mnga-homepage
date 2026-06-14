@@ -195,12 +195,15 @@ export default function Reports() {
 
       <main>
         <section className="phero">
-          <p className="phero__kana">Reports — 活動レポート</p>
-          <h1 className="phero__title">
-            <span className="lineMask"><span className="line">提言ではなく、</span></span>
-            <span className="lineMask"><span className="line">現場の記録を。</span></span>
-          </h1>
-          <p className="phero__lead">共創ラウンドテーブル、協業案件の進捗、登壇・寄稿、プレス発表まで。MNGAが「接続」を実装に変えていく一次情報を、現場の温度のまま記録します。</p>
+          <div className="phero__bg" aria-hidden="true" />
+          <div className="phero__inner">
+            <p className="phero__kana">Reports — 活動レポート</p>
+            <h1 className="phero__title">
+              <span className="lineMask"><span className="line">提言ではなく、</span></span>
+              <span className="lineMask"><span className="line">現場の記録を。</span></span>
+            </h1>
+            <p className="phero__lead">共創ラウンドテーブル、協業案件の進捗、登壇・寄稿、プレス発表まで。MNGAが「接続」を実装に変えていく一次情報を、現場の温度のまま記録します。</p>
+          </div>
         </section>
 
         <div className="repwrap">

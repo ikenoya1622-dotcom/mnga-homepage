@@ -129,6 +129,20 @@ function fixUrls(css) {
     .replace(/url\(['"]?[^)]*board\/櫻田\.jpg['"]?\)/g, "url('/images/board/櫻田.jpg')")
 }
 
+// iOS Safari hardening. The mocks omit vendor prefixes / units that desktop
+// Chromium tolerates but iPhone Safari does not, which made every page look
+// broken on iOS:
+//   - `backdrop-filter` needs `-webkit-backdrop-filter` or the fixed header
+//     blur silently fails and page content bleeds through the translucent bar.
+//   - `svh` is unsupported before iOS 15.4; emit a `vh` fallback first so the
+//     hero / sticky-deck cards keep their full height on older iPhones.
+function iosFixes(css) {
+  return css
+    .replace(/(^|[;{])(\s*)backdrop-filter:\s*([^;}]+)/g,
+      (_m, pre, ws, val) => `${pre}${ws}-webkit-backdrop-filter:${val.trim()};${ws}backdrop-filter:${val.trim()}`)
+    .replace(/([\w-]+)\s*:\s*(\d+(?:\.\d+)?)svh/g, '$1:$2vh;$1:$2svh')
+}
+
 fs.mkdirSync(OUT_DIR, { recursive: true })
 for (const p of PAGES) {
   const html = fs.readFileSync(path.join(MOCKS, p.file), 'utf8')
@@ -136,6 +150,7 @@ for (const p of PAGES) {
   const tree = parse(style)
   let scoped = emit(tree, p.root)
   scoped = fixUrls(scoped)
+  scoped = iosFixes(scoped)
   // Restore the implicit 16px base that the mock relied on (mock <body> had no
   // explicit font-size; the app's global body sets 20px which we must not inherit).
   const header = `/* AUTO-GENERATED from ${p.file} by scripts/scope-mock-css.mjs — do not edit by hand */\n.${p.root}{font-size:16px;}\n`

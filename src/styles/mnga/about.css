@@ -46,7 +46,7 @@
 .mnga-about .thread__node.is-active{ background:#fff; border-color:#fff; transform:translate(-50%,-50%) scale(1); box-shadow:0 0 0 5px rgba(255,255,255,.12); }
 .mnga-about .deck{ position:relative; }
 .mnga-about .card{
-    position:sticky; top:0; min-height:100svh;
+    position:sticky; top:0; min-height:100vh;min-height:100svh;
     display:flex; align-items:center;
     
     padding:calc(72px + 4vh) 7vw 7vh calc(var(--thread-x) + 4vw);
@@ -164,7 +164,7 @@
 .mnga-about .preloader{ display:none; }
 }
 .mnga-about .site-header{ position:fixed; top:0; left:0; right:0; z-index:120; height:72px; display:flex; align-items:center;
-    background:rgba(22,20,16,.58); backdrop-filter:blur(12px); border-bottom:1px solid var(--hair); transition:background .4s; }
+    background:rgba(22,20,16,.58); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); border-bottom:1px solid var(--hair); transition:background .4s; }
 .mnga-about .site-header.solid{ background:rgba(22,20,16,.95); }
 .mnga-about .site-nav{ width:100%; padding:0 6vw; display:flex; align-items:center; justify-content:space-between; }
 .mnga-about .site-logo{ display:inline-flex; align-items:center; text-decoration:none; }

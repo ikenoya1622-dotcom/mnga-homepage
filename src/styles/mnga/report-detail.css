@@ -47,7 +47,7 @@
 .mnga-report-detail .art-pill{ font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ivory);
     border:1px solid var(--hair-strong); border-radius:999px; padding:3px 14px; }
 .mnga-report-detail .art-date{ font-family:'Cormorant Garamond',serif; font-size:14px; color:var(--ivory-dim); }
-.mnga-report-detail .art-title{ font-size:clamp(2.1rem,4.4vw,3.3rem); font-weight:900; line-height:1.4; letter-spacing:.04em; color:var(--ivory); margin-bottom:6px;
+.mnga-report-detail .art-title{ font-size:clamp(1.6rem,3vw,2.4rem); font-weight:900; line-height:1.55; letter-spacing:.03em; color:var(--ivory); margin-bottom:6px;
     word-break:keep-all; line-break:strict; text-wrap:balance; }
 .mnga-report-detail .art-lead{ margin-top:22px; font-size:clamp(1.04rem,1.6vw,1.2rem); color:var(--body); line-height:2.1; }
 .mnga-report-detail .art-utility{ display:flex; align-items:center; justify-content:space-between; gap:18px; padding:16px 0; margin:8px 0 20px; border-bottom:1px solid var(--hair); flex-wrap:wrap; }
@@ -58,7 +58,7 @@
     border:1px solid var(--hair); border-radius:50%; color:var(--ivory-dim); background:transparent; cursor:pointer; transition:all .25s; }
 .mnga-report-detail .art-share a:hover, .mnga-report-detail .art-share button:hover{ color:var(--ink); background:var(--ivory); border-color:var(--ivory); }
 .mnga-report-detail .art-share svg{ width:15px; height:15px; fill:currentColor; }
-.mnga-report-detail .art-hero{ margin:38px 0 4px; }
+.mnga-report-detail .art-hero{ margin:34px 0 4px; width:100%; }
 .mnga-report-detail .art-hero img{ width:100%; aspect-ratio:16/9; object-fit:cover; border:1px solid var(--hair); filter:grayscale(0) brightness(.98) contrast(1.02); display:block; }
 .mnga-report-detail figure{ margin:42px 0; }
 .mnga-report-detail figure img{ width:100%; object-fit:cover; border:1px solid var(--hair); filter:grayscale(.12) brightness(.9) contrast(1.03); display:block; }

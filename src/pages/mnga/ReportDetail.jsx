@@ -53,7 +53,6 @@ function Blocks({ blocks }) {
 function StaticBody() {
   return (
     <>
-      <div className="art-hero reveal"><img src="/act-img/act-match.jpg" alt="共創ラウンドテーブルの会場（イメージ）" /></div>
       <div className="art-body">
         <p>第1回 共創ラウンドテーブルは、大企業とベンチャーの意思決定者が<strong>「対等に向き合う」場</strong>として設計されました。冒頭、会長 櫻田謙悟が「PoCで終わらせず、社会実装まで前進させる」という運営方針を改めて共有し、各社が抱える協業の障壁を率直に持ち寄ることから始まりました。</p>
         <h2 className="reveal">5つの協業テーマ</h2>
@@ -208,6 +207,7 @@ export default function ReportDetail() {
   const lead = isStatic
     ? '2026年5月28日、大企業7社・ベンチャー12社の意思決定者が一堂に会し、第1回 共創ラウンドテーブルを実施しました。協業テーマを5領域に整理し、検証案件の優先順位を合意しました。'
     : (item?.excerpt || '')
+  const heroSrc = isStatic ? '/act-img/act-match.jpg' : (item?.thumbnail_url || '')
 
   return (
     <div className="mnga-report-detail js" ref={rootRef}>
@@ -270,6 +270,10 @@ export default function ReportDetail() {
               )}
               {lead && <p className="art-lead">{lead}</p>}
 
+              {heroSrc && (
+                <div className="art-hero reveal"><img src={heroSrc} alt={title} /></div>
+              )}
+
               <div className="art-utility">
                 <span className="art-source">主催: MNGA 事務局 ／ 記録: 運営事務局</span>
                 <div className="art-share">
@@ -283,12 +287,7 @@ export default function ReportDetail() {
               {isStatic ? (
                 <StaticBody />
               ) : (
-                <>
-                  {item?.thumbnail_url && (
-                    <div className="art-hero reveal"><img src={item.thumbnail_url} alt={title} /></div>
-                  )}
-                  <div className="art-body"><Blocks blocks={item?.content} /></div>
-                </>
+                <div className="art-body"><Blocks blocks={item?.content} /></div>
               )}
 
               <div className="art-tags">

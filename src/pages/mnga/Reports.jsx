@@ -226,13 +226,12 @@ export default function Reports() {
               const inner = (
                 <>
                   <div className="rcard__media">
-                    {a.category && <span className="rcard__cat">{a.category}</span>}
                     <img loading="lazy" decoding="async" src={img} alt="" />
                   </div>
-                  <div className="rcard__meta"><span className="rcard__date en">{fmtDate(a.published_at)}</span><span className="rcard__line" /></div>
+                  {a.category && <span className="rcard__cat">{a.category}</span>}
                   <h2 className="rcard__t">{a.title}</h2>
                   <p className="rcard__ex">{deriveExcerpt(a)}</p>
-                  <span className="rcard__more en">Read</span>
+                  <span className="rcard__date en">{fmtDate(a.published_at)}</span>
                 </>
               )
               return a.id ? (

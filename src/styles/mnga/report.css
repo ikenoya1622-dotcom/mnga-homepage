@@ -39,7 +39,8 @@
 .mnga-report .site-nav__links a:hover, .mnga-report .site-nav__links a[aria-current]{ color:var(--ivory); }
 .mnga-report .site-nav__cta{ font-family:'Cormorant Garamond',serif; font-size:14px; background:var(--ivory); color:var(--ink)!important; padding:9px 20px; border-radius:999px; }
 .mnga-report .phero{ position:relative; min-height:86vh; min-height:86svh; display:flex; align-items:center; padding:120px 6vw 80px; overflow:hidden; isolation:isolate; }
-.mnga-report .phero__bg{ position:absolute; inset:0; z-index:0; background:url("/images/hero/hero-tokyo-dusk.jpg") center/cover no-repeat; filter:brightness(.5) contrast(1.04) saturate(.9); }
+/* Reports固有の背景＝東京の夜景・俯瞰（高速の光跡）。home(夕景)/activities(東京タワー)と差別化。夜景なので輝度はやや高めで光跡を活かす */
+.mnga-report .phero__bg{ position:absolute; inset:0; z-index:0; background:url("/images/hero/hero-tokyo-aerial.jpg") center/cover no-repeat; filter:brightness(.68) contrast(1.05) saturate(.92); }
 .mnga-report .phero::before{ content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
     background:linear-gradient(102deg, rgba(15,14,11,.92) 0%, rgba(18,17,13,.78) 40%, rgba(20,18,15,.5) 74%, rgba(20,18,15,.4) 100%),
               linear-gradient(0deg, var(--bg) 0%, rgba(35,34,32,0) 30%); }

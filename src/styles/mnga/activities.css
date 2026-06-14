@@ -49,6 +49,13 @@
 .mnga-activities .nav__burger{ display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:6px; }
 .mnga-activities .nav__burger span{ width:24px; height:2px; background:var(--cream); display:block; }
 .mnga-activities .phero{ position:relative; min-height:86vh;min-height:86svh; display:flex; align-items:center; padding:120px var(--margin) 80px; overflow:hidden; isolation:isolate; }
+/* 背景＝東京タワー夜景（輝度を落として重厚に）＋左からの暗幕・下端フェードで左寄せ見出しの可読性を確保 */
+.mnga-activities .phero::before{ content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:url('/images/hero/hero-tokyo-tower.webp') center/cover no-repeat; filter:brightness(.5) contrast(1.04) saturate(.85); }
+.mnga-activities .phero::after{ content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    linear-gradient(102deg, rgba(18,16,13,.82) 0%, rgba(18,16,13,.52) 48%, rgba(18,16,13,.34) 100%),
+    linear-gradient(0deg, var(--canvas) 0%, rgba(35,34,32,0) 24%); }
 .mnga-activities .phero__inner{ position:relative; z-index:1; max-width:880px; }
 .mnga-activities .phero__kana{ font-family:var(--f-en); font-size:13px; letter-spacing:.3em; text-transform:uppercase; color:var(--olive);
     display:inline-flex; align-items:center; gap:14px; margin-bottom:28px; }

@@ -113,7 +113,7 @@ export default function Activities() {
 
   return (
     <div className="mnga-activities js" ref={rootRef}>
-      <Seo title="活動内容" path="/activities" description="MNGAは政策提言の団体ではなく、実装するための場。経営者育成・協業マッチング・実装支援・ナレッジ基盤の4機能が連動し、構想を案件に、案件を事業に変える。" />
+      <Seo title="活動内容" path="/activities" description="MNGAは、大企業とベンチャーを接続し新産業の創出を実現する実装基盤。経営者育成・協業マッチング・実装支援・ナレッジ基盤の4機能が連動し、構想を案件化・検証・事業化まで前進させる。" />
       <Preloader variant="mark" caption="Activities" />
       <MobileNav current="/activities" />
 
@@ -137,10 +137,10 @@ export default function Activities() {
           <div className="phero__inner">
             <p className="phero__kana">Activities — 活動内容</p>
             <h1 className="phero__title">
-              <span className="lineMask"><span className="line">提言ではなく、</span></span>
-              <span className="lineMask"><span className="line">実装する。</span></span>
+              <span className="lineMask"><span className="line">提言でも、交流でもない。</span></span>
+              <span className="lineMask"><span className="line">新産業を生む、実装基盤。</span></span>
             </h1>
-            <p className="phero__lead"><strong>MNGAは、政策提言の団体ではありません。実装するための場です。</strong>4つの機能が連動し、構想を案件に、案件を事業に変えていきます。日本の経営に欠けてきた「共創・執行・自己変革・結果へのこだわり」を、この4機能が補います。</p>
+            <p className="phero__lead"><strong>MNGAは、大企業とベンチャーを接続し、構想を案件化・検証・事業化まで実行する実装基盤です。</strong>経営者育成・協業マッチング・実装支援・ナレッジ基盤の4機能が連動し、PoCで終わらせず、新産業の創出まで前進させます。</p>
           </div>
         </section>
 

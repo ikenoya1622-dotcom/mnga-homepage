@@ -188,7 +188,7 @@ export default function About() {
             <div className="lede">
               <p className="kana reveal">THE LOST 30 YEARS</p>
               <h2 className="title reveal">この30年を、<br />「失われた」とは呼ばない。</h2>
-              <p className="body reveal">奪われたのではありません。<strong>私たち自身が「失った」30年</strong>です。共通の将来像を描けず、計画を執行まで運べず、既存事業を守るために自己変革から逃げてきた。その結果、新しい産業が生まれず、日本の停滞を招いたのです。</p>
+              <p className="body reveal">日本のこの30年を、私たちは「失われた30年」とは呼びません。<strong>私たち自身が「失った」30年</strong>です。共通の将来像を描けず、計画を執行まで運べず、既存事業を守るために自己変革から逃げてきた——その結果、新しい産業が生まれず、日本の停滞を招いたのです。</p>
               <div className="chart reveal">
                 <div className="chart__cap">名目GDP（米ドル）　1995 → 2023</div>
                 <svg className="chart__svg" viewBox="0 0 690 262" preserveAspectRatio="xMidYMid meet" role="img" aria-label="日本・米国・中国の名目GDP推移。日本だけが横ばい。">
@@ -231,8 +231,8 @@ export default function About() {
             <div className="lede">
               <p className="kana reveal">THE DISCONNECT</p>
               <h2 className="title reveal">足りないのは構想ではなく、<br />「回路」だった。</h2>
-              <p className="body reveal">構想はありました。足りなかったのは、それを事業化・実装へ<strong>「接続」する回路</strong>です。日本が持つ技術・人材・精神性を掛け合わせる回路さえあれば、世界に不可欠な新産業を生み出し、日本を「いなくてはならない国」と再定義できる。</p>
-              <p className="body reveal">大企業には豊富な資本・顧客基盤・社会実装力がある一方、既存事業に縛られ、外部共創の機敏性に欠ける。ベンチャーには迅速な意思決定と実行力がある一方、実装フィールドや信用、大企業との接点が足りない。両者は、出会わないまま離れていました。</p>
+              <p className="body reveal">このような停滞を打破するには、日本が持つ技術・人材・精神性を掛け合わせ、世界に新たな価値を生み出す新産業が必要です。足りないのは構想ではなく、構想を事業化・実装まで運ぶ<strong>「回路」</strong>。世界に不可欠な新産業を生み出すことで、日本を「いなくてはならない国」と再定義します。</p>
+              <p className="body reveal">大企業には豊富な資本・顧客基盤・社会実装力がある一方、既存事業に縛られ、自己変革や外部共創の機敏性に欠ける。ベンチャーには迅速な意思決定と実行力がある一方、実装フィールドや市場・顧客からの信用、大企業との接点が足りない。<strong>これらを補いあうこと</strong>が、日本に新産業を生み出すために不可欠です。</p>
             </div>
           </div>
         </section>
@@ -244,7 +244,7 @@ export default function About() {
             <div className="lede">
               <p className="kana reveal">OUR ROLE</p>
               <h2 className="title reveal">大企業とベンチャーを、<br />「接続」する実装基盤。</h2>
-              <p className="body reveal">大企業の資産・顧客基盤・意思決定力と、ベンチャーの仮説検証速度を接続する。新産業を案件化・検証・事業化まで前進させ、<strong>PoCで終わらせず、社会実装まで実行する</strong>仕組みです。</p>
+              <p className="body reveal">MNGAの役割は、大企業とベンチャーを接続し、新産業の<strong>案件化・検証・事業化まで前進させる仕組みづくり</strong>です。大企業の資産・顧客基盤・意思決定力とベンチャーの仮説検証速度を接続し、PoCで終わらせず、迅速な検証から事業化・実装まで実行します。</p>
               <p className="body reveal">多くの企業家団体が交流に留まるなか、MNGAは協業・提携から新産業創出までを実現する、経営者と起業家の共創プラットフォームです。</p>
               <div className="nexus reveal">
                 <div className="p"><div className="k">大企業</div><div className="s">資本・顧客基盤・社会実装力</div></div>
@@ -262,8 +262,8 @@ export default function About() {
             <div className="lede">
               <p className="kana reveal">FROM WORDS TO RESULTS</p>
               <h2 className="title reveal">語ることではなく、<br />事業を通じて結果を残す。</h2>
-              <p className="body reveal">評価基準も、撤退ルールも、共創の規律も明示し、<strong>場の品質</strong>を保ちます。提言で終わらせず、実装まで行く。私たちが進める協業案件は、売上だけでなく、生活者価値・社会実装可能性で評価します。</p>
-              <p className="body reveal">立ち上げ期は、経営層とベンチャーの意思決定者の双方から信頼される<strong>理事体制</strong>によって初期参加者の質を見極め、中長期は人材交流・育成・マッチングの運営基盤を構築します。</p>
+              <p className="body reveal">評価基準・撤退ルール・共創の規律を明示し、<strong>場の品質を担保</strong>します。提言で終わらせず、実装まで行く。私たちが進める協業案件は、売上だけでなく、生活者価値・社会実装可能性で評価します。</p>
+              <p className="body reveal">協業・提携を掲げるだけでは終わらせません。立ち上げ期は、経営層とベンチャーの意思決定者の双方から信頼される<strong>最高峰の理事体制</strong>を構築し、初期参加者の質を担保。中長期は、人材交流・育成・マッチングの運営基盤を構築し、新産業の創出を実現します。</p>
             </div>
           </div>
         </section>

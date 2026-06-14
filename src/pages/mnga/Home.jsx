@@ -215,9 +215,9 @@ export default function Home() {
         <div className="wrap">
           <div className="shead reveal"><span className="shead__no en">01</span><span className="shead__kick en">What We Are<span className="shead__rule" aria-hidden="true" /></span></div>
           <SplitLines className="stitle" lines={['協業を、', '検討で終わらせない。']} />
-          <p className="lede reveal">多くの団体は、交流や情報交換に留まり、取引の実行までは到達しません。MNGAは、構想を「実行」に落とし込み、<strong>ディールとして成立させること</strong>にこだわります。</p>
-          <p className="lede reveal">参加できるのは、自ら事業を起こし、動かし、意思決定できる立場の方に限ります。その結果、組織規模や知名度に依存しない形で、大企業とベンチャーが対等に向き合い、本気で協業できる環境が成立します。</p>
-          <p className="lede reveal">MNGAが目指すのは、個社の利益に閉じた営みではありません。実行とディールの連鎖によって産業の競争力を引き上げ、<strong>日本全体を再び前へ進める</strong>、具体的な成果を積み上げます。</p>
+          <p className="lede reveal">MNGAは、大企業とベンチャーの協業・提携を促進し、<strong>新産業の創出を実現する実装基盤</strong>です。</p>
+          <p className="lede reveal">多くの企業家団体は、交流に留まり、協業・提携による新産業創出までは実現できていません。MNGAは、そうした経済団体やコミュニティとは異なります。</p>
+          <p className="lede reveal"><strong>協業・提携から新産業創出まで</strong>を実現する、経営者と起業家が共創するプラットフォーム——それがMNGAです。</p>
         </div>
       </section>
 
@@ -232,7 +232,7 @@ export default function Home() {
                 <div className="speaker__name">櫻田 謙悟</div>
                 <div className="speaker__role en">元経済同友会 代表幹事 ／ MNGA 会長</div>
               </div>
-              <p className="lede speaker__body">そして、自らもその一人だと語ってきました。誰かを断罪するのではなく、自分たちの責任として引き受ける。この問いが、すべての起点になりました。</p>
+              <p className="lede speaker__body">そして、自らもその一人だと語ってきました。MNGAは、この問題意識から設立されました。停滞を招いたのが経営者の責任なら、<strong>それを変えられるのも、また経営者</strong>です。</p>
             </div>
           </div>
         </div>
@@ -265,11 +265,11 @@ export default function Home() {
         <div className="wrap">
           <div className="shead reveal"><span className="shead__no en">04</span><span className="shead__kick en">The Disconnect<span className="shead__rule" aria-hidden="true" /></span></div>
           <SplitLines className="stitle" lines={['足りないのは構想ではなく、', '「<span class="accent">回路</span>」だった。']} />
-          <p className="lede reveal">大企業の意思決定力・資産・顧客基盤と、ベンチャーの検証速度・技術探索力。その両者は、出会わないまま離れていました。両者を案件化・検証・事業化まで<strong>継続的に接続する</strong>——それが私たちの役割です。</p>
+          <p className="lede reveal">日本が持つ技術・人材・精神性を掛け合わせれば、世界に不可欠な新産業を生み出せる。足りないのは構想ではなく、それを事業化・実装へ<strong>「接続」する回路</strong>でした。大企業の資本・顧客基盤・社会実装力と、ベンチャーの意思決定・実行力——補い合えるはずの両者は、出会わないまま離れていたのです。</p>
           <div className="nexus reveal">
-            <div className="p"><div className="k">大企業</div><div className="s en">意思決定力・資産・顧客基盤</div></div>
+            <div className="p"><div className="k">大企業</div><div className="s en">資本・顧客基盤・社会実装力</div></div>
             <div className="bridge"><i /></div>
-            <div className="p" style={{ textAlign: 'right' }}><div className="k">ベンチャー</div><div className="s en">検証速度・技術探索力</div></div>
+            <div className="p" style={{ textAlign: 'right' }}><div className="k">ベンチャー</div><div className="s en">意思決定・実行力</div></div>
           </div>
         </div>
       </section>

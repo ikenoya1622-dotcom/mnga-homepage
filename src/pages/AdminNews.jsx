@@ -3,8 +3,10 @@ import { supabase } from '../lib/supabase'
 import AdminHeader from '../components/AdminHeader'
 import BlockEditor, { hydrateBlocks } from '../components/BlockEditor'
 
-const CATEGORIES = ['定款', '事業報告', 'お知らせ']
-const ANNOUNCEMENT_CATEGORY = 'お知らせ'
+// News（お知らせ）の両立型タグ：編集系（お知らせ/プレス/イベント）＋情報公開（定款・事業報告のPDF）
+const CATEGORIES = ['お知らせ', 'プレス', 'イベント', '情報公開']
+// 本文ブロック（見出し・本文・画像）を編集できる＝編集系カテゴリ。情報公開はPDF添付のみ
+const RICH_CATEGORIES = ['お知らせ', 'プレス', 'イベント']
 const PDF_BUCKET = 'news-files'
 const IMAGE_BUCKET = 'report-thumbnails'
 
@@ -48,7 +50,8 @@ export default function AdminNews() {
   const [sortOrder, setSortOrder] = useState(0)
   const [blocks, setBlocks] = useState([])
 
-  const isAnnouncement = category === ANNOUNCEMENT_CATEGORY
+  // 編集系カテゴリは本文ブロックを扱える（情報公開はPDFのみ）。既存ロジック互換のため変数名は維持
+  const isAnnouncement = RICH_CATEGORIES.includes(category)
 
   useEffect(() => {
     fetchItems()
@@ -216,10 +219,11 @@ export default function AdminNews() {
 
   // ── 一覧ビュー ──
   if (view === 'list') {
-    const grouped = CATEGORIES.map((c) => ({
-      category: c,
-      items: items.filter((x) => x.category === c),
-    }))
+    // 既知カテゴリに無い旧カテゴリ（定款/事業報告 等・正規化前）も必ず表示する
+    const extraCats = [...new Set(items.map((x) => x.category).filter((c) => c && !CATEGORIES.includes(c)))]
+    const grouped = [...CATEGORIES, ...extraCats]
+      .map((c) => ({ category: c, items: items.filter((x) => x.category === c) }))
+      .filter((g) => g.items.length > 0 || CATEGORIES.includes(g.category))
 
     return (
       <div style={{ minHeight: '100vh', background: '#f9fafb', fontFamily: 'Zen Old Mincho, serif' }}>
@@ -375,11 +379,11 @@ export default function AdminNews() {
             >
               {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
-            {isAnnouncement && (
-              <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '6px' }}>
-                お知らせカテゴリは本文ブロック（見出し・本文・画像）を編集できます。
-              </p>
-            )}
+            <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '6px' }}>
+              {isAnnouncement
+                ? '編集系カテゴリ（お知らせ／プレス／イベント）は本文ブロック（見出し・本文・画像）を編集できます。'
+                : '「情報公開」は定款・事業報告などのPDFを添付して公開します（本文ブロックは不要）。'}
+            </p>
           </div>
 
           <div style={{ marginBottom: '20px' }}>

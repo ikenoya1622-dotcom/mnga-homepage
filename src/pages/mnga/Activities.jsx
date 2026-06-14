@@ -12,12 +12,12 @@ const FEATURES = [
   {
     id: 'f1', flip: false, img: '/act-img/act-ikusei.jpg', fallback: '/act-img/bg-night.jpg',
     h: ['経営者育成', '― 地力と視座を磨く'],
-    body: <>第一線の経営者による講話と対話を通じて、覚悟と視座を磨く場（プログラム名：<strong>櫻田塾</strong>）。アドバイスではなく経験を共有する——上から目線の助言ではなく、<strong>経営者同士が対等に学び合う</strong>設計です。</>,
+    body: <>第一線の経営者による講話と対話を通じて、覚悟と視座を磨く場（プログラム名：<strong>経営塾</strong>）。アドバイスではなく経験を共有する——上から目線の助言ではなく、<strong>経営者同士が対等に学び合う</strong>設計です。</>,
   },
   {
     id: 'f2', flip: true, img: '/act-img/act-match.jpg', fallback: '/act-img/bg-night.jpg',
     h: ['協業マッチング', '― 案件を生む'],
-    body: <>大企業の課題とベンチャーの技術を、<strong>事前にスクリーニングしたテーマ</strong>で突き合わせる。名刺交換で終わるネットワーキングではなく、具体的な案件テーマとして立ち上げます。</>,
+    body: <>大企業の課題とベンチャーの技術を、<strong>事前にスクリーニングしたテーマ</strong>で突き合わせる。名刺交換で終わる交流ではなく、具体的な案件テーマとして立ち上げます。</>,
   },
   {
     id: 'f3', flip: false, img: '/act-img/act-impl.jpg', fallback: '/act-img/bg-dawn.jpg', core: true,
@@ -26,7 +26,7 @@ const FEATURES = [
   },
   {
     id: 'f4', flip: true, img: '/act-img/act-knowledge.jpg', fallback: '/act-img/bg-night.jpg',
-    h: ['ナレッジ基盤', '― 場の質を担保する'],
+    h: ['ナレッジ基盤', '― 場の品質を担保する'],
     body: <>評価基準・撤退ルール・共創の規律を明示し、事例と知見を蓄積する。属人的な熱量ではなく、<strong>再現性のある仕組み</strong>として協業の質を守ります。</>,
   },
 ]

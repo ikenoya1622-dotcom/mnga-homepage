@@ -20,9 +20,9 @@ function fmtDate(s) {
 
 // Mirrors the mock's static NEWS rows; used when the DB is unconfigured/empty.
 const FALLBACK_NEWS = [
-  { id: null, published_at: '2026-06-10', category: 'Press', title: 'MNGA 設立記者発表会を開催しました' },
-  { id: null, published_at: '2026-05-28', category: 'News', title: '第1回 共創ラウンドテーブルの参加申込を開始しました' },
-  { id: null, published_at: '2026-05-03', category: 'News', title: '理事体制について（第一次発表）' },
+  { id: null, published_at: '2026-06-10', category: 'プレス', title: 'MNGA 設立記者発表会を開催しました' },
+  { id: null, published_at: '2026-05-28', category: 'お知らせ', title: '第1回 共創ラウンドテーブルの参加申込を開始しました' },
+  { id: null, published_at: '2026-05-03', category: 'お知らせ', title: '理事体制について（第一次発表）' },
 ]
 
 export default function Home() {
@@ -229,7 +229,7 @@ export default function Home() {
               <p className="speaker__quote">「停滞を招いたのは、政府でも、国民でもない。経営者である」</p>
               <div className="speaker__meta">
                 <div className="speaker__name">櫻田 謙悟</div>
-                <div className="speaker__role en">経済同友会 代表幹事 ／ MNGA 会長</div>
+                <div className="speaker__role en">元経済同友会 代表幹事 ／ MNGA 会長</div>
               </div>
               <p className="lede speaker__body">そして、自らもその一人だと語ってきました。誰かを断罪するのではなく、自分たちの責任として引き受ける。この問いが、すべての起点になりました。</p>
             </div>
@@ -245,7 +245,7 @@ export default function Home() {
           <div className="board">
             <article className="dcard dcard--chair reveal">
               <div className="dcard__photo"><span className="dcard__idx en">01</span></div>
-              <div className="dcard__body"><div className="dcard__name">櫻田 謙悟</div><div className="dcard__role en">会長 ／ 経済同友会 代表幹事</div></div>
+              <div className="dcard__body"><div className="dcard__name">櫻田 謙悟</div><div className="dcard__role en">会長 ／ 元経済同友会 代表幹事</div></div>
             </article>
             {[
               ['弐'], ['参'], ['肆'], ['伍'], ['陸'], ['漆'],
@@ -289,7 +289,7 @@ export default function Home() {
             </Link>
             <Link className="fn" to="/activities"><div className="fn__char">育</div><div><div className="fn__t">経営者育成</div><div className="fn__d">第一線の経営者による講話と対話で、覚悟と視座を磨く。</div></div></Link>
             <Link className="fn" to="/activities"><div className="fn__char">繋</div><div><div className="fn__t">協業マッチング</div><div className="fn__d">スクリーニング済みのテーマで、具体的な案件を立ち上げる。</div></div></Link>
-            <Link className="fn" to="/activities"><div className="fn__char">知</div><div><div className="fn__t">ナレッジ基盤</div><div className="fn__d">評価基準・撤退ルール・規律で、場の質を担保する。</div></div></Link>
+            <Link className="fn" to="/activities"><div className="fn__char">知</div><div><div className="fn__t">ナレッジ基盤</div><div className="fn__d">評価基準・撤退ルール・規律で、場の品質を担保する。</div></div></Link>
           </div>
           <div className="btn-row reveal" style={{ marginTop: '28px' }}><Link className="btn" to="/activities">活動内容をすべて見る</Link></div>
         </div>
@@ -323,7 +323,7 @@ export default function Home() {
               const inner = (
                 <>
                   <span className="nrow-date en">{fmtDate(n.published_at)}</span>
-                  <span className="nrow-cat en">{n.category || 'News'}</span>
+                  <span className="nrow-cat">{n.category || 'お知らせ'}</span>
                   <span className="nrow-t">{n.title}</span>
                 </>
               )

@@ -160,7 +160,7 @@ export default function NewsDetail() {
     }
   }, [loading, item])
 
-  const category = isStatic ? 'Press' : (item?.category || 'News')
+  const category = isStatic ? 'プレス' : (item?.category || 'お知らせ')
   const title = isStatic ? 'MNGA 設立記者発表会を開催しました' : (item?.title || '')
   const date = isStatic ? '2026-06-10' : item?.published_at
   const hasBlocks = !isStatic && Array.isArray(item?.content) && item.content.length > 0

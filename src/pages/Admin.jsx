@@ -8,6 +8,13 @@ import BlockEditor, {
 } from '../components/BlockEditor'
 
 const BUCKET = 'report-thumbnails'
+// Reports（活動レポート）のカテゴリ＝一覧フィルタ／カードのタグ（mock準拠）
+const REPORT_CATEGORIES = [
+  { key: 'Meetup', ja: '会合' },
+  { key: 'Project', ja: '協業案件' },
+  { key: 'Talk', ja: '登壇・寄稿' },
+  { key: 'Press', ja: 'プレス' },
+]
 
 // ── プレビュー用ヘルパー ────────────────────────────────────
 function renderBold(text) {
@@ -151,6 +158,8 @@ export default function Admin() {
   const [file, setFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
   const [blocks, setBlocks] = useState([])
+  const [category, setCategory] = useState(REPORT_CATEGORIES[0].key)
+  const [excerpt, setExcerpt] = useState('')
   const [showPreview, setShowPreview] = useState(false)
 
   const thumbnailInputRef = useRef(null)
@@ -181,6 +190,8 @@ export default function Admin() {
     setFile(null)
     setPreviewUrl('')
     setBlocks([])
+    setCategory(REPORT_CATEGORIES[0].key)
+    setExcerpt('')
   }
 
   function goToList() {
@@ -200,6 +211,8 @@ export default function Admin() {
     setPreviewUrl(article.thumbnail_url || '')
     setFile(null)
     setBlocks(hydrateBlocks(article.content))
+    setCategory(article.category || REPORT_CATEGORIES[0].key)
+    setExcerpt(article.excerpt || '')
     setView('editor')
   }
 
@@ -283,6 +296,8 @@ export default function Admin() {
         published_at: publishedAt || new Date().toISOString().slice(0, 16),
         thumbnail_url: thumbnailUrl || null,
         content: processedBlocks,
+        category,
+        excerpt: excerpt.trim() || null,
       }
 
       if (editId) {
@@ -511,6 +526,30 @@ export default function Admin() {
                 outline: 'none',
                 background: 'transparent',
               }}
+            />
+          </div>
+
+          {/* カテゴリ（一覧フィルタ／カードのタグ） */}
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontSize: '12px', color: '#6b7280', marginBottom: '6px' }}>カテゴリ</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              style={{ fontSize: '14px', color: '#333', border: '1px solid #e5e7eb', borderRadius: '4px', padding: '8px 10px', fontFamily: 'Zen Old Mincho, serif', background: '#fff', outline: 'none' }}
+            >
+              {REPORT_CATEGORIES.map((c) => <option key={c.key} value={c.key}>{c.key}（{c.ja}）</option>)}
+            </select>
+          </div>
+
+          {/* 抜粋（リード文・任意） */}
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', fontSize: '12px', color: '#6b7280', marginBottom: '6px' }}>抜粋（カード／詳細のリード文・任意）</label>
+            <textarea
+              value={excerpt}
+              onChange={(e) => setExcerpt(e.target.value.slice(0, 300))}
+              placeholder="一覧カードと記事冒頭に表示される短い要約（未入力なら本文から自動生成）"
+              rows={2}
+              style={{ width: '100%', fontSize: '14px', color: '#333', border: '1px solid #e5e7eb', borderRadius: '4px', padding: '10px', fontFamily: 'Zen Old Mincho, serif', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
             />
           </div>
 

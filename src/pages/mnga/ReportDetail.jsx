@@ -70,7 +70,7 @@ function StaticBody() {
           <figcaption>分科会では、各テーマごとに「誰が・いつまでに・何を検証するか」を具体化した（イメージ）。</figcaption>
         </figure>
         <blockquote className="art-quote reveal">「交流で終わらせない。<br />ここで、案件を立ち上げる。」
-          <small>MNGA 会長 ／ 経済同友会 代表幹事　櫻田 謙悟</small>
+          <small>MNGA 会長 ／ 元経済同友会 代表幹事　櫻田 謙悟</small>
         </blockquote>
         <h2 className="reveal">当日の様子</h2>
         <p>後半のクロージングでは、各テーマのオーナーを決め、次回までの検証ステップを合意。MNGAが伴走しながら、案件化・検証・事業化まで継続的に「回し続ける」体制を確認しました。</p>
@@ -271,7 +271,7 @@ export default function ReportDetail() {
               {lead && <p className="art-lead">{lead}</p>}
 
               <div className="art-utility">
-                <span className="art-source">主催: MNGA 事務局 ／ 記録: 運営チーム</span>
+                <span className="art-source">主催: MNGA 事務局 ／ 記録: 運営事務局</span>
                 <div className="art-share">
                   <span className="en">Share</span>
                   <a href="#" aria-label="Xでシェア"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-7.3 8.3L23 22h-6.8l-5-6.5L5.4 22H2.3l7.8-8.9L1.6 2h6.9l4.5 6 5.9-6Zm-1.2 18h1.9L7.1 4H5.1l12.6 16Z" /></svg></a>

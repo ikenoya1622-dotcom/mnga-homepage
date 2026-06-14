@@ -176,7 +176,7 @@ export default function About() {
           <div className="card__inner">
             <h1 className="cover__jp">いなくては<br />ならない日本へ</h1>
             <p className="cover__en en">Make Nippon Great Again<br />Co-Creation &amp; Implementation Platform for an Indispensable Japan</p>
-            <p className="cover__q">なぜ、私たちはこのチームをつくったのか。</p>
+            <p className="cover__q">なぜ、私たちはこの団体をつくったのか。</p>
           </div>
           <p className="cover__scroll">SCROLL ─ めくる</p>
         </section>
@@ -217,7 +217,7 @@ export default function About() {
               <p className="kana reveal">THE QUESTION</p>
               <p className="say reveal">「停滞を招いたのは、政府でも、国民でもない。<br />経営者である」</p>
               <div className="speaker reveal">
-                <div><div className="speaker__name">櫻田 謙悟</div><div className="speaker__role">経済同友会 代表幹事 ／ MNGA 会長</div></div>
+                <div><div className="speaker__name">櫻田 謙悟</div><div className="speaker__role">元経済同友会 代表幹事 ／ MNGA 会長</div></div>
               </div>
               <p className="body reveal">そして、<strong>自らもその一人だ</strong>と語ってきました。MNGAは、この問題意識から設立されました。停滞を招いたのが経営者の責任なら、それを変えられるのも、また経営者です。</p>
             </div>
@@ -262,7 +262,7 @@ export default function About() {
             <div className="lede">
               <p className="kana reveal">FROM WORDS TO RESULTS</p>
               <h2 className="title reveal">語ることではなく、<br />事業を通じて結果を残す。</h2>
-              <p className="body reveal">評価基準も、撤退ルールも、共創の規律も明示し、<strong>場の質</strong>を保ちます。提言で終わらせず、実装まで行く。私たちが進める協業案件は、売上だけでなく、生活者価値・社会実装可能性で評価します。</p>
+              <p className="body reveal">評価基準も、撤退ルールも、共創の規律も明示し、<strong>場の品質</strong>を保ちます。提言で終わらせず、実装まで行く。私たちが進める協業案件は、売上だけでなく、生活者価値・社会実装可能性で評価します。</p>
               <p className="body reveal">立ち上げ期は、経営層とベンチャーの意思決定者の双方から信頼される<strong>理事体制</strong>によって初期参加者の質を見極め、中長期は人材交流・育成・マッチングの運営基盤を構築します。</p>
             </div>
           </div>
@@ -272,7 +272,7 @@ export default function About() {
         <section className="card card--close" data-card="6">
           <div className="card__inner">
             <p className="tagline">接続を、取り戻す。<span className="en">Toward an Indispensable Japan.</span></p>
-            <p className="close__lead">世界にとって不可欠な新産業を生み出すことで、停滞した日本を、再び前へ進める。それが、私たちがこのチームをつくった理由です。</p>
+            <p className="close__lead">世界にとって不可欠な新産業を生み出すことで、停滞した日本を、再び前へ進める。それが、私たちがこの団体をつくった理由です。</p>
             <p className="shield">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、経団連・経済同友会が築いてきた産業共創の系譜に連なる、非政治・中立の団体です。</p>
           </div>
         </section>

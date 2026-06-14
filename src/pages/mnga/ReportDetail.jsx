@@ -103,7 +103,7 @@ export default function ReportDetail() {
       setItem(data)
       const { data: rel } = await supabase
         .from('reports')
-        .select('id, category, published_at, title, thumbnail_url')
+        .select('id, published_at, title, thumbnail_url')
         .neq('id', id)
         .lte('published_at', new Date().toISOString())
         .order('published_at', { ascending: false })
@@ -308,7 +308,7 @@ export default function ReportDetail() {
                     const img = r.thumbnail_url || STATIC_RELATED[i % STATIC_RELATED.length].thumbnail_url
                     const inner = (
                       <>
-                        <div className="rcard__media"><span className="rcard__cat">{r.category}</span><img loading="lazy" decoding="async" src={img} alt="" /></div>
+                        <div className="rcard__media">{r.category && <span className="rcard__cat">{r.category}</span>}<img loading="lazy" decoding="async" src={img} alt="" /></div>
                         <span className="rcard__date en">{fmtDate(r.published_at)}</span>
                         <h3 className="rcard__t">{r.title}</h3>
                       </>

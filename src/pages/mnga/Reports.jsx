@@ -5,6 +5,7 @@ import { supabase } from '../../lib/supabase'
 import { Preloader, Vignette } from '../../components/mnga/parts'
 import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/report.css'
+import Seo from '../../components/Seo'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
 const PAGE_SIZE = 6
@@ -174,6 +175,7 @@ export default function Reports() {
 
   return (
     <div className="mnga-report js" ref={rootRef}>
+      <Seo title="活動レポート" path="/report" description="共創ラウンドテーブル、協業案件の進捗、登壇・寄稿、プレス発表まで。MNGAが「接続」を実装に変えていく一次情報を記録する活動レポート一覧。" />
       <Vignette />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
       <MobileNav current="/report" />
@@ -222,7 +224,7 @@ export default function Reports() {
                 <>
                   <div className="rcard__media">
                     {a.category && <span className="rcard__cat">{a.category}</span>}
-                    <img src={img} alt="" />
+                    <img loading="lazy" decoding="async" src={img} alt="" />
                   </div>
                   <div className="rcard__meta"><span className="rcard__date en">{fmtDate(a.published_at)}</span><span className="rcard__line" /></div>
                   <h2 className="rcard__t">{a.title}</h2>

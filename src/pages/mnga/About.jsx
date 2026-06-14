@@ -4,6 +4,8 @@ import { gsap, ScrollTrigger, prefersReduced, loadLenis } from '../../lib/mngaMo
 import { Preloader, Vignette } from '../../components/mnga/parts'
 import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/about.css'
+import Seo from '../../components/Seo'
+import { ORGANIZATION_JSONLD } from '../../lib/site'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
 const REVEAL_SEL = '.reveal, .cover__jp, .cover__en, .cover__q, .cover__scroll, .tagline, .close__lead, .shield'
@@ -139,6 +141,7 @@ export default function About() {
 
   return (
     <div className="mnga-about js" ref={rootRef}>
+      <Seo title="団体概要" path="/about" description="MNGAはなぜつくられたのか。失った30年・一人の問い・断絶、そして接続。大企業とベンチャーをつなぎ、構想を事業化・社会実装まで実行する産業実装基盤の物語。" jsonLd={ORGANIZATION_JSONLD} />
       <Vignette />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
       <MobileNav current="/about" />

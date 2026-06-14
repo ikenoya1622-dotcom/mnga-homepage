@@ -4,6 +4,8 @@ import { gsap, ScrollTrigger, prefersReduced, loadLenis, observeSplitLines } fro
 import { supabase } from '../../lib/supabase'
 import { Preloader, Vignette, SplitLines } from '../../components/mnga/parts'
 import MobileNav from '../../components/mnga/MobileNav'
+import Seo from '../../components/Seo'
+import { absUrl, ORG_NAME } from '../../lib/site'
 import '../../styles/mnga/news-detail.css'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
@@ -165,6 +167,22 @@ export default function NewsDetail() {
 
   return (
     <div className="mnga-news-detail js" ref={rootRef}>
+      <Seo
+        title={title || 'お知らせ'}
+        path={isStatic ? '/news' : `/news/${id}`}
+        description={title ? `${title}｜一般社団法人 MNGA（Make Nippon Great Again）からのお知らせ。` : 'MNGA（Make Nippon Great Again）からのお知らせ。'}
+        type="article"
+        noindex={!isStatic && notFound}
+        jsonLd={(!notFound && title) ? {
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: title,
+          datePublished: date || undefined,
+          author: { '@type': 'Organization', name: ORG_NAME },
+          publisher: { '@type': 'Organization', name: ORG_NAME, logo: { '@type': 'ImageObject', url: absUrl('/mnga-horizontal.png') } },
+          mainEntityOfPage: absUrl(isStatic ? '/news' : `/news/${id}`),
+        } : undefined}
+      />
       <Vignette />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
       <MobileNav current="/report" />

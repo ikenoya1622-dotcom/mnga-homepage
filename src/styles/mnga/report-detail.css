@@ -119,6 +119,7 @@
 .mnga-report-detail .related__grid{ grid-template-columns:1fr; gap:30px; }
 .mnga-report-detail .foot-grid{ flex-direction:column; gap:28px; }
 .mnga-report-detail .foot-nav{ align-items:flex-start; text-align:left; }
+.mnga-report-detail .art-title, .mnga-report-detail .art-quote, .mnga-report-detail .rcard__t{ word-break:normal; line-break:auto; overflow-wrap:anywhere; }
 }
 @media (prefers-reduced-motion:reduce){
 .mnga-report-detail .reveal{ opacity:1!important; transform:none!important; }

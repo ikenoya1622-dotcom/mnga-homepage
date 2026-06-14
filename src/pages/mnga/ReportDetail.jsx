@@ -5,6 +5,8 @@ import { supabase } from '../../lib/supabase'
 import { isSafeImageUrl } from '../../components/BlockRenderer'
 import { Preloader, Vignette, SplitLines } from '../../components/mnga/parts'
 import MobileNav from '../../components/mnga/MobileNav'
+import Seo from '../../components/Seo'
+import { absUrl, ORG_NAME } from '../../lib/site'
 import '../../styles/mnga/report-detail.css'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
@@ -40,7 +42,7 @@ function Blocks({ blocks }) {
       })
     } else if (b.type === 'image' && isSafeImageUrl(b.url)) {
       out.push(
-        <figure className="reveal" key={`f-${i}`}><img src={b.url} alt="" /></figure>,
+        <figure className="reveal" key={`f-${i}`}><img loading="lazy" decoding="async" src={b.url} alt="" /></figure>,
       )
     }
   })
@@ -209,6 +211,24 @@ export default function ReportDetail() {
 
   return (
     <div className="mnga-report-detail js" ref={rootRef}>
+      <Seo
+        title={title || 'レポート'}
+        path={isStatic ? '/report' : `/report/${id}`}
+        description={lead || '共創ラウンドテーブル、協業案件の進捗、登壇・寄稿、プレス発表まで。MNGAの活動を記録します。'}
+        type="article"
+        image={item?.thumbnail_url || undefined}
+        noindex={!isStatic && notFound}
+        jsonLd={(!notFound && title) ? {
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: title,
+          datePublished: date || undefined,
+          image: item?.thumbnail_url ? absUrl(item.thumbnail_url) : undefined,
+          author: { '@type': 'Organization', name: ORG_NAME },
+          publisher: { '@type': 'Organization', name: ORG_NAME, logo: { '@type': 'ImageObject', url: absUrl('/mnga-horizontal.png') } },
+          mainEntityOfPage: absUrl(isStatic ? '/report' : `/report/${id}`),
+        } : undefined}
+      />
       <Vignette />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
       <MobileNav current="/report" />
@@ -288,7 +308,7 @@ export default function ReportDetail() {
                     const img = r.thumbnail_url || STATIC_RELATED[i % STATIC_RELATED.length].thumbnail_url
                     const inner = (
                       <>
-                        <div className="rcard__media"><span className="rcard__cat">{r.category}</span><img src={img} alt="" /></div>
+                        <div className="rcard__media"><span className="rcard__cat">{r.category}</span><img loading="lazy" decoding="async" src={img} alt="" /></div>
                         <span className="rcard__date en">{fmtDate(r.published_at)}</span>
                         <h3 className="rcard__t">{r.title}</h3>
                       </>

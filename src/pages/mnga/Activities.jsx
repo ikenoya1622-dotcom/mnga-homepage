@@ -4,6 +4,7 @@ import { gsap, ScrollTrigger, prefersReduced, loadLenis, observeSplitLines } fro
 import { SplitLines, Preloader } from '../../components/mnga/parts'
 import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/activities.css'
+import Seo from '../../components/Seo'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
 
@@ -112,6 +113,7 @@ export default function Activities() {
 
   return (
     <div className="mnga-activities js" ref={rootRef}>
+      <Seo title="活動内容" path="/activities" description="MNGAは政策提言の団体ではなく、実装するための場。経営者育成・協業マッチング・実装支援・ナレッジ基盤の4機能が連動し、構想を案件に、案件を事業に変える。" />
       <Preloader variant="mark" caption="Activities" />
       <MobileNav current="/activities" />
 
@@ -148,7 +150,7 @@ export default function Activities() {
             {FEATURES.map((f) => (
               <article className={`feature${f.flip ? ' feature--flip' : ''}`} id={f.id} key={f.id}>
                 <div className="feature__media reveal">
-                  <img className="pic" src={f.img} alt="" onError={(e) => { e.currentTarget.src = f.fallback }} />
+                  <img loading="lazy" decoding="async" className="pic" src={f.img} alt="" onError={(e) => { e.currentTarget.src = f.fallback }} />
                   <div className="ovl" />
                 </div>
                 <div className="feature__body">

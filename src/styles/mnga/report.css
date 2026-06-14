@@ -94,6 +94,7 @@
 .mnga-report .repgrid{ grid-template-columns:1fr; gap:34px; }
 .mnga-report .foot-grid{ flex-direction:column; gap:28px; }
 .mnga-report .foot-nav{ align-items:flex-start; text-align:left; }
+.mnga-report .rcard__t, .mnga-report .phero__title{ word-break:normal; line-break:auto; overflow-wrap:anywhere; }
 }
 @media (prefers-reduced-motion:reduce){
 .mnga-report .reveal{ opacity:1!important; transform:none!important; }

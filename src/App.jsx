@@ -8,6 +8,7 @@ import Activities from './pages/mnga/Activities'
 import Reports from './pages/mnga/Reports'
 import ReportDetail from './pages/mnga/ReportDetail'
 import NewsDetail from './pages/mnga/NewsDetail'
+import NotFound from './pages/mnga/NotFound'
 import Admin from './pages/Admin'
 import AdminNews from './pages/AdminNews'
 import AdminLogin from './pages/AdminLogin'
@@ -49,6 +50,7 @@ function App() {
         <Route path="/mnga-console-7kx9a/login" element={<AdminLogin />} />
         <Route path="/mnga-console-7kx9a" element={<PrivateRoute><Admin /></PrivateRoute>} />
         <Route path="/mnga-console-7kx9a/news" element={<PrivateRoute><AdminNews /></PrivateRoute>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )

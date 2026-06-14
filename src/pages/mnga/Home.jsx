@@ -5,6 +5,8 @@ import { supabase } from '../../lib/supabase'
 import { SplitLines, Preloader } from '../../components/mnga/parts'
 import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/top.css'
+import Seo from '../../components/Seo'
+import { ORGANIZATION_JSONLD } from '../../lib/site'
 
 const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
 
@@ -168,6 +170,7 @@ export default function Home() {
 
   return (
     <div className="mnga-top js" ref={rootRef}>
+      <Seo path="/" jsonLd={ORGANIZATION_JSONLD} />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
       <MobileNav current="/" />
 

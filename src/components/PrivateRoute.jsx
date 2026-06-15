@@ -34,5 +34,14 @@ export default function PrivateRoute({ children }) {
     return <Navigate to="/mnga-console-7kx9a/login" replace />
   }
 
+  // 認可：admin ロール（app_metadata.role==='admin'）必須。
+  // 自己登録ユーザー等の非adminはセッションがあっても拒否（RLSと二重で防御）。
+  // ※ app_metadata はユーザー自身が改変できないため、なりすまし不可。
+  const role = session.user?.app_metadata?.role
+  if (role !== 'admin') {
+    supabase.auth.signOut()
+    return <Navigate to="/mnga-console-7kx9a/login" replace />
+  }
+
   return children
 }

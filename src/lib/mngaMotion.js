@@ -13,18 +13,15 @@ export const prefersReduced = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 let lenisPromise = null
+// Lenis は npm パッケージから動的import（バンドル＝自己ホスト）。
+// 外部CDNを読まないため CSP は script-src 'self' のまま維持できる（供給網リスク排除）。
 export function loadLenis() {
   if (typeof window === 'undefined') return Promise.resolve(null)
-  if (window.Lenis) return Promise.resolve(window.Lenis)
-  if (lenisPromise) return lenisPromise
-  lenisPromise = new Promise((resolve) => {
-    const s = document.createElement('script')
-    s.src = 'https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js'
-    s.async = true
-    s.onload = () => resolve(window.Lenis || null)
-    s.onerror = () => resolve(null)
-    document.head.appendChild(s)
-  })
+  if (!lenisPromise) {
+    lenisPromise = import('lenis')
+      .then((m) => m.default || m.Lenis || null)
+      .catch(() => null)
+  }
   return lenisPromise
 }
 

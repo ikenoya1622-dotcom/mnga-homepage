@@ -44,6 +44,7 @@ export default function Activities() {
     let ticker = null
     let timeoutId = null
     let cancelled = false
+    let removeParallax = null
 
     document.body.classList.add('mnga-active')
     const pre = q1('#preloader')
@@ -80,6 +81,28 @@ export default function Activities() {
         gsap.ticker.lagSmoothing(0)
       })
       playReveals()
+      // 各活動画像のスクロール・パララックス（data-parallax → --plx を更新）
+      const plx = q('[data-parallax]').map((el) => ({ el, sp: parseFloat(el.getAttribute('data-parallax') || '0.12') }))
+      if (plx.length) {
+        let pTick = false
+        const pUpd = () => {
+          const mid = window.innerHeight / 2
+          plx.forEach((o) => {
+            const r = o.el.getBoundingClientRect()
+            const c = r.top + r.height / 2
+            o.el.style.setProperty('--plx', ((c - mid) * -o.sp).toFixed(1) + 'px')
+          })
+          pTick = false
+        }
+        const onPScroll = () => { if (!pTick) { pTick = true; requestAnimationFrame(pUpd) } }
+        window.addEventListener('scroll', onPScroll, { passive: true })
+        window.addEventListener('resize', pUpd, { passive: true })
+        pUpd()
+        removeParallax = () => {
+          window.removeEventListener('scroll', onPScroll)
+          window.removeEventListener('resize', pUpd)
+        }
+      }
       if (pre) {
         const tl = gsap.timeline()
         tl.to('#preloader .preloader__mark span', { opacity: 1, duration: 0.5, stagger: 0.08 })
@@ -104,6 +127,7 @@ export default function Activities() {
       tweens.forEach((t) => { t.scrollTrigger && t.scrollTrigger.kill(); t.kill() })
       triggers.forEach((t) => t.kill())
       if (ticker) gsap.ticker.remove(ticker)
+      if (removeParallax) removeParallax()
       if (lenis) lenis.destroy()
       document.body.classList.remove('mnga-active')
     }
@@ -149,7 +173,7 @@ export default function Activities() {
             {FEATURES.map((f) => (
               <article className={`feature${f.flip ? ' feature--flip' : ''}`} id={f.id} key={f.id}>
                 <div className="feature__media reveal">
-                  <img loading="lazy" decoding="async" className="pic" src={f.img} alt={`${f.h[0]}の活動イメージ`} onError={(e) => { e.currentTarget.src = f.fallback }} />
+                  <img loading="lazy" decoding="async" className="pic" data-parallax="0.08" src={f.img} alt={`${f.h[0]}の活動イメージ`} onError={(e) => { e.currentTarget.src = f.fallback }} />
                   <div className="ovl" />
                 </div>
                 <div className="feature__body">

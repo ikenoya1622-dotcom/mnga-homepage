@@ -248,3 +248,26 @@ body.mnga-active {
     flex-wrap: wrap;
   }
 }
+
+/* =============================
+   アクセシビリティ補強（RV: C-4 / B-3）
+   ※生成CSS(scope-mock-css)・MobileNavに干渉しないよう本ファイルで上書き
+============================= */
+/* C-4: フッターナビ／CTAリンクのタップ領域を 44px 以上に（WCAG 2.5.8 / HIG 44pt） */
+.mnga-top .foot__nav a,
+.mnga-top .cta-links a,
+.mnga-about .foot-nav a,
+.mnga-activities .footer__nav a,
+.mnga-report .foot-nav a,
+.mnga-report-detail .foot-nav a,
+.mnga-news-detail .foot-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* B-3: 「準備中」本文は不具合ではなく意図的な未公開とわかる控えめな体裁に */
+.mnga-news-detail .art-prep {
+  color: #8f8f80;
+  font-style: italic;
+}

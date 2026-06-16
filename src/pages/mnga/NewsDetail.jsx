@@ -164,6 +164,8 @@ export default function NewsDetail() {
   const title = isStatic ? 'MNGA 設立記者発表会を開催しました' : (item?.title || '')
   const date = isStatic ? '2026-06-10' : item?.published_at
   const hasBlocks = !isStatic && Array.isArray(item?.content) && item.content.length > 0
+  // B-3: 本文ブロックもPDFも無い「空記事」（定款・事業報告などを"出している風"で中身ゼロにしない）
+  const isEmpty = !isStatic && !notFound && !hasBlocks && !item?.file_url
 
   return (
     <div className="mnga-news-detail js" ref={rootRef}>
@@ -172,7 +174,7 @@ export default function NewsDetail() {
         path={isStatic ? '/news' : `/news/${id}`}
         description={title ? `${title}｜一般社団法人 MNGA（Make Nippon Great Again）からのお知らせ。` : 'MNGA（Make Nippon Great Again）からのお知らせ。'}
         type="article"
-        noindex={!isStatic && notFound}
+        noindex={!isStatic && (notFound || isEmpty)}
         jsonLd={(!notFound && title) ? {
           '@context': 'https://schema.org',
           '@type': 'Article',
@@ -231,8 +233,10 @@ export default function NewsDetail() {
                   </>
                 ) : hasBlocks ? (
                   <NewsBlocks blocks={item.content} />
+                ) : item?.file_url ? (
+                  <p>詳細は下記の添付資料をご覧ください。</p>
                 ) : (
-                  <p>{item?.file_url ? '詳細は下記の添付資料をご覧ください。' : 'このお知らせには本文がまだありません。'}</p>
+                  <p className="art-prep">本記事は現在準備中です。内容が整い次第、公開いたします。</p>
                 )}
               </div>
 

@@ -158,6 +158,8 @@
     display:inline-flex; align-items:center; gap:8px; transition:gap .25s; }
 .mnga-top .btn-text:hover{ gap:14px; }
 .mnga-top footer{ background:var(--paper); color:var(--ink-dark); padding:64px 0 40px; }
+/* 固定オーバーレイ(ライトリークz150/グレインz200)の曇りをフッターから除く */
+.mnga-top footer{ position:relative; z-index:210; }
 .mnga-top footer .wrap{ max-width:none; }
 .mnga-top .foot{ display:flex; justify-content:space-between; align-items:flex-start; gap:48px; }
 .mnga-top .foot__org .logo{ margin-bottom:20px; }

@@ -122,6 +122,8 @@
 .mnga-activities .cta-links{ margin-top:22px; }
 .mnga-activities .cta-links a{ font-family:var(--f-en); font-size:14px; letter-spacing:.06em; color:var(--cream); text-decoration:none; border-bottom:1px solid var(--line-strong); padding-bottom:3px; }
 .mnga-activities .footer{ background:var(--paper); color:var(--ink-dark); padding:64px 0 36px; }
+/* 固定オーバーレイ(ライトリークz150/グレインz200)の曇りをフッターから除く */
+.mnga-activities .footer{ position:relative; z-index:210; }
 .mnga-activities .footer__top{ width:100%; max-width:none; margin:0 auto; padding:0 var(--margin); display:flex; justify-content:space-between; align-items:flex-start; gap:48px; }
 .mnga-activities .footer__logo{ height:40px; width:auto; display:block; }
 .mnga-activities .footer__brand .tag{ font-family:var(--f-en); font-size:12px; color:var(--olive-dark); line-height:1.7; margin-top:14px; }

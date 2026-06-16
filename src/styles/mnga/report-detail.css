@@ -103,6 +103,8 @@
 .mnga-report-detail .rcard:hover .rcard__t{ color:#fff; }
 .mnga-report-detail .reveal{ opacity:0; transform:translateY(24px); }
 .mnga-report-detail .site-footer{ background:#dcdcd0; color:var(--ink); padding:64px 0 40px; margin-top:clamp(80px,12vh,140px); }
+/* 固定オーバーレイ(グレインz90/ライトリークz100/ヴィネットz110)の曇りを下部から除く（ヘッダーz120より背面） */
+.mnga-report-detail .related, .mnga-report-detail .site-footer{ position:relative; z-index:115; }
 .mnga-report-detail .awrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 6vw; }
 .mnga-report-detail .site-footer .awrap{ max-width:none; }
 .mnga-report-detail .foot-grid{ display:flex; justify-content:space-between; align-items:flex-start; gap:48px; }

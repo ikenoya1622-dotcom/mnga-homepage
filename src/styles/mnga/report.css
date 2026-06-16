@@ -82,6 +82,8 @@
 .mnga-report .repmore button:hover{ background:var(--ivory); color:var(--ink); }
 .mnga-report .reveal{ opacity:0; transform:translateY(24px); }
 .mnga-report .site-footer{ background:#dcdcd0; color:var(--ink); padding:64px 0 40px; margin-top:clamp(80px,12vh,140px); }
+/* 固定オーバーレイ(グレインz90/ライトリークz100/ヴィネットz110)の曇りを下部から除く（ヘッダーz120より背面） */
+.mnga-report .repwrap, .mnga-report .site-footer{ position:relative; z-index:115; }
 .mnga-report .awrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 6vw; }
 .mnga-report .site-footer .awrap{ max-width:none; }
 .mnga-report .foot-grid{ display:flex; justify-content:space-between; align-items:flex-start; gap:48px; }

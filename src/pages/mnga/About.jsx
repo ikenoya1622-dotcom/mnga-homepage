@@ -7,7 +7,6 @@ import '../../styles/mnga/about.css'
 import Seo from '../../components/Seo'
 import { ORGANIZATION_JSONLD } from '../../lib/site'
 
-const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
 const REVEAL_SEL = '.reveal, .cover__jp, .cover__en, .cover__q, .cover__scroll, .tagline, .close__lead, .shield'
 
 export default function About() {
@@ -144,17 +143,18 @@ export default function About() {
       <Seo title="団体概要" path="/about" description="MNGAはなぜつくられたのか。失った30年・一人の問い・断絶、そして接続。大企業とベンチャーをつなぎ、構想を事業化・社会実装まで実行する産業実装基盤の物語。" jsonLd={ORGANIZATION_JSONLD} />
       <Vignette />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
+      <a className="skip-link" href="#main">本文へスキップ</a>
       <MobileNav current="/about" />
 
       <header className="site-header" id="ahdr">
-        <nav className="site-nav">
+        <nav className="site-nav" aria-label="メインナビゲーション">
           <Link className="site-logo" to="/" aria-label="MNGA"><img src="/mnga-horizontal-white.png" alt="MNGA ロゴ" /></Link>
           <div className="site-nav__links">
             <Link to="/">TOP</Link>
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report">REPORTS</Link>
-            <a className="site-nav__cta en" href={CONTACT_URL} target="_blank" rel="noopener">問い合わせ</a>
+            <a className="site-nav__cta en" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>問い合わせ（準備中）</a>
           </div>
         </nav>
       </header>
@@ -169,7 +169,7 @@ export default function About() {
         <span className="thread__node" style={{ top: '78%' }} />
       </div>
 
-      <main className="deck">
+      <main className="deck" id="main">
         {/* 表紙 */}
         <section className="card cover" data-card="0">
           <div className="veil" />
@@ -203,7 +203,7 @@ export default function About() {
                   <text className="ax" x="40" y="256">1995</text>
                   <text className="ax" x="520" y="256" textAnchor="end">2023</text>
                 </svg>
-                <div className="chart__src">出典: IMF World Economic Outlook (2026.4)　単位: 兆ドル</div>
+                <div className="chart__src">出典：IMF World Economic Outlook (2026.04)　単位：兆ドル</div>
               </div>
             </div>
           </div>
@@ -217,7 +217,7 @@ export default function About() {
               <p className="kana reveal">THE QUESTION</p>
               <p className="say reveal">「停滞を招いたのは、政府でも、国民でもない。<br />経営者である」</p>
               <div className="speaker reveal">
-                <div><div className="speaker__name">櫻田 謙悟</div><div className="speaker__role">元経済同友会 代表幹事 ／ MNGA 会長</div></div>
+                <div><div className="speaker__name">櫻田 謙悟</div><div className="speaker__role">MNGA 理事長（代表理事） ／ 元経済同友会 代表幹事</div></div>
               </div>
               <p className="body reveal">そして、<strong>自らもその一人だ</strong>と語ってきました。MNGAは、この問題意識から設立されました。停滞を招いたのが経営者の責任なら、それを変えられるのも、また経営者です。</p>
             </div>
@@ -230,7 +230,7 @@ export default function About() {
           <div className="card__inner">
             <div className="lede">
               <p className="kana reveal">THE DISCONNECT</p>
-              <h2 className="title reveal">足りないのは構想ではなく、<br />「回路」だった。</h2>
+              <h2 className="title reveal">足りなかったのは構想ではなく、<br />「つなぐ仕組み」だった。</h2>
               <p className="body reveal">このような停滞を打破するには、日本が持つ技術・人材・精神性を掛け合わせ、世界に新たな価値を生み出す新産業が必要です。足りないのは構想ではなく、構想を事業化・実装まで運ぶ<strong>「回路」</strong>。世界に不可欠な新産業を生み出すことで、日本を「いなくてはならない国」と再定義します。</p>
               <p className="body reveal">大企業には豊富な資本・顧客基盤・社会実装力がある一方、既存事業に縛られ、自己変革や外部共創の機敏性に欠ける。ベンチャーには迅速な意思決定と実行力がある一方、実装フィールドや市場・顧客からの信用、大企業との接点が足りない。<strong>これらを補いあうこと</strong>が、日本に新産業を生み出すために不可欠です。</p>
             </div>
@@ -244,8 +244,8 @@ export default function About() {
             <div className="lede">
               <p className="kana reveal">OUR ROLE</p>
               <h2 className="title reveal">大企業とベンチャーを、<br />「接続」する実装基盤。</h2>
-              <p className="body reveal">MNGAの役割は、大企業とベンチャーを接続し、新産業の<strong>案件化・検証・事業化まで前進させる仕組みづくり</strong>です。大企業の資産・顧客基盤・意思決定力とベンチャーの仮説検証速度を接続し、PoCで終わらせず、迅速な検証から事業化・実装まで実行します。</p>
-              <p className="body reveal">多くの企業家団体が交流に留まるなか、MNGAは協業・提携から新産業創出までを実現する、経営者と起業家の共創プラットフォームです。</p>
+              <p className="body reveal">MNGAの役割は、大企業とベンチャーを接続し、新産業の<strong>案件化・検証・事業化まで前進させる仕組みづくり</strong>です。大企業の資本・顧客基盤・社会実装力とベンチャーの意思決定・実行力を接続し、PoCで終わらせず、迅速な検証から事業化・実装まで実行します。</p>
+              <p className="body reveal">多くの経済団体が交流に留まるなか、MNGAは協業・提携から新産業創出までを実現する、経営者と起業家の共創プラットフォームです。</p>
               <div className="nexus reveal">
                 <div className="p"><div className="k">大企業</div><div className="s">資本・顧客基盤・社会実装力</div></div>
                 <div className="bridge"><i /></div>
@@ -263,7 +263,7 @@ export default function About() {
               <p className="kana reveal">FROM WORDS TO RESULTS</p>
               <h2 className="title reveal">語ることではなく、<br />事業を通じて結果を残す。</h2>
               <p className="body reveal">評価基準・撤退ルール・共創の規律を明示し、<strong>場の品質を担保</strong>します。提言で終わらせず、実装まで行く。私たちが進める協業案件は、売上だけでなく、生活者価値・社会実装可能性で評価します。</p>
-              <p className="body reveal">協業・提携を掲げるだけでは終わらせません。立ち上げ期は、経営層とベンチャーの意思決定者の双方から信頼される<strong>最高峰の理事体制</strong>を構築し、初期参加者の質を担保。中長期は、人材交流・育成・マッチングの運営基盤を構築し、新産業の創出を実現します。</p>
+              <p className="body reveal">協業・提携を掲げるだけでは終わらせません。立ち上げ期は、大企業の経営層とベンチャーの意思決定者の双方から信頼される<strong>人物の問題意識と人的基盤</strong>によって、初期参加者の質を担保。中長期は、人材交流・育成・マッチングの運営基盤を構築し、新産業の創出を実現します。</p>
             </div>
           </div>
         </section>
@@ -271,7 +271,7 @@ export default function About() {
         {/* 結び（反転） */}
         <section className="card card--close" data-card="6">
           <div className="card__inner">
-            <p className="tagline">接続を、取り戻す。<span className="en">Toward an Indispensable Japan.</span></p>
+            <p className="tagline">前進を、取り戻す。<span className="en">Toward an Indispensable Japan.</span></p>
             <p className="close__lead">世界にとって不可欠な新産業を生み出すことで、停滞した日本を、再び前へ進める。それが、私たちがこの団体をつくった理由です。</p>
             <p className="shield">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、経団連・経済同友会が築いてきた産業共創の系譜に連なる、非政治・中立の団体です。</p>
           </div>
@@ -292,11 +292,11 @@ export default function About() {
                 <Link to="/activities">ACTIVITIES</Link>
                 <Link to="/report">REPORTS</Link>
                 <Link to="/#news">NEWS</Link>
-                <a href={CONTACT_URL} target="_blank" rel="noopener">CONTACT（Googleフォーム）</a>
+                <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
               </div>
             </div>
-            <p className="foot-neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、非政治・中立の一般社団法人として活動します。</p>
-            <p className="foot-copy en">© Make Nippon Great Again. All rights reserved.</p>
+            <p className="foot-neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、経団連・経済同友会が築いてきた産業共創の系譜に連なる、非政治・中立のプラットフォームです。</p>
+            <p className="foot-copy en">© 2026 Make Nippon Great Again. All rights reserved.</p>
           </div>
         </footer>
       </div>

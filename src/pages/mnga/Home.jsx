@@ -172,10 +172,11 @@ export default function Home() {
     <div className="mnga-top js" ref={rootRef}>
       <Seo path="/" jsonLd={ORGANIZATION_JSONLD} />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
+      <a className="skip-link" href="#main">本文へスキップ</a>
       <MobileNav current="/" />
 
       <header id="hdr">
-        <nav className="nav">
+        <nav className="nav" aria-label="メインナビゲーション">
           <a className="logo" href="#top" aria-label="MNGA">
             <img className="logo__img" src="/mnga-horizontal-white.png" alt="MNGA ロゴ" />
           </a>
@@ -184,12 +185,13 @@ export default function Home() {
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report">REPORTS</Link>
-            <a className="nav__cta en" href={CONTACT_URL} target="_blank" rel="noopener">問い合わせ</a>
+            <a className="nav__cta en" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>問い合わせ（準備中）</a>
           </div>
           <button className="burger" aria-label="メニュー"><span /><span /><span /></button>
         </nav>
       </header>
 
+      <main id="main">
       {/* 00 Hero */}
       <section className="hero" id="top">
         <div className="hero__bg" aria-hidden="true" />
@@ -197,14 +199,13 @@ export default function Home() {
         <div className="hero__inner">
           <p className="hero__kicker">Make Nippon Great Again</p>
           <h1 className="hero__jp">
-            <span className="lineMask"><span className="line">日本を、<span className="accent">再び前へ</span>。</span></span>
-            <span className="lineMask"><span className="line">世界にとって<wbr />“いなくてはならない国”へ。</span></span>
+            <span className="lineMask"><span className="line">いなくては<wbr />ならない<span className="accent">日本へ</span>。</span></span>
           </h1>
-          <p className="hero__en en">A co-creation &amp; implementation platform<br />for an Indispensable Japan.</p>
+          <p className="hero__en en">Co-Creation &amp; Implementation Platform<br />for an Indispensable Japan</p>
           <div className="hero__meta en" aria-hidden="true">
             <span>Tokyo, Japan</span>
-            <span>Non-partisan &middot; Neutral</span>
-            <span>General Incorporated Assoc.</span>
+            <span>Non-partisan / Neutral</span>
+            <span>General Incorporated Association</span>
           </div>
         </div>
         <span className="hero__scroll en">SCROLL</span>
@@ -214,9 +215,9 @@ export default function Home() {
       <section className="band band--a" id="purpose">
         <div className="wrap">
           <div className="shead reveal"><span className="shead__no en">01</span><span className="shead__kick en">What We Are<span className="shead__rule" aria-hidden="true" /></span></div>
-          <SplitLines className="stitle" lines={['協業を、', '検討で終わらせない。']} />
-          <p className="lede reveal">MNGAは、大企業とベンチャーの協業・提携を促進し、<strong>新産業の創出を実現する実装基盤</strong>です。</p>
-          <p className="lede reveal">多くの企業家団体は、交流に留まり、協業・提携による新産業創出までは実現できていません。MNGAは、そうした経済団体やコミュニティとは異なります。</p>
+          <SplitLines className="stitle" lines={['私たちは、いなくてはならない', '日本をつくる団体です。']} />
+          <p className="lede reveal">世界に不可欠な新産業を生み出し、停滞した日本を再び前へ進める——それが私たちの目的です。そのために、大企業とベンチャーの協業を「検討」で終わらせず、事業化・実装まで運ぶ。<strong>MNGAは、その手段としての実装基盤</strong>です。</p>
+          <p className="lede reveal">多くの経済団体は、交流や情報交換に留まり、協業・提携を通じた新産業の創出には至っていません。MNGAは、そうした団体やコミュニティとは異なります。</p>
           <p className="lede reveal"><strong>協業・提携から新産業創出まで</strong>を実現する、経営者と起業家が共創するプラットフォーム——それがMNGAです。</p>
         </div>
       </section>
@@ -230,7 +231,7 @@ export default function Home() {
               <p className="speaker__quote">「停滞を招いたのは、政府でも、国民でもない。経営者である」</p>
               <div className="speaker__meta">
                 <div className="speaker__name">櫻田 謙悟</div>
-                <div className="speaker__role en">元経済同友会 代表幹事 ／ MNGA 会長</div>
+                <div className="speaker__role en">MNGA 理事長（代表理事） ／ 元経済同友会 代表幹事</div>
               </div>
               <p className="lede speaker__body">そして、自らもその一人だと語ってきました。MNGAは、この問題意識から設立されました。停滞を招いたのが経営者の責任なら、<strong>それを変えられるのも、また経営者</strong>です。</p>
             </div>
@@ -246,17 +247,10 @@ export default function Home() {
           <div className="board">
             <article className="dcard dcard--chair reveal">
               <div className="dcard__photo"><span className="dcard__idx en">01</span></div>
-              <div className="dcard__body"><div className="dcard__name">櫻田 謙悟</div><div className="dcard__role en">会長 ／ 元経済同友会 代表幹事</div></div>
+              <div className="dcard__body"><div className="dcard__name">櫻田 謙悟</div><div className="dcard__role en">理事長（代表理事） ／ 元経済同友会 代表幹事</div></div>
             </article>
-            {[
-              ['弐'], ['参'], ['肆'], ['伍'], ['陸'], ['漆'],
-            ].map(([mono], i) => (
-              <article className="dcard reveal" key={i}>
-                <div className="dcard__photo"><span className="dcard__mono">{mono}</span><span className="dcard__tba en">To be announced</span></div>
-                <div className="dcard__body"><div className="dcard__name">就任予定</div><div className="dcard__role en">Director</div></div>
-              </article>
-            ))}
           </div>
+          <p className="board-note reveal" style={{ marginTop: '24px', color: 'var(--olive)', letterSpacing: '.04em' }}>理事は順次発表します。</p>
         </div>
       </section>
 
@@ -264,7 +258,7 @@ export default function Home() {
       <section className="band band--b" id="disconnect">
         <div className="wrap">
           <div className="shead reveal"><span className="shead__no en">04</span><span className="shead__kick en">The Disconnect<span className="shead__rule" aria-hidden="true" /></span></div>
-          <SplitLines className="stitle" lines={['足りないのは構想ではなく、', '「<span class="accent">回路</span>」だった。']} />
+          <SplitLines className="stitle" lines={['足りなかったのは構想ではなく、', '「<span class="accent">つなぐ仕組み</span>」だった。']} />
           <p className="lede reveal">日本が持つ技術・人材・精神性を掛け合わせれば、世界に不可欠な新産業を生み出せる。足りないのは構想ではなく、それを事業化・実装へ<strong>「接続」する回路</strong>でした。大企業の資本・顧客基盤・社会実装力と、ベンチャーの意思決定・実行力——補い合えるはずの両者は、出会わないまま離れていたのです。</p>
           <div className="nexus reveal">
             <div className="p"><div className="k">大企業</div><div className="s en">資本・顧客基盤・社会実装力</div></div>
@@ -283,7 +277,7 @@ export default function Home() {
             <Link className="fn fn--core" to="/activities">
               <div className="fn__glyph" aria-hidden="true">実</div>
               <div>
-                <div className="fn__flag en">MNGA の核心</div>
+                <div className="fn__flag en">MNGAの核心</div>
                 <div className="fn__t">実装支援 ― PoCで終わらせない</div>
                 <div className="fn__d">立ち上がった案件を、論点整理から進捗管理・成果検証まで継続的に伴走する。多くの協業がPoCで止まるのは、この「回し続ける仕組み」がないから。MNGAはここを持ち、その結果としてM&amp;A・出資・提携が生まれます。</div>
               </div>
@@ -300,7 +294,7 @@ export default function Home() {
       <section className="band band--a" id="offer">
         <div className="wrap">
           <div className="shead reveal"><span className="shead__no en">06</span><span className="shead__kick en">What We Offer<span className="shead__rule" aria-hidden="true" /></span></div>
-          <SplitLines className="stitle" lines={['私たちが提供する価値。']} />
+          <SplitLines className="stitle" lines={['規模ではなく、質で選ぶ。']} />
           <div className="bento reveal">
             <div className="bento__cell bento__cell--lead c3 r2">
               <div className="bento__k">対等な関係</div>
@@ -308,7 +302,7 @@ export default function Home() {
             </div>
             <div className="bento__cell c3"><div className="bento__k">会員の質</div><div className="bento__v">会員数ではなく、厳選された経営者の質と、関係性の深さを重視します。</div></div>
             <div className="bento__cell c3"><div className="bento__k">本質的な協業</div><div className="bento__v">名刺交換ではなく、具体的な協業プロジェクトの創出。</div></div>
-            <div className="bento__cell c2"><div className="bento__k">経営スキル</div><div className="bento__v">経営者同士の相談と知見共有による、スキルの向上。</div></div>
+            <div className="bento__cell c2"><div className="bento__k">経営スキル</div><div className="bento__v">経営者同士の相談と知見共有を通じた、経営スキルの向上。</div></div>
             <div className="bento__cell c4"><div className="bento__k">将来志向</div><div className="bento__v">過去の再現ではなく、世界に貢献する日本の実現。“いなくてはならない国”へ。</div></div>
           </div>
         </div>
@@ -340,11 +334,13 @@ export default function Home() {
 
       {/* Closing CTA */}
       <section className="cta-strip" id="contact-cta">
-        <SplitLines as="h3" lines={['接続を、取り戻す。<span class="en">Toward an Indispensable Japan.</span>']} />
+        <SplitLines as="h3" lines={['前進を、取り戻す。<span class="en">Toward an Indispensable Japan.</span>']} />
         <p className="reveal">世界にとって不可欠な新産業を生み出すことで、停滞した日本を、再び前へ進める。志を共にする経営者と、ここで会いたい。</p>
-        <div className="btn-row reveal"><a className="btn btn--solid en" href={CONTACT_URL} target="_blank" rel="noopener">お問い合わせ</a></div>
+        <div className="btn-row reveal"><a className="btn btn--solid en" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>お問い合わせ（準備中）</a></div>
         <p className="cta-links reveal"><Link to="/about">なぜ、つくったのか</Link><Link to="/activities">活動内容を見る</Link></p>
       </section>
+
+      </main>
 
       {/* Footer */}
       <footer>
@@ -360,11 +356,11 @@ export default function Home() {
               <Link to="/activities">ACTIVITIES</Link>
               <Link to="/report">REPORTS</Link>
               <a href="#news">NEWS</a>
-              <a href={CONTACT_URL} target="_blank" rel="noopener">CONTACT（Googleフォーム）</a>
+              <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
             </div>
           </div>
-          <p className="foot__neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、非政治・中立の一般社団法人として活動します。</p>
-          <p className="foot__copy en">© Make Nippon Great Again. All rights reserved.</p>
+          <p className="foot__neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、経団連・経済同友会が築いてきた産業共創の系譜に連なる、非政治・中立のプラットフォームです。</p>
+          <p className="foot__copy en">© 2026 Make Nippon Great Again. All rights reserved.</p>
         </div>
       </footer>
     </div>

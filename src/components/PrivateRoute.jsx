@@ -7,6 +7,9 @@ export default function PrivateRoute({ children }) {
   const [session, setSession] = useState(undefined) // undefined = 確認中
 
   useEffect(() => {
+    // Supabase 未設定（env欠落）なら未認証扱いでログインへ
+    if (!supabase) { setSession(null); return }
+
     // 現在のセッションを取得
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session)

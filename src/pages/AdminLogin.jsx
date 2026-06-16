@@ -43,8 +43,9 @@ export default function AdminLogin() {
 
         <form onSubmit={handleLogin}>
           <div className="adm-field">
-            <label className="adm-label">メールアドレス</label>
+            <label className="adm-label" htmlFor="adm-email">メールアドレス</label>
             <input
+              id="adm-email"
               type="email"
               className="adm-input"
               value={email}
@@ -55,8 +56,9 @@ export default function AdminLogin() {
           </div>
 
           <div className="adm-field">
-            <label className="adm-label">パスワード</label>
+            <label className="adm-label" htmlFor="adm-password">パスワード</label>
             <input
+              id="adm-password"
               type="password"
               className="adm-input"
               value={password}

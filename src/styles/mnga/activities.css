@@ -139,7 +139,7 @@
 .mnga-activities .footer__nav{ align-items:flex-start; text-align:left; }
 .mnga-activities .footer__bar{ flex-direction:column; gap:8px; }
 .mnga-activities .phero__inner{ max-width:100%; }
-.mnga-activities .phero__title, .mnga-activities .feature__body h3, .mnga-activities .sec-head, .mnga-activities .cta-strip h3{ word-break:normal; line-break:auto; overflow-wrap:anywhere; }
+.mnga-activities .phero__title, .mnga-activities .feature__body h3, .mnga-activities .sec-head, .mnga-activities .cta-strip h3{ word-break:keep-all; line-break:strict; overflow-wrap:normal; }
 }
 @media (prefers-reduced-motion:reduce){
 .mnga-activities .reveal{ opacity:1!important; transform:none!important; }

@@ -8,7 +8,7 @@ export const ORG_NAME = '一般社団法人 Make Nippon Great Again'
 export const DEFAULT_TITLE = 'MNGA — Make Nippon Great Again'
 export const DEFAULT_DESCRIPTION =
   '一般社団法人 MNGA（Make Nippon Great Again）は、大企業とベンチャーを接続し、新産業を案件化・検証・事業化まで前進させる、経営者と起業家の共創・実装プラットフォームです。'
-export const DEFAULT_OG_IMAGE = '/images/MNGA_ヨコ.png' // 本番ではOG専用画像(1200x630)を推奨
+export const DEFAULT_OG_IMAGE = '/images/ogp.png' // ASCII名（I-3）。本番ではOG専用画像(1200x630)を推奨
 
 // 絶対URLを組み立てる（canonical / og:url / og:image 用）
 export function absUrl(path = '/') {

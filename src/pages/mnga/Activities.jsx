@@ -6,13 +6,11 @@ import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/activities.css'
 import Seo from '../../components/Seo'
 
-const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
-
 const FEATURES = [
   {
     id: 'f1', flip: false, img: '/act-img/act-ikusei.jpg', fallback: '/act-img/bg-night.jpg',
     h: ['経営者育成', '― 地力と視座を磨く'],
-    body: <>第一線の経営者による講話と対話を通じて、覚悟と視座を磨く場（プログラム名：<strong>経営塾</strong>）。アドバイスではなく経験を共有する——上から目線の助言ではなく、<strong>経営者同士が対等に学び合う</strong>設計です。</>,
+    body: <>第一線の経営者による講話と対話を通じて、覚悟と視座を磨く場（プログラム名：<strong>櫻田塾</strong>）。アドバイスではなく経験を共有する——上から目線の助言ではなく、<strong>経営者同士が対等に学び合う</strong>設計です。</>,
   },
   {
     id: 'f2', flip: true, img: '/act-img/act-match.jpg', fallback: '/act-img/bg-night.jpg',
@@ -115,30 +113,31 @@ export default function Activities() {
     <div className="mnga-activities js" ref={rootRef}>
       <Seo title="活動内容" path="/activities" description="MNGAは、大企業とベンチャーを接続し新産業の創出を実現する実装基盤。経営者育成・協業マッチング・実装支援・ナレッジ基盤の4機能が連動し、構想を案件化・検証・事業化まで前進させる。" />
       <Preloader variant="mark" caption="Activities" />
+      <a className="skip-link" href="#main">本文へスキップ</a>
       <MobileNav current="/activities" />
 
       <header className="nav" id="hdr">
         <Link className="nav__brand" to="/" aria-label="MNGA トップ"><img className="nav__logo" src="/mnga-horizontal-white.png" alt="MNGA" /></Link>
-        <nav>
+        <nav aria-label="メインナビゲーション">
           <ul className="nav__links">
             <li><Link to="/">TOP</Link></li>
             <li><Link to="/about">ABOUT</Link></li>
             <li><Link className="is-current" aria-current="page" to="/activities">ACTIVITIES</Link></li>
             <li><Link to="/report">REPORTS</Link></li>
-            <li><a className="nav__cta en" href={CONTACT_URL} target="_blank" rel="noopener">問い合わせ</a></li>
+            <li><a className="nav__cta en" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>問い合わせ（準備中）</a></li>
           </ul>
         </nav>
         <button className="nav__burger" aria-label="メニュー"><span /><span /><span /></button>
       </header>
 
-      <main>
+      <main id="main">
         {/* ヒーロー */}
         <section className="phero">
           <div className="phero__inner">
             <p className="phero__kana">Activities — 活動内容</p>
             <h1 className="phero__title">
               <span className="lineMask"><span className="line">提言でも、交流でもない。</span></span>
-              <span className="lineMask"><span className="line">新産業を生む、実装基盤。</span></span>
+              <span className="lineMask"><span className="line">事業を、生む。</span></span>
             </h1>
             <p className="phero__lead"><strong>MNGAは、大企業とベンチャーを接続し、構想を案件化・検証・事業化まで実行する実装基盤です。</strong>経営者育成・協業マッチング・実装支援・ナレッジ基盤の4機能が連動し、PoCで終わらせず、新産業の創出まで前進させます。</p>
           </div>
@@ -150,7 +149,7 @@ export default function Activities() {
             {FEATURES.map((f) => (
               <article className={`feature${f.flip ? ' feature--flip' : ''}`} id={f.id} key={f.id}>
                 <div className="feature__media reveal">
-                  <img loading="lazy" decoding="async" className="pic" src={f.img} alt="" onError={(e) => { e.currentTarget.src = f.fallback }} />
+                  <img loading="lazy" decoding="async" className="pic" src={f.img} alt={`${f.h[0]}の活動イメージ`} onError={(e) => { e.currentTarget.src = f.fallback }} />
                   <div className="ovl" />
                 </div>
                 <div className="feature__body">
@@ -166,13 +165,13 @@ export default function Activities() {
         {/* 場の設計 */}
         <section className="section wash--dawn" id="ba">
           <div className="wrap">
-            <p className="sec-kana reveal en">The Setting — 場の設計</p>
-            <SplitLines className="sec-head" lines={['提言でもなく、交流でもなく、', '<span class="accent">実装まで。</span>']} />
+            <p className="sec-kana reveal en">The Setting ― 場の設計</p>
+            <SplitLines className="sec-head" lines={['語るのではなく、', '<span class="accent">実装する。</span>']} />
             <div className="duo reveal">
               <div className="duo__cell">
                 <h4>本会</h4>
                 <div className="meta en">会員限定 ・ 月1回</div>
-                <p>月例会で、上記4機能を一体で回す。NDA・チャタムハウスルールを前提に、立場を超えて本音で議論できる場を担保します。</p>
+                <p>月例会で、上記4機能を一体で回す。NDA・チャタムハウスルール（発言者を特定しない前提）のもと、立場を超えて本音で議論できる場を担保します。</p>
               </div>
               <div className="duo__cell">
                 <h4>分科会</h4>
@@ -180,7 +179,7 @@ export default function Activities() {
                 <p>特定テーマを深掘りし、新しい案件の種を探す入口。関心の高い参加者が、審査を経て本会へ加わります。</p>
               </div>
             </div>
-            <p className="prose reveal" style={{ marginTop: '30px', maxWidth: '760px' }}>提言でもなく、交流でもなく、実装まで。<strong style={{ color: 'var(--cream)' }}>それがMNGAの活動です。</strong></p>
+            <p className="prose reveal" style={{ marginTop: '30px', maxWidth: '760px' }}>会員が4つの機能を一体で回し、構想を実装まで運ぶ。<strong style={{ color: 'var(--cream)' }}>それがMNGAの活動です。</strong></p>
           </div>
         </section>
 
@@ -189,7 +188,7 @@ export default function Activities() {
           <SplitLines as="h3" lines={['構想を、案件に。案件を、事業に。<span class="en">From words to results.</span>']} />
           <p className="reveal">自ら事業を起こし、動かし、意思決定できる立場の方へ。実装の場で会いましょう。</p>
           <div className="btn-row reveal">
-            <a className="btn btn--solid en" href={CONTACT_URL} target="_blank" rel="noopener">参加を申し込む</a>
+            <a className="btn btn--solid en" role="link" aria-disabled="true" tabIndex={-1} title="参加申込フォームは準備中です" onClick={(e) => e.preventDefault()}>参加を申し込む（準備中）</a>
           </div>
         </section>
       </main>
@@ -198,8 +197,8 @@ export default function Activities() {
         <div className="footer__top">
           <div className="footer__brand">
             <img className="footer__logo" src="/mnga-horizontal.png" alt="MNGA" />
-            <div className="tag en">Make Nippon Great Again<br />Co-Creation Implementation Platform for an Indispensable Japan</div>
-            <p className="shield">私たちの "Again" は、復古ではなく前進です。"Great" は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、非政治・中立のプラットフォームです。</p>
+            <div className="tag en">Make Nippon Great Again<br />Co-Creation &amp; Implementation Platform for an Indispensable Japan</div>
+            <p className="shield">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、経団連・経済同友会が築いてきた産業共創の系譜に連なる、非政治・中立のプラットフォームです。</p>
           </div>
           <nav className="footer__nav" aria-label="フッターナビ">
             <Link to="/">TOP</Link>
@@ -207,11 +206,11 @@ export default function Activities() {
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report">REPORTS</Link>
             <Link to="/#news">NEWS</Link>
-            <a href={CONTACT_URL} target="_blank" rel="noopener">CONTACT</a>
+            <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
           </nav>
         </div>
         <div className="footer__bar">
-          <span className="en">© 2026 MNGA</span>
+          <span className="en">© 2026 Make Nippon Great Again. All rights reserved.</span>
           <span className="en">Toward an Indispensable Japan.</span>
         </div>
       </footer>

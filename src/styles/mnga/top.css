@@ -266,7 +266,7 @@
 .mnga-top .news{ grid-template-columns:1fr; }
 .mnga-top .foot{ flex-direction:column; gap:32px; }
 .mnga-top .foot__nav{ align-items:flex-start; text-align:left; }
-.mnga-top .hero__jp, .mnga-top h2.stitle, .mnga-top .stitle, .mnga-top .speaker__quote, .mnga-top .imgband__t, .mnga-top .cta-strip h3{ word-break:normal; line-break:auto; overflow-wrap:anywhere; }
+.mnga-top .hero__jp, .mnga-top h2.stitle, .mnga-top .stitle, .mnga-top .speaker__quote, .mnga-top .imgband__t, .mnga-top .cta-strip h3{ word-break:keep-all; line-break:strict; overflow-wrap:normal; }
 }
 @media (prefers-reduced-motion:reduce){
 .mnga-top .reveal, .mnga-top .hero__kicker, .mnga-top .hero__jp, .mnga-top .hero__en, .mnga-top .hero__meta, .mnga-top .hero__rail{ opacity:1 !important; transform:none !important; }

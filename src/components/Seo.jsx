@@ -16,7 +16,7 @@ export default function Seo({
   noindex = false,
   jsonLd,
 }) {
-  const fullTitle = title ? `${title} ─ MNGA` : SITE_NAME
+  const fullTitle = title ? `${title} ― MNGA` : SITE_NAME
   const url = absUrl(path)
   const ogImage = absUrl(image)
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []

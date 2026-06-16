@@ -8,7 +8,6 @@ import Seo from '../../components/Seo'
 import { absUrl, ORG_NAME } from '../../lib/site'
 import '../../styles/mnga/news-detail.css'
 
-const CONTACT_URL = '#' // TODO: 実Googleフォーム URL
 
 function fmtDate(s) {
   if (!s) return ''
@@ -189,20 +188,21 @@ export default function NewsDetail() {
       <Preloader variant="logo" caption="Make Nippon Great Again" />
       <MobileNav current="/report" />
 
+      <a className="skip-link" href="#main">本文へスキップ</a>
       <header className="site-header" id="ahdr">
-        <nav className="site-nav">
+        <nav className="site-nav" aria-label="メインナビゲーション">
           <Link className="site-logo" to="/" aria-label="MNGA"><img src="/mnga-horizontal-white.png" alt="MNGA ロゴ" /></Link>
           <div className="site-nav__links">
             <Link to="/">TOP</Link>
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report">REPORTS</Link>
-            <a className="site-nav__cta en" href={CONTACT_URL} target="_blank" rel="noopener">問い合わせ</a>
+            <a className="site-nav__cta en" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>問い合わせ（準備中）</a>
           </div>
         </nav>
       </header>
 
-      <main>
+      <main id="main">
         {!isStatic && notFound ? (
           <article className="article">
             <p className="art-body" style={{ marginTop: 0 }}>お知らせが見つかりませんでした。</p>
@@ -229,7 +229,7 @@ export default function NewsDetail() {
                 {isStatic ? (
                   <>
                     <p>一般社団法人 Make Nippon Great Again は、2026年6月10日、東京・赤坂にて設立記者発表会を開催し、設立の背景と初年度の実装方針を発表しました。</p>
-                    <p>当日は会長 櫻田謙悟が登壇し、<strong>大企業とベンチャーを「接続」し、新産業を社会実装まで前進させる</strong>という設立趣旨をお伝えしました。発表内容の詳細は、下記のプレスリリースをご覧ください。</p>
+                    <p>当日は理事長 櫻田謙悟が登壇し、<strong>大企業とベンチャーを「接続」し、新産業を社会実装まで前進させる</strong>という設立趣旨をお伝えしました。発表内容の詳細は、下記のプレスリリースをご覧ください。</p>
                   </>
                 ) : hasBlocks ? (
                   <NewsBlocks blocks={item.content} />
@@ -274,7 +274,7 @@ export default function NewsDetail() {
             <section className="news-cta">
               <div className="news-cta__in">
                 <p className="news-cta__t">MNGAの活動に参加しませんか。<span className="en">Join the platform for an indispensable Japan.</span></p>
-                <a className="news-cta__btn" href={CONTACT_URL} target="_blank" rel="noopener">お問い合わせ</a>
+                <a className="news-cta__btn" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>お問い合わせ（準備中）</a>
               </div>
             </section>
           </>
@@ -294,11 +294,11 @@ export default function NewsDetail() {
               <Link to="/activities">ACTIVITIES</Link>
               <Link to="/report">REPORTS</Link>
               <Link to="/#news">NEWS</Link>
-              <a href={CONTACT_URL} target="_blank" rel="noopener">CONTACT（Googleフォーム）</a>
+              <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
             </div>
           </div>
-          <p className="foot-neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、非政治・中立の一般社団法人として活動します。</p>
-          <p className="foot-copy en">© Make Nippon Great Again. All rights reserved.</p>
+          <p className="foot-neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、経団連・経済同友会が築いてきた産業共創の系譜に連なる、非政治・中立のプラットフォームです。</p>
+          <p className="foot-copy en">© 2026 Make Nippon Great Again. All rights reserved.</p>
         </div>
       </footer>
     </div>

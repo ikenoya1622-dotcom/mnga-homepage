@@ -24,7 +24,7 @@ const FALLBACK = [
   { id: null, category: 'Press', published_at: '2026-06-10', title: 'MNGA 設立記者発表会を開催しました', excerpt: '大企業経営層とベンチャー意思決定者、報道関係者を迎え、設立の背景と初年度の実装方針を発表しました。', thumbnail_url: '/images/about/c5.jpg' },
   { id: null, category: 'Meetup', published_at: '2026-05-28', title: '第1回 共創ラウンドテーブルを実施', excerpt: '大企業7社・ベンチャー12社が参加。協業テーマを5領域に整理し、検証案件の優先順位を合意しました。', thumbnail_url: '/act-img/act-match.jpg' },
   { id: null, category: 'Project', published_at: '2026-05-16', title: '協業案件「次世代モビリティ実装」がPoCフェーズへ', excerpt: '大企業の社会実装力とベンチャーの検証速度を接続。半年での社会実装を目標にPoCを開始しました。', thumbnail_url: '/act-img/act-impl.jpg' },
-  { id: null, category: 'Talk', published_at: '2026-05-03', title: '会長 櫻田が経営者育成プログラムに登壇', excerpt: '「停滞を招いたのも、変えられるのも経営者である」——自己変革と実装責任をテーマに講演しました。', thumbnail_url: '/act-img/act-ikusei.jpg' },
+  { id: null, category: 'Talk', published_at: '2026-05-03', title: '理事長 櫻田が経営者育成プログラムに登壇', excerpt: '「停滞を招いたのも、変えられるのも経営者である」——自己変革と実装責任をテーマに講演しました。', thumbnail_url: '/act-img/act-ikusei.jpg' },
   { id: null, category: 'Project', published_at: '2026-04-24', title: 'ナレッジ基盤「実装の型」第1版を公開', excerpt: '評価基準・撤退ルール・共創の規律を体系化。会員が案件設計に再利用できる形で整備しました。', thumbnail_url: '/act-img/act-knowledge.jpg' },
   { id: null, category: 'Meetup', published_at: '2026-04-12', title: '分科会「新産業デザイン」キックオフ', excerpt: '領域横断の少人数分科会を始動。仮説の筋とフィールドの確度を、現場目線で磨き込みます。', thumbnail_url: '/act-img/bg-dawn.jpg' },
 ]
@@ -178,22 +178,23 @@ export default function Reports() {
       <Seo title="活動レポート" path="/report" description="共創ラウンドテーブル、協業案件の進捗、登壇・寄稿、プレス発表まで。MNGAが「接続」を実装に変えていく一次情報を記録する活動レポート一覧。" />
       <Vignette />
       <Preloader variant="logo" caption="Make Nippon Great Again" />
+      <a className="skip-link" href="#main">本文へスキップ</a>
       <MobileNav current="/report" />
 
       <header className="site-header" id="ahdr">
-        <nav className="site-nav">
+        <nav className="site-nav" aria-label="メインナビゲーション">
           <Link className="site-logo" to="/" aria-label="MNGA"><img src="/mnga-horizontal-white.png" alt="MNGA ロゴ" /></Link>
           <div className="site-nav__links">
             <Link to="/">TOP</Link>
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report" aria-current="page">REPORTS</Link>
-            <a className="site-nav__cta en" href={CONTACT_URL} target="_blank" rel="noopener">問い合わせ</a>
+            <a className="site-nav__cta en" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>問い合わせ（準備中）</a>
           </div>
         </nav>
       </header>
 
-      <main>
+      <main id="main">
         <section className="phero">
           <div className="phero__bg" aria-hidden="true" />
           <div className="phero__inner">
@@ -262,11 +263,11 @@ export default function Reports() {
               <Link to="/about">ABOUT</Link>
               <Link to="/activities">ACTIVITIES</Link>
               <Link to="/report">REPORTS</Link>
-              <a href={CONTACT_URL} target="_blank" rel="noopener">CONTACT（Googleフォーム）</a>
+              <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
             </div>
           </div>
-          <p className="foot-neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、非政治・中立の一般社団法人として活動します。</p>
-          <p className="foot-copy en">© Make Nippon Great Again. All rights reserved.</p>
+          <p className="foot-neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、経団連・経済同友会が築いてきた産業共創の系譜に連なる、非政治・中立のプラットフォームです。</p>
+          <p className="foot-copy en">© 2026 Make Nippon Great Again. All rights reserved.</p>
         </div>
       </footer>
     </div>

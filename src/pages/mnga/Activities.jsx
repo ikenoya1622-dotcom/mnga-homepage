@@ -90,7 +90,12 @@ export default function Activities() {
           plx.forEach((o) => {
             const r = o.el.getBoundingClientRect()
             const c = r.top + r.height / 2
-            o.el.style.setProperty('--plx', ((c - mid) * -o.sp).toFixed(1) + 'px')
+            // 移動量を画像の余白（headroom）内にクランプ＝枠から画像がはみ出して隙間が出ないように
+            const max = o.el.offsetHeight * 0.08
+            let y = (c - mid) * -o.sp
+            if (y > max) y = max
+            else if (y < -max) y = -max
+            o.el.style.setProperty('--plx', y.toFixed(1) + 'px')
           })
           pTick = false
         }

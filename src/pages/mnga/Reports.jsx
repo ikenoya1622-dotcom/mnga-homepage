@@ -229,7 +229,7 @@ export default function Reports() {
                   <div className="rcard__media">
                     <img loading="lazy" decoding="async" src={img} alt="" />
                   </div>
-                  {a.category && <span className="rcard__cat">{a.category}</span>}
+                  <span className="rcard__cat">{a.category || 'Report'}</span>
                   <h2 className="rcard__t">{a.title}</h2>
                   <p className="rcard__ex">{deriveExcerpt(a)}</p>
                   <span className="rcard__date en">{fmtDate(a.published_at)}</span>

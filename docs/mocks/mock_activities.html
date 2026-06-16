@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="MNGAは政策提言の団体ではなく、実装するための場。経営者育成・協業マッチング・実装支援・ナレッジ基盤の4機能が連動し、構想を案件に、案件を事業に変える。" />
+<script>document.documentElement.classList.add('js');</script>
+<title>活動内容 ─ MNGA</title>
+<!--
+  MNGA 活動内容ページ モック (mock_activities.html)
+  - 構成: mnga-about-prototype/activities.html を忠実に再現（ヒーロー巨大グリフ→マーキー→章ナビ→画像つき左右交互フィーチャー4本→場の設計→CTA）
+  - 画像: 御団体プロトタイプの実画像（act-img/）を使用
+  - 配色・フォント: 現行デザインシステム（暖色チャコール/クリーム/明朝）。共通ヘッダー・フッターと統一
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --canvas:#232220; --canvas-2:#2b2a26; --surface:#2b2a26; --surface-raised:#34322b;
+    --cream:#f5f3ea; --body:#d8d4c7; --olive:#a8a89a; --olive-dark:#5c5c4e;
+    --paper:#dcdcd0; --ink-dark:#26261c;
+    --accent:#f5f3ea; --on-accent:#26261c;
+    --line:rgba(245,243,234,.18); --line-strong:rgba(245,243,234,.4);
+    --f-jp:'Zen Old Mincho',serif; --f-en:'Cormorant Garamond',serif;
+    --maxw:1180px; --margin:6vw; --gutter:24px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; background:var(--canvas); scroll-behavior:smooth; }
+  body{ font-family:var(--f-jp); color:var(--body); background-color:var(--canvas);
+    /* TOP/About準拠：地色は単一の連続グラデ（ページ全体を一枚で覆う）。セクション境界に段差を作らない */
+    background-image:linear-gradient(180deg, #232220 0%, #26262a 34%, #201f1e 64%, #282621 88%, #232220 100%);
+    background-repeat:no-repeat;
+    line-height:2.0; letter-spacing:.03em; overflow-x:hidden; font-feature-settings:"palt" 1; -webkit-font-smoothing:antialiased; }
+  /* ライトリーク（参照: mnga-about-prototype）。右上に寒色・左下に暖色の二灯。固定・screen合成で奥行きを与える */
+  body::before{ content:''; position:fixed; inset:0; z-index:150; pointer-events:none; mix-blend-mode:screen;
+    background:
+      radial-gradient(58% 42% at 82% -4%, rgba(120,150,210,.12), rgba(0,0,0,0) 60%),
+      radial-gradient(52% 50% at -4% 104%, rgba(196,150,110,.09), rgba(0,0,0,0) 60%); }
+  body::after{ content:''; position:fixed; inset:0; z-index:200; pointer-events:none; opacity:.04; mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .en{ font-family:var(--f-en); }
+  ::selection{ background:var(--cream); color:var(--ink-dark); }
+  a:focus-visible,button:focus-visible{ outline:2px solid var(--cream); outline-offset:3px; border-radius:1px; }
+  :focus:not(:focus-visible){ outline:none; }
+  .wrap{ width:100%; max-width:var(--maxw); margin:0 auto; padding:0 var(--margin); }
+
+  /* ===== プリローダー ===== */
+  .preloader{ position:fixed; inset:0; z-index:1000; background:var(--canvas); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; }
+  .preloader__mark{ font-family:var(--f-en); font-weight:600; font-size:40px; letter-spacing:.3em; color:var(--cream); display:flex; gap:.05em; }
+  .preloader__mark span{ opacity:0; }
+  .preloader__bar{ width:120px; height:1px; background:var(--line); position:relative; overflow:hidden; }
+  .preloader__bar i{ position:absolute; left:0; top:0; height:100%; width:0; background:var(--cream); }
+  .preloader__cap{ font-family:var(--f-en); font-size:11px; letter-spacing:.4em; text-transform:uppercase; color:var(--olive); }
+  html:not(.js) .preloader{ display:none; }
+  @media (prefers-reduced-motion:reduce){ .preloader{ display:none; } }
+
+  /* ===== 共通ヘッダー ===== */
+  header.nav{ position:fixed; top:0; left:0; right:0; z-index:100; height:72px; display:flex; align-items:center; justify-content:space-between;
+    padding:0 var(--margin); background:rgba(22,20,16,.4); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); transition:background .4s; }
+  header.nav.solid{ background:rgba(22,20,16,.92); }
+  .nav__brand{ display:inline-flex; align-items:center; text-decoration:none; }
+  .nav__logo{ height:28px; width:auto; display:block; }
+  .nav__links{ list-style:none; display:flex; align-items:center; gap:28px; }
+  .nav__links a{ font-family:var(--f-en); font-size:14px; letter-spacing:.06em; color:var(--body); text-decoration:none; transition:color .25s; }
+  .nav__links a:hover,.nav__links a.is-current{ color:var(--cream); }
+  .nav__cta{ font-family:var(--f-en); font-size:14px; background:var(--cream); color:var(--ink-dark)!important; padding:9px 20px; border-radius:999px; }
+  .nav__burger{ display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding:6px; }
+  .nav__burger span{ width:24px; height:2px; background:var(--cream); display:block; }
+
+  /* ===== ヒーロー（見出しのみ／薄い透かし漢字は不採用） ===== */
+  .phero{ position:relative; min-height:86svh; display:flex; align-items:center; padding:120px var(--margin) 80px; overflow:hidden; isolation:isolate; }
+  .phero__inner{ position:relative; z-index:1; max-width:880px; }
+  .phero__kana{ font-family:var(--f-en); font-size:13px; letter-spacing:.3em; text-transform:uppercase; color:var(--olive);
+    display:inline-flex; align-items:center; gap:14px; margin-bottom:28px; }
+  .phero__kana::before{ content:''; width:30px; height:1px; background:var(--olive); }
+  .phero__title{ font-family:var(--f-jp); font-weight:900; color:var(--cream); font-size:clamp(2.6rem,7vw,5rem); line-height:1.3; letter-spacing:.05em;
+    word-break:keep-all; line-break:strict; text-wrap:balance; }
+  .phero__title .lineMask{ display:block; overflow:hidden; }
+  .phero__title .line{ display:block; }
+  .phero__lead{ margin-top:30px; max-width:760px; font-size:clamp(1rem,1.4vw,1.12rem); color:var(--body); line-height:2.1; }
+  .phero__lead strong{ color:var(--cream); font-weight:700; }
+
+  /* ===== マーキー ===== */
+  .marquee{ overflow:hidden; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:20px 0; background:transparent; }
+  .marquee__track{ display:inline-flex; white-space:nowrap; width:max-content; animation:marq 36s linear infinite; }
+  .marquee__track span{ font-family:var(--f-jp); font-weight:700; font-size:clamp(1.1rem,2.4vw,1.9rem); color:var(--cream); padding:0 28px; position:relative; letter-spacing:.04em; }
+  .marquee__track span::after{ content:'·'; position:absolute; right:-4px; color:var(--olive); }
+  @keyframes marq{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+  @media (prefers-reduced-motion:reduce){ .marquee__track{ animation:none; } }
+
+  /* ===== 章ナビ ===== */
+  .chapnav{ position:sticky; top:72px; z-index:50; display:flex; flex-wrap:wrap; justify-content:center; gap:0;
+    background:rgba(22,20,16,.7); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .chapnav a{ display:inline-flex; align-items:baseline; gap:8px; padding:14px 22px; font-family:var(--f-jp); font-size:14px; color:var(--body); text-decoration:none; transition:color .25s; }
+  .chapnav a:hover{ color:var(--cream); }
+  .chapnav .idx{ font-family:var(--f-en); font-size:12px; letter-spacing:.1em; color:var(--olive); }
+  @media (max-width:820px){ .chapnav{ display:none; } }
+
+  /* ===== フィーチャー（左右交互・画像つき） ===== */
+  .section{ padding:clamp(40px,6vh,80px) 0; }
+  .feature{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(32px,5vw,72px); align-items:center; padding:clamp(44px,8vh,96px) 0; scroll-margin-top:130px; }
+  .feature--flip .feature__media{ order:2; }
+  .feature__media{ position:relative; aspect-ratio:4/3; overflow:hidden; border:1px solid var(--line); }
+  .feature__media .pic{ width:100%; height:100%; object-fit:cover; filter:grayscale(.28) contrast(1.03); transition:transform .8s ease; display:block; }
+  .feature:hover .pic{ transform:scale(1.04); }
+  .feature__media .ovl{ position:absolute; inset:0; background:linear-gradient(150deg, rgba(20,18,15,.05), rgba(20,18,15,.55)); }
+  .mtag{ position:absolute; top:16px; left:18px; font-family:var(--f-jp); font-weight:700; font-size:1.6rem; color:var(--cream); }
+  .feature__body h3{ font-family:var(--f-jp); font-weight:700; color:var(--cream); font-size:clamp(1.5rem,3vw,2.2rem); line-height:1.45; letter-spacing:.05em; word-break:keep-all; text-wrap:balance; }
+  .feature__body p{ margin-top:20px; font-size:clamp(1rem,1.35vw,1.1rem); color:var(--body); line-height:2.1; }
+  .feature__body p strong{ color:var(--cream); font-weight:700; }
+  .feature__core{ display:inline-block; margin-bottom:14px; font-family:var(--f-en); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--olive); border:1px solid var(--line-strong); border-radius:999px; padding:4px 13px; }
+
+  /* ===== 場の設計 ===== */
+  .wash--dawn{ background:transparent; }
+  .sec-kana{ font-family:var(--f-en); font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--olive); margin-bottom:18px; }
+  .sec-head{ font-family:var(--f-jp); font-weight:700; color:var(--cream); font-size:clamp(1.8rem,4vw,2.8rem); line-height:1.45; letter-spacing:.06em; word-break:keep-all; text-wrap:balance; }
+  .sec-head .accent{ color:var(--cream); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.18em; text-decoration-color:var(--line-strong); }
+  /* 場の設計：見出しと同じ左右幅／上に1本の細罫＋「見出し左・メタ右」の定義行＋本文（編集的に厳密整列） */
+  .duo{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(40px,5vw,80px); margin-top:48px; align-items:start; }
+  .duo__cell{ border-top:1px solid var(--line-strong); padding-top:24px; display:grid; grid-template-columns:1fr auto; align-items:baseline; column-gap:18px; }
+  .duo__cell h4{ font-family:var(--f-jp); font-weight:700; font-size:1.35rem; color:var(--cream); letter-spacing:.08em; }
+  .duo__cell .meta{ justify-self:end; font-family:var(--f-en); font-size:13px; letter-spacing:.08em; color:var(--olive); white-space:nowrap; }
+  .duo__cell p{ grid-column:1 / -1; margin-top:16px; font-size:15px; color:var(--body); line-height:2; }
+  .prose{ font-size:clamp(1rem,1.4vw,1.1rem); color:var(--body); line-height:2.1; }
+  .prose strong{ font-weight:700; }
+
+  /* ===== CTA ===== */
+  .cta-strip{ text-align:center; padding:clamp(70px,12vh,140px) var(--margin); background:transparent; }
+  .cta-strip h3{ font-family:var(--f-jp); font-weight:700; color:var(--cream); font-size:clamp(1.6rem,3.4vw,2.4rem); letter-spacing:.06em; line-height:1.6; word-break:keep-all; text-wrap:balance; }
+  .cta-strip h3 .en{ display:block; font-size:clamp(1rem,2vw,1.4rem); font-style:italic; color:var(--olive); margin-top:14px; }
+  .cta-strip > p{ margin:22px auto 0; max-width:640px; color:var(--body); line-height:2.1; }
+  .btn-row{ margin-top:36px; }
+  .btn{ font-family:var(--f-en); font-size:15px; letter-spacing:.04em; padding:16px 40px; border-radius:999px; text-decoration:none; }
+  .btn--solid{ background:var(--cream); color:var(--ink-dark); }
+  .cta-links{ margin-top:22px; }
+  .cta-links a{ font-family:var(--f-en); font-size:14px; letter-spacing:.06em; color:var(--cream); text-decoration:none; border-bottom:1px solid var(--line-strong); padding-bottom:3px; }
+
+  /* ===== 共通フッター ===== */
+  .footer{ background:var(--paper); color:var(--ink-dark); padding:64px 0 36px; }
+  .footer__top{ width:100%; max-width:none; margin:0 auto; padding:0 var(--margin); display:flex; justify-content:space-between; align-items:flex-start; gap:48px; }
+  .footer__logo{ height:40px; width:auto; display:block; }
+  .footer__brand .tag{ font-family:var(--f-en); font-size:12px; color:var(--olive-dark); line-height:1.7; margin-top:14px; }
+  .footer__brand .shield{ margin-top:18px; max-width:520px; font-size:12px; color:var(--olive-dark); line-height:2; font-style:italic; }
+  .footer__nav{ display:flex; flex-direction:column; align-items:flex-end; text-align:right; gap:12px; }
+  .footer__nav a{ font-family:var(--f-en); font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-dark); text-decoration:none; opacity:.82; }
+  .footer__nav a:hover{ opacity:1; }
+  .footer__bar{ max-width:none; margin:34px auto 0; padding:18px var(--margin) 0; border-top:1px solid rgba(38,38,28,.2); display:flex; justify-content:space-between; font-family:var(--f-en); font-size:12px; letter-spacing:.06em; color:var(--olive-dark); }
+
+  .fade-up,.feature,.phero__inner > *{ }
+  .reveal{ opacity:0; transform:translateY(24px); }
+
+  @media (max-width:820px){
+    .nav__links{ display:none; } .nav__burger{ display:flex; }
+    .feature{ grid-template-columns:1fr; gap:24px; padding:48px 0; } .feature--flip .feature__media{ order:0; }
+    .duo{ grid-template-columns:1fr; }
+    .footer__top{ flex-direction:column; gap:30px; } .footer__nav{ align-items:flex-start; text-align:left; } .footer__bar{ flex-direction:column; gap:8px; }
+  }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1!important; transform:none!important; } html{ scroll-behavior:auto; } }
+  html:not(.js) .reveal{ opacity:1; transform:none; }
+
+  /* ===== 文字の表示方法（行マスク split-lines：プロトタイプ準拠／ヒーロー以外の見出しに適用） ===== */
+  .split-lines .line{ display:block; overflow:hidden; }  /* 字間は従来と完全一致（演出のマスクのみ） */
+  .split-lines .line__i{ display:block; transform:translateY(110%); will-change:transform; }
+  .split-lines.is-in .line__i{ transform:translateY(0); transition:transform 1s cubic-bezier(.22,1,.36,1); }
+  .split-lines.is-in .line:nth-child(2) .line__i{ transition-delay:.08s; }
+  .split-lines.is-in .line:nth-child(3) .line__i{ transition-delay:.16s; }
+  .split-lines.is-in .line:nth-child(4) .line__i{ transition-delay:.24s; }
+  @media (prefers-reduced-motion:reduce){ .split-lines .line__i{ transform:none !important; } }
+  html:not(.js) .split-lines .line__i{ transform:none; }
+
+  /* ===== セクション区切り線（1pxクリームのヘアライン）。activitiesはトップ(phero)直下・各活動(feature)間・セクション間・CTA帯の上に ===== */
+  .phero + .section{ border-top:1px solid var(--line); }
+  .section + .section{ border-top:1px solid var(--line); }
+  .feature + .feature{ border-top:1px solid var(--line); }
+  .cta-strip{ border-top:1px solid var(--line); }
+</style>
+</head>
+<body>
+
+  <!-- プリローダー -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__mark en"><span>M</span><span>N</span><span>G</span><span>A</span></div>
+    <div class="preloader__bar"><i></i></div>
+    <div class="preloader__cap en">Activities</div>
+  </div>
+
+  <!-- 共通ヘッダー -->
+  <header class="nav" id="hdr">
+    <a class="nav__brand" href="mock_top.html" aria-label="MNGA トップ"><img class="nav__logo" src="mnga-horizontal-white.png" alt="MNGA" /></a>
+    <nav><ul class="nav__links">
+      <li><a href="mock_top.html">TOP</a></li>
+      <li><a href="mock_about.html">ABOUT</a></li>
+      <li><a class="is-current" aria-current="page" href="mock_activities.html">ACTIVITIES</a></li>
+      <li><a href="mock_report.html">REPORTS</a></li>
+      <!-- TODO: 実Googleフォーム URL -->
+      <li><a class="nav__cta en" href="#" target="_blank" rel="noopener">問い合わせ</a></li>
+    </ul></nav>
+    <button class="nav__burger" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </header>
+
+  <main>
+    <!-- ヒーロー -->
+    <section class="phero">
+      <div class="phero__inner">
+        <p class="phero__kana">Activities — 活動内容</p>
+        <h1 class="phero__title"><span class="lineMask"><span class="line">提言ではなく、</span></span><span class="lineMask"><span class="line">実装する。</span></span></h1>
+        <p class="phero__lead"><strong>MNGAは、政策提言の団体ではありません。実装するための場です。</strong>4つの機能が連動し、構想を案件に、案件を事業に変えていきます。日本の経営に欠けてきた「共創・執行・自己変革・結果へのこだわり」を、この4機能が補います。</p>
+      </div>
+    </section>
+
+    <!-- 4機能（画像つき・左右交互） -->
+    <section class="section">
+      <div class="wrap">
+
+        <article class="feature" id="f1">
+          <div class="feature__media reveal">
+            <img class="pic" src="act-img/act-ikusei.jpg" alt="" onerror="this.src='act-img/bg-night.jpg'" />
+            <div class="ovl"></div>
+          </div>
+          <div class="feature__body">
+            <h3 class="split-lines">経営者育成<br>― 地力と視座を磨く</h3>
+            <p>第一線の経営者による講話と対話を通じて、覚悟と視座を磨く場（プログラム名：<strong>櫻田塾</strong>）。アドバイスではなく経験を共有する——上から目線の助言ではなく、<strong>経営者同士が対等に学び合う</strong>設計です。</p>
+          </div>
+        </article>
+
+        <article class="feature feature--flip" id="f2">
+          <div class="feature__media reveal">
+            <img class="pic" src="act-img/act-match.jpg" alt="" onerror="this.src='act-img/bg-night.jpg'" />
+            <div class="ovl"></div>
+          </div>
+          <div class="feature__body">
+            <h3 class="split-lines">協業マッチング<br>― 案件を生む</h3>
+            <p>大企業の課題とベンチャーの技術を、<strong>事前にスクリーニングしたテーマ</strong>で突き合わせる。名刺交換で終わるネットワーキングではなく、具体的な案件テーマとして立ち上げます。</p>
+          </div>
+        </article>
+
+        <article class="feature" id="f3">
+          <div class="feature__media reveal">
+            <img class="pic" src="act-img/act-impl.jpg" alt="" onerror="this.src='act-img/bg-dawn.jpg'" />
+            <div class="ovl"></div>
+          </div>
+          <div class="feature__body">
+            <span class="feature__core en">Core ─ MNGAの核心</span>
+            <h3 class="split-lines">実装支援<br>― PoCで終わらせない</h3>
+            <p><strong>ここがMNGAの核心です。</strong>立ち上がった案件を、論点整理（法務・セキュリティ・競合配慮）から進捗管理、成果検証まで継続的に伴走する。多くの協業がPoCで止まるのは、この「回し続ける仕組み」がないからです。MNGAはここを持ちます。その結果として、<strong>M&A・出資・提携が生まれます。</strong></p>
+          </div>
+        </article>
+
+        <article class="feature feature--flip" id="f4">
+          <div class="feature__media reveal">
+            <img class="pic" src="act-img/act-knowledge.jpg" alt="" onerror="this.src='act-img/bg-night.jpg'" />
+            <div class="ovl"></div>
+          </div>
+          <div class="feature__body">
+            <h3 class="split-lines">ナレッジ基盤<br>― 場の質を担保する</h3>
+            <p>評価基準・撤退ルール・共創の規律を明示し、事例と知見を蓄積する。属人的な熱量ではなく、<strong>再現性のある仕組み</strong>として協業の質を守ります。</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 場の設計 -->
+    <section class="section wash--dawn" id="ba">
+      <div class="wrap">
+        <p class="sec-kana reveal en">The Setting — 場の設計</p>
+        <h2 class="sec-head split-lines">提言でもなく、交流でもなく、<br><span class="accent">実装まで。</span></h2>
+        <div class="duo reveal">
+          <div class="duo__cell">
+            <h4>本会</h4>
+            <div class="meta en">会員限定 ・ 月1回</div>
+            <p>月例会で、上記4機能を一体で回す。NDA・チャタムハウスルールを前提に、立場を超えて本音で議論できる場を担保します。</p>
+          </div>
+          <div class="duo__cell">
+            <h4>分科会</h4>
+            <div class="meta en">会員＋ゲスト</div>
+            <p>特定テーマを深掘りし、新しい案件の種を探す入口。関心の高い参加者が、審査を経て本会へ加わります。</p>
+          </div>
+        </div>
+        <p class="prose reveal" style="margin-top:30px;max-width:760px;">提言でもなく、交流でもなく、実装まで。<strong style="color:var(--cream)">それがMNGAの活動です。</strong></p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-strip">
+      <h3 class="split-lines">構想を、案件に。案件を、事業に。<span class="en">From words to results.</span></h3>
+      <p class="reveal">自ら事業を起こし、動かし、意思決定できる立場の方へ。実装の場で会いましょう。</p>
+      <div class="btn-row reveal">
+        <!-- TODO: 実Googleフォーム URL（join） -->
+        <a class="btn btn--solid en" href="#" target="_blank" rel="noopener">参加を申し込む</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 共通フッター -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img class="footer__logo" src="../../00_素材・アセット/mnga-horizontal.png" alt="MNGA" />
+        <div class="tag en">Make Nippon Great Again<br />Co-Creation Implementation Platform for an Indispensable Japan</div>
+        <p class="shield">私たちの "Again" は、復古ではなく前進です。"Great" は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、非政治・中立のプラットフォームです。</p>
+      </div>
+      <nav class="footer__nav" aria-label="フッターナビ">
+        <a href="mock_top.html">TOP</a>
+        <a href="mock_about.html">ABOUT</a>
+        <a href="mock_activities.html">ACTIVITIES</a>
+        <a href="mock_report.html">REPORTS</a>
+        <a href="mock_top.html#news">NEWS</a>
+        <!-- TODO: 実Googleフォーム URL -->
+        <a href="#" target="_blank" rel="noopener">CONTACT</a>
+      </nav>
+    </div>
+    <div class="footer__bar">
+      <span class="en">© <span data-year>2026</span> MNGA</span>
+      <span class="en">Toward an Indispensable Japan.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script>
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const pre = document.getElementById('preloader');
+    var y=document.querySelector('[data-year]'); /* 年は据え置き(2026) */
+
+    if(!window.gsap){ document.documentElement.classList.remove('js'); if(pre) pre.remove(); }
+    else{
+      gsap.registerPlugin(ScrollTrigger);
+      const hdr=document.getElementById('hdr');
+      ScrollTrigger.create({ start:'top -30', onUpdate:s=>hdr.classList.toggle('solid', s.scroll()>30) });
+
+      function playReveals(){
+        if(reduce){ gsap.set('.reveal',{opacity:1,y:0}); return; }
+        gsap.utils.toArray('.reveal').forEach(el=>{
+          gsap.to(el,{ opacity:1, y:0, duration:.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 86%', once:true } });
+        });
+      }
+      /* ヒーロー入場（幕が上がった後に再生＝必ず見える）。見出しは行マスクでせり上がる */
+      function playHero(){
+        if(reduce){ return; }
+        gsap.timeline({ defaults:{ ease:'power3.out' } })
+          .from('.phero__kana',{ opacity:0, y:16, duration:.7 })
+          .from('.phero__title .line',{ yPercent:110, duration:1.0, stagger:.12 }, '-=.2')
+          .from('.phero__lead',{ opacity:0, y:18, duration:.8 }, '-=.5');
+      }
+
+      if(reduce){ gsap.set('.reveal',{opacity:1,y:0}); if(pre) pre.style.display='none'; }
+      else{
+        if(window.Lenis){ const lenis=new Lenis({duration:1.15,smoothWheel:true}); lenis.on('scroll',ScrollTrigger.update); gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0); }
+        playReveals();
+        if(pre){
+          gsap.timeline()
+            .to('.preloader__mark span',{ opacity:1, duration:.5, stagger:.08 })
+            .to('.preloader__bar i',{ width:'100%', duration:.9, ease:'power1.inOut' }, '-=.3')
+            .to('.preloader',{ yPercent:-100, duration:.9, ease:'power3.inOut' }, '+=.1')
+            .add(()=>{ pre.style.display='none'; })
+            .add(playHero);
+        } else { playHero(); }
+        setTimeout(()=>{ const p=document.getElementById('preloader'); if(p && getComputedStyle(p).display!=='none'){ p.style.display='none'; playHero(); } }, 4000);
+      }
+    }
+    document.querySelector('.nav__burger')?.addEventListener('click',()=>alert('モック: SPナビ（ハンバーガー）。本番ではドロワーを展開します。'));
+  </script>
+  <script>
+  /* 文字の表示方法（行マスク split-lines）— プロトタイプ準拠。ヒーロー以外の見出しに適用 */
+  (function(){
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function splitLines(el){
+      var parts = el.innerHTML.split(/<br\s*\/?>/i);
+      el.innerHTML = parts.map(function(l){ return '<span class="line"><span class="line__i">'+l.trim()+'</span></span>'; }).join('');
+    }
+    var heads = [].slice.call(document.querySelectorAll('.split-lines'));
+    heads.forEach(splitLines);
+    if('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { threshold:.25, rootMargin:'0px 0px -8% 0px' });
+      heads.forEach(function(el){ io.observe(el); });
+    } else { heads.forEach(function(el){ el.classList.add('is-in'); }); }
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="「失った30年」を超え、世界にとって“いなくてはならない国”へ。MNGAが、大企業とベンチャーの断絶を「接続」し、新産業を生み出すまで。なぜこのチームをつくったのかを綴るストーリー。" />
+<!-- プログレッシブ・エンハンスメント：JSが動く時だけ .js を付与。CDN(GSAP)失敗・JS無効でも本文が消えないようCSS側でフォールバック -->
+<script>document.documentElement.classList.add('js');</script>
+<title>MNGA ─ なぜ、つくられたのか</title>
+<!--
+  MNGA Aboutページ モック (mock_about.html)
+  - フォント: アーカイブ版 mock_about.html を完全再現（Zen Old Mincho + Cormorant Garamond）
+    ※ユーザー指示「フォントに関してはアーカイブを完全再現」に準拠
+  - 色トークン: 暖色チャコール #232220（持ち上げた黒）＋ クリームアクセント #f5f3ea（キー線・橋・引用罫）。hero以外は画像なし＝solid暖色チャコールの交互バンド（DESIGN.md準拠）
+  - 挙動: 既存挙動を完全保持（要件定義§3.5 B1〜B14）
+  技術: GSAP + ScrollTrigger + Lenis / sticky札デッキ + 3D奥行き遷移 + 接続線
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* ▼ 色トークン：TOP/activitiesと統一した暖色チャコール（青みを排除）。DESIGN.md準拠 */
+    --bg:#232220;          /* 暖色チャコール（持ち上げた黒） */
+    --bg2:#2b2a26;         /* surface */
+    --paper:#f4f2ea;       /* 結びの反転面 */
+    --ivory:#f5f3ea;       /* クリーム文字 */
+    --ivory-dim:#a8a89a;   /* オリーブグレー */
+    --muted:#8f8f80;
+    --ink:#26261c;         /* 反転面の文字（dark olive） */
+    --accent:#f5f3ea;      /* アクセント＝クリーム（キー線・橋・引用罫） */
+    --hair:rgba(245,243,234,.18);
+    --thread-x:46px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; background:var(--bg); }
+  body{
+    /* ▼ フォント：アーカイブ完全再現 */
+    font-family:'Zen Old Mincho', serif;
+    color:var(--ivory);
+    background:var(--bg);
+    line-height:2.0; letter-spacing:.02em;
+    overflow-x:hidden;
+    font-feature-settings:"palt" 1;
+    -webkit-font-smoothing:antialiased;
+  }
+  .en{ font-family:'Cormorant Garamond', serif; letter-spacing:.06em; }
+  ::selection{ background:var(--ivory); color:var(--ink); }
+  /* キーボード・フォーカスの可視化（マウス操作では出ない）。クリームの細枠＝ブランド整合 */
+  a:focus-visible,button:focus-visible{ outline:2px solid var(--ivory); outline-offset:3px; border-radius:1px; }
+  :focus:not(:focus-visible){ outline:none; }
+
+  /* ライトリーク（参照: mnga-about-prototype）。隅から差す二灯＝右上に寒色・左下に暖色。固定・screen合成でsolid暗部に奥行きを与える */
+  body::before{ content:''; position:fixed; inset:0; z-index:100; pointer-events:none; mix-blend-mode:screen;
+    background:
+      radial-gradient(58% 42% at 82% -4%, rgba(120,150,210,.12), rgba(0,0,0,0) 60%),
+      radial-gradient(52% 50% at -4% 104%, rgba(196,150,110,.09), rgba(0,0,0,0) 60%); }
+
+  /* ヴィネット（周辺減光・参照: mnga-about-prototype）。隅を落として中央へ視線を集める */
+  html::after{ content:''; position:fixed; inset:0; z-index:110; pointer-events:none; box-shadow:inset 0 0 220px 30px rgba(0,0,0,.55); }
+
+  /* フィルムグレイン */
+  body::after{
+    content:''; position:fixed; inset:0; z-index:90; pointer-events:none;
+    opacity:.07; mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ───── 接続線（串）───── */
+  .thread{ position:fixed; left:var(--thread-x); top:0; bottom:0; width:1px; z-index:60; pointer-events:none; mix-blend-mode:difference; }
+  .thread__track{ position:absolute; inset:0; background:rgba(255,255,255,.22); }
+  .thread__fill{ position:absolute; left:0; top:0; width:100%; height:100%; background:#fff; transform:scaleY(0); transform-origin:top; }
+  .thread__node{ position:absolute; left:50%; width:8px; height:8px; border-radius:50%; transform:translate(-50%,-50%) scale(.6); background:var(--bg); border:1px solid rgba(255,255,255,.4); transition:all .55s cubic-bezier(.2,.7,.2,1); }
+  .thread__node.is-active{ background:#fff; border-color:#fff; transform:translate(-50%,-50%) scale(1); box-shadow:0 0 0 5px rgba(255,255,255,.12); }
+
+  /* ───── 札 ───── */
+  .deck{ position:relative; }
+  .card{
+    position:sticky; top:0; min-height:100svh;
+    display:flex; align-items:center;
+    /* 上は固定ヘッダー(72px)分を必ず空ける＝コンテンツがヘッダーに潜らない */
+    padding:calc(72px + 4vh) 7vw 7vh calc(var(--thread-x) + 4vw);
+    /* 各札に実写の東京（c0→c5）を敷き、暖色チャコールのオーバーレイを段階的に薄くして「深夜→夜明け」へ（青みは排してTOP/activitiesと統一）。深みはライトリーク＋グレインで補強 */
+    --bg-img:url('images/about/c0.jpg');
+    --ov1:rgba(22,19,15,.88); --ov2:rgba(12,10,8,.95);
+    background:
+      radial-gradient(120% 75% at 72% 20%, rgba(150,126,96,.12), transparent 62%),
+      linear-gradient(160deg, var(--ov1), var(--ov2)),
+      var(--bg-img) center/cover no-repeat,
+      #120f0c;
+    overflow:hidden;
+    perspective:1300px;
+  }
+  /* 各札の背景写真＋オーバーレイ濃度（深夜→夜明けへ段階的に明るく・暖色に） */
+  /* hero（表紙）は背景画像なし＝墨紺ソリッド（淡い光だけ残す）。lightleak/vignette/グレインは全面共通で乗る */
+  .card[data-card="0"]{ background:radial-gradient(120% 75% at 72% 20%, rgba(150,126,96,.10), transparent 62%), var(--bg); }
+  .card[data-card="1"]{ --bg-img:url('images/about/c1.jpg'); --ov1:rgba(22,19,15,.85); --ov2:rgba(12,10,8,.94); }
+  .card[data-card="2"]{ --bg-img:url('images/about/c2.jpg'); --ov1:rgba(26,22,17,.81); --ov2:rgba(13,11,9,.92); }
+  .card[data-card="3"]{ --bg-img:url('images/about/c3.jpg'); --ov1:rgba(30,26,20,.73); --ov2:rgba(15,13,10,.88); }
+  .card[data-card="4"]{ --bg-img:url('images/about/c4.jpg'); --ov1:rgba(38,32,25,.60); --ov2:rgba(16,14,11,.82); }
+  .card[data-card="5"]{ --bg-img:url('images/about/c5.jpg'); --ov1:rgba(48,38,28,.50); --ov2:rgba(18,15,11,.78); }
+  .veil{ position:absolute; inset:0; background:#000; opacity:0; pointer-events:none; }
+
+  .card__inner{
+    position:relative; z-index:2; width:100%; max-width:1180px; margin:0 auto;
+    display:grid; grid-template-columns:1fr; align-items:center;
+    transform-style:preserve-3d; will-change:transform,opacity; backface-visibility:hidden;
+  }
+
+  /* 絵札＝巨大漢字（アーカイブ通り Zen Old Mincho・weight 400） */
+  .glyph{ position:relative; justify-self:center; }
+  .glyph__char{
+    font-size:clamp(8rem,26vw,20rem); font-weight:400; line-height:.9;
+    color:var(--ivory); letter-spacing:0;
+    text-shadow:0 8px 60px rgba(0,0,0,.5);
+    opacity:0; transform:scale(.92);
+  }
+  .glyph__sub{
+    position:absolute; top:50%; left:-2.6em; transform:translateY(-50%);
+    writing-mode:vertical-rl; text-orientation:mixed;
+    font-size:13px; letter-spacing:.4em; color:var(--ivory-dim);
+  }
+
+  /* テキスト面 */
+  .lede{ max-width:820px; }
+  .kana{ font-size:11px; letter-spacing:.45em; color:var(--muted); margin-bottom:22px; }
+  h2.title{
+    font-size:clamp(1.7rem,3.4vw,2.7rem); font-weight:700; color:var(--ivory);
+    line-height:1.55; letter-spacing:.06em; margin-bottom:30px;
+    word-break:keep-all; line-break:strict; text-wrap:balance; /* 文節で折り、孤立字（オーファン）を防ぐ */
+  }
+  .body{ font-size:clamp(1rem,1.45vw,1.12rem); color:#cecbbf; line-height:2.05; letter-spacing:.02em; text-wrap:pretty; }
+  .body + .body{ margin-top:20px; }
+  .body strong{ color:var(--ivory); font-weight:700; }
+  .say{
+    margin:26px 0; padding-left:20px; border-left:2px solid var(--accent);
+    /* 問の札の見出し（引用）も他札の .title と同サイズに統一 */
+    font-size:clamp(1.7rem,3.4vw,2.7rem); font-weight:700; color:var(--ivory); line-height:1.55; letter-spacing:.04em;
+    word-break:keep-all; line-break:strict; text-wrap:balance;
+  }
+  .say small{ display:block; margin-top:14px; font-size:12px; font-weight:400; letter-spacing:.2em; color:var(--muted); }
+
+  /* 話者（櫻田氏） */
+  .speaker{ display:flex; align-items:center; gap:15px; margin:24px 0 8px; }
+  .speaker__face{ width:62px; height:62px; border-radius:50%; object-fit:cover; object-position:center top; filter:grayscale(.35) contrast(1.03); border:1px solid rgba(255,255,255,.28); flex-shrink:0; background:var(--bg2); }
+  .speaker__name{ font-size:15px; font-weight:700; color:var(--ivory); letter-spacing:.1em; }
+  .speaker__role{ font-size:11px; color:var(--muted); letter-spacing:.16em; margin-top:5px; }
+
+  /* 表紙：文章を詰め、上下対称の余白＋align-items:centerで全体を画面中央に置く */
+  .card.cover{ padding-top:calc(72px + 1vh); padding-bottom:calc(72px + 1vh); }
+  .cover .card__inner{ grid-template-columns:1fr; text-align:center; max-width:860px; }
+  .cover__jp{ font-size:clamp(2.6rem,8vw,5.6rem); font-weight:900; color:var(--ivory); line-height:1.28; letter-spacing:.1em; opacity:0; transform:translateY(20px); }
+  .cover__en{ margin-top:16px; font-size:clamp(.95rem,1.9vw,1.25rem); color:var(--ivory-dim); font-style:italic; line-height:1.7; opacity:0; transform:translateY(20px); }
+  .cover__q{ margin-top:22px; font-size:clamp(1rem,1.7vw,1.2rem); color:var(--muted); letter-spacing:.14em; opacity:0; transform:translateY(20px); }
+  .cover__scroll{ position:absolute; left:0; right:0; bottom:5vh; z-index:2; font-size:10px; letter-spacing:.4em; color:var(--muted); display:flex; justify-content:center; align-items:center; gap:12px; opacity:0; }
+  .cover__scroll::after{ content:""; width:1px; height:36px; background:rgba(255,255,255,.3); animation:drop 1.9s ease-in-out infinite; }
+  @keyframes drop{ 0%,100%{opacity:.25;transform:translateY(-6px);} 50%{opacity:1;transform:translateY(7px);} }
+
+  /* 接続演出（接の札） */
+  .nexus{ margin-top:30px; display:flex; align-items:center; }
+  .nexus .p{ flex:1 1 0; }
+  .nexus .p .k{ font-size:clamp(1rem,2vw,1.3rem); font-weight:700; color:var(--ivory); letter-spacing:.05em; }
+  .nexus .p .s{ font-size:11px; color:var(--muted); letter-spacing:.16em; margin-top:6px; }
+  .nexus .bridge{ flex:0 0 90px; height:1px; background:rgba(255,255,255,.25); position:relative; }
+  .nexus .bridge i{ position:absolute; left:0; top:0; height:100%; width:0; background:var(--accent); }
+
+  /* GDPグラフ：失の札 */
+  .chart{ margin-top:30px; width:100%; max-width:560px; }
+  .chart__cap{ font-size:11px; letter-spacing:.18em; color:var(--ivory-dim); margin-bottom:8px; }
+  .chart__svg{ width:100%; height:auto; overflow:visible; display:block; }
+  .chart__base{ stroke:rgba(255,255,255,.16); stroke-width:1; }
+  .ln{ fill:none; stroke-width:1.5; vector-effect:non-scaling-stroke; stroke-linejoin:round; stroke-linecap:round; }
+  .ln--jp{ stroke:var(--accent); stroke-width:2.6; }       /* キー線＝白アクセント（日本＝横ばい） */
+  .ln--us{ stroke:#9aa6bd; }
+  .ln--cn{ stroke:#6b7388; }
+  .lb{ font-family:'Zen Old Mincho',serif; font-size:11px; fill:var(--ivory-dim); letter-spacing:.04em; }
+  .lb--jp{ fill:var(--accent); font-weight:700; }
+  .lb--jp0{ fill:var(--muted); font-size:10px; }
+  .ax{ font-size:10px; fill:var(--muted); letter-spacing:.1em; }
+  .chart__src{ font-size:9px; color:var(--muted); margin-top:10px; letter-spacing:.06em; }
+
+  /* 結び（反転＝夜明け） */
+  .card--close{ background:var(--paper); color:var(--ink); }
+  .card--close .card__inner{ grid-template-columns:1fr; max-width:820px; text-align:center; }
+  .tagline{ font-size:clamp(2rem,5.5vw,3.6rem); font-weight:700; color:var(--ink); letter-spacing:.12em; line-height:1.5; opacity:0; transform:translateY(20px); }
+  .tagline .en{ display:block; font-size:clamp(1rem,2vw,1.4rem); color:var(--muted); margin-top:18px; font-style:italic; }
+  .close__lead{ margin-top:30px; font-size:clamp(1rem,1.6vw,1.15rem); color:#46506a; line-height:2.0; opacity:0; transform:translateY(20px); }
+  .shield{ margin-top:50px; padding-top:28px; border-top:1px solid rgba(26,36,56,.18); font-size:clamp(.78rem,1.2vw,.86rem); color:#6a7186; line-height:2.0; font-style:italic; letter-spacing:.02em; opacity:0; }
+
+  .reveal{ opacity:0; transform:translateY(24px); }
+
+  @media (max-width:820px){
+    :root{ --thread-x:20px; }
+    .card{ padding:calc(64px + 5vh) 7vw 9vh calc(var(--thread-x) + 6vw); align-items:flex-start; }
+    .card__inner{ grid-template-columns:1fr; gap:5vh; }
+    .glyph{ justify-self:flex-start; order:-1; }
+    .glyph__char{ font-size:clamp(7rem,40vw,12rem); }
+    .glyph__sub{ left:auto; right:-1.8em; }
+    .cover__jp{ letter-spacing:.04em; }   /* SPで「へ」が3行目に孤立するのを防ぐ（トラッキングを詰める） */
+  }
+  @media (prefers-reduced-motion:reduce){
+    .reveal,.glyph__char,.cover__jp,.cover__en,.cover__q,.cover__scroll,.tagline,.close__lead,.shield{ opacity:1 !important; transform:none !important; }
+    .cover__scroll::after{ animation:none; }
+  }
+  /* no-JSフォールバック：GSAP(CDN)が読めない・JS無効でも札の本文・絵札を必ず表示（入場演出は .js 時のみ適用） */
+  html:not(.js) .reveal,
+  html:not(.js) .glyph__char,
+  html:not(.js) .cover__jp,
+  html:not(.js) .cover__en,
+  html:not(.js) .cover__q,
+  html:not(.js) .cover__scroll,
+  html:not(.js) .tagline,
+  html:not(.js) .close__lead,
+  html:not(.js) .shield{ opacity:1 !important; transform:none !important; }
+
+  /* ===== プリローダー（読込イントロ：トップと統一） ===== */
+  .preloader{ position:fixed; inset:0; z-index:1000; background:var(--bg); display:flex; align-items:center; justify-content:center; }
+  .preloader__inner{ display:flex; flex-direction:column; align-items:center; gap:22px; }
+  .preloader__logo{ height:92px; width:auto; display:block; opacity:0; }
+  .preloader__bar{ width:120px; height:1px; background:var(--hair); position:relative; overflow:hidden; opacity:0; }
+  .preloader__bar i{ position:absolute; left:0; top:0; height:100%; width:0; background:var(--ivory); }
+  .preloader__txt{ font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:.36em; text-transform:uppercase; color:var(--ivory-dim); opacity:0; }
+  @media (prefers-reduced-motion:reduce){ .preloader{ display:none; } }
+
+  /* ===== 共通ヘッダー（トップと統一） ===== */
+  .site-header{ position:fixed; top:0; left:0; right:0; z-index:120; height:72px; display:flex; align-items:center;
+    background:rgba(22,20,16,.58); backdrop-filter:blur(12px); border-bottom:1px solid var(--hair); transition:background .4s; }
+  .site-header.solid{ background:rgba(22,20,16,.95); }
+  /* ヘッダーは全幅・両端寄せ */
+  .site-nav{ width:100%; padding:0 6vw; display:flex; align-items:center; justify-content:space-between; }
+  /* ヘッダー=「MNGA」テキスト表記のみ（ロゴ画像・台座なし） */
+  /* ヘッダー=横ロゴ（白文字＋赤い太陽の加工版・台座なし） */
+  .site-logo{ display:inline-flex; align-items:center; text-decoration:none; }
+  .site-logo img{ height:28px; width:auto; display:block; }
+  .site-nav__links{ display:flex; align-items:center; gap:30px; }
+  .site-nav__links a{ font-family:'Cormorant Garamond',serif; font-size:14px; letter-spacing:.06em; color:var(--ivory-dim); text-decoration:none; transition:color .25s; }
+  .site-nav__links a:hover{ color:var(--ivory); }
+  .site-nav__cta{ font-family:'Cormorant Garamond',serif; font-size:14px; background:var(--ivory); color:var(--ink)!important; padding:9px 20px; border-radius:999px; }
+
+  /* ===== デッキ後のセクション（NEWS・共通フッター） ===== */
+  .after{ position:relative; z-index:70; }
+  .awrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 6vw; }
+  .band-news{ background:var(--bg); padding:clamp(72px,12vh,140px) 0; scroll-margin-top:72px; }
+  .news-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:22px; }
+  .news-no{ font-family:'Cormorant Garamond',serif; font-size:17px; color:var(--ivory); }
+  .news-kick{ font-family:'Cormorant Garamond',serif; font-size:13px; letter-spacing:.24em; text-transform:uppercase; color:var(--ivory-dim); padding-bottom:10px; border-bottom:1px solid var(--hair); flex:1; }
+  .news-title{ font-size:clamp(1.6rem,3.2vw,2.3rem); font-weight:700; color:var(--ivory); letter-spacing:.05em; margin-bottom:30px; }
+  .news-list{ max-width:900px; }
+  .nrow{ position:relative; display:grid; grid-template-columns:auto auto 1fr; gap:18px; align-items:baseline; padding:20px 18px 20px 16px; border-top:1px solid var(--hair); text-decoration:none; color:var(--ivory);
+    transition:background .3s ease, padding-left .35s cubic-bezier(.2,.7,.2,1); }
+  .nrow:last-child{ border-bottom:1px solid var(--hair); }
+  /* hoverで左にクリームの細罫が立つ＋わずかに字下げ（明るくする方向＝有効に見せる） */
+  .nrow::before{ content:''; position:absolute; left:0; top:14px; bottom:14px; width:2px; background:var(--accent); transform:scaleY(0); transform-origin:top; transition:transform .35s cubic-bezier(.2,.7,.2,1); }
+  .nrow:hover{ background:rgba(245,243,234,.035); padding-left:24px; }
+  .nrow:hover::before{ transform:scaleY(1); }
+  .nrow-date{ font-family:'Cormorant Garamond',serif; font-size:14px; color:var(--ivory-dim); }
+  .nrow-pill{ font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ivory-dim); border:1px solid var(--hair); border-radius:999px; padding:2px 11px; transition:border-color .3s, color .3s; }
+  .nrow:hover .nrow-pill{ border-color:var(--hair-strong,rgba(245,243,234,.4)); color:var(--ivory); }
+  .nrow-t{ font-weight:700; font-size:16px; letter-spacing:.03em; transition:color .25s; }
+  .site-footer{ background:#dcdcd0; color:var(--ink); padding:64px 0 40px; }
+  .site-footer .awrap{ max-width:none; }  /* フッターは全幅・両端寄せ */
+  .foot-grid{ display:flex; justify-content:space-between; align-items:flex-start; gap:48px; }
+  .foot-logo{ height:40px; width:auto; display:block; }
+  .foot-org{ margin-top:16px; font-size:13px; color:#5c5c4e; line-height:2; letter-spacing:.04em; }
+  .foot-nav{ display:flex; flex-direction:column; align-items:flex-end; text-align:right; gap:13px; }
+  .foot-nav a{ font-family:'Cormorant Garamond',serif; font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink); text-decoration:none; opacity:.82; }
+  .foot-nav a:hover{ opacity:1; }
+  .foot-neutral{ margin-top:44px; padding-top:22px; border-top:1px solid rgba(38,38,28,.2); font-size:12px; color:#5c5c4e; line-height:2; font-style:italic; }
+  .foot-copy{ margin-top:14px; font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:.06em; color:#5c5c4e; }
+  @media (max-width:820px){ .site-nav__links a:not(.site-nav__cta){ display:none; } .foot-grid{ flex-direction:column; gap:28px; } .foot-nav{ align-items:flex-start; text-align:left; } }
+
+  /* 低い表示高（ノートPC等）でも札を1画面に収める：縦サイズ・余白・チャートを圧縮（下端の見切れ防止）。基本ルールより後に置き確実に上書き */
+  @media (max-height:920px) and (min-width:821px){
+    .card{ padding:calc(60px + 1.5vh) 7vw 4vh calc(var(--thread-x) + 4vw); }
+    .glyph__char{ font-size:clamp(6rem,18vw,12rem); }
+    h2.title{ font-size:clamp(1.4rem,2.8vw,2rem); line-height:1.45; margin-bottom:16px; }
+    .kana{ margin-bottom:12px; }
+    .body{ font-size:clamp(.92rem,1.15vw,1rem); line-height:1.78; }
+    .body + .body{ margin-top:12px; }
+    .say{ margin:16px 0; font-size:clamp(1.4rem,2.8vw,2rem); line-height:1.45; }
+    .say small{ margin-top:10px; }
+    .speaker{ margin:14px 0 6px; }
+    .nexus{ margin-top:20px; }
+    .chart{ margin-top:14px; max-width:430px; }
+    .chart__cap{ margin-bottom:6px; }
+    .cover__jp{ font-size:clamp(2.2rem,6vw,4.2rem); }
+    .cover__en{ margin-top:16px; }
+    .cover__q{ margin-top:24px; }
+    .cover__scroll{ margin-top:28px; }
+  }
+
+  /* ===== 文字の表示方法（行マスク split-lines：プロトタイプ準拠／ヒーロー以外の見出しに適用） ===== */
+  .split-lines .line{ display:block; overflow:hidden; }  /* 字間は従来と完全一致（演出のマスクのみ） */
+  .split-lines .line__i{ display:block; transform:translateY(110%); will-change:transform; }
+  .split-lines.is-in .line__i{ transform:translateY(0); transition:transform 1s cubic-bezier(.22,1,.36,1); }
+  .split-lines.is-in .line:nth-child(2) .line__i{ transition-delay:.08s; }
+  .split-lines.is-in .line:nth-child(3) .line__i{ transition-delay:.16s; }
+  .split-lines.is-in .line:nth-child(4) .line__i{ transition-delay:.24s; }
+  @media (prefers-reduced-motion:reduce){ .split-lines .line__i{ transform:none !important; } }
+  html:not(.js) .split-lines .line__i{ transform:none; }
+</style>
+</head>
+<body>
+
+  <!-- プリローダー（読込イントロ） -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <img class="preloader__logo" src="../../00_素材・アセット/mnga-symbol.png" alt="" />
+      <div class="preloader__bar"><i></i></div>
+      <span class="preloader__txt en">Make Nippon Great Again</span>
+    </div>
+  </div>
+
+  <!-- 共通ヘッダー（トップと統一） -->
+  <header class="site-header" id="ahdr">
+    <nav class="site-nav">
+      <a class="site-logo" href="mock_top.html" aria-label="MNGA"><img src="mnga-horizontal-white.png" alt="MNGA ロゴ" /></a>
+      <div class="site-nav__links">
+        <a href="mock_top.html">TOP</a>
+        <a href="mock_about.html">ABOUT</a>
+        <a href="mock_activities.html">ACTIVITIES</a>
+        <a href="mock_report.html">REPORTS</a>
+        <!-- TODO: 実Googleフォーム URL -->
+        <a class="site-nav__cta en" href="#" target="_blank" rel="noopener">問い合わせ</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="thread" aria-hidden="true">
+    <div class="thread__track"></div>
+    <div class="thread__fill"></div>
+    <span class="thread__node" style="top:8%"></span>
+    <span class="thread__node" style="top:26%"></span>
+    <span class="thread__node" style="top:43%"></span>
+    <span class="thread__node" style="top:60%"></span>
+    <span class="thread__node" style="top:78%"></span>
+  </div>
+
+  <main class="deck">
+
+    <!-- 表紙 -->
+    <section class="card cover" data-card="0">
+      <div class="veil"></div>
+      <div class="card__inner">
+        <h1 class="cover__jp">いなくては<br />ならない日本へ</h1>
+        <p class="cover__en en">Make Nippon Great Again<br />Co-Creation &amp; Implementation Platform for an Indispensable Japan</p>
+        <p class="cover__q">なぜ、私たちはこのチームをつくったのか。</p>
+      </div>
+      <!-- SCROLL誘導は中央の文章塊から外し、カード下部に固定（見出しが中央に来るように） -->
+      <p class="cover__scroll">SCROLL ─ めくる</p>
+    </section>
+
+    <!-- 壱：失 -->
+    <section class="card" data-card="1">
+      <div class="veil"></div>
+      <div class="card__inner">
+        <div class="lede">
+          <p class="kana reveal">THE LOST 30 YEARS</p>
+          <h2 class="title reveal">この30年を、<br />「失われた」とは呼ばない。</h2>
+          <p class="body reveal">奪われたのではありません。<strong>私たち自身が「失った」30年</strong>です。共通の将来像を描けず、計画を執行まで運べず、既存事業を守るために自己変革から逃げてきた。その結果、新しい産業が生まれず、日本の停滞を招いたのです。</p>
+          <div class="chart reveal">
+            <div class="chart__cap">名目GDP（米ドル）　1995 → 2023</div>
+            <svg class="chart__svg" viewBox="0 0 690 262" preserveAspectRatio="xMidYMid meet" role="img" aria-label="日本・米国・中国の名目GDP推移。日本だけが横ばい。">
+              <line class="chart__base" x1="40" y1="240" x2="520" y2="240" />
+              <path class="ln ln--cn" d="M40,234 L126,230 L211,222 L297,192 L383,151 L469,121 L520,96" />
+              <path class="ln ln--us" d="M40,180 L126,160 L211,138 L297,122 L383,96 L469,72 L520,22" />
+              <path class="ln ln--jp" d="M40,196 L126,200 L211,202 L297,194 L383,204 L469,199 L520,206" />
+              <text class="lb lb--us" x="528" y="25">米国 27.8兆</text>
+              <text class="lb lb--cn" x="528" y="99">中国 18.4兆</text>
+              <text class="lb lb--jp" x="528" y="209">日本 4.4兆</text>
+              <text class="lb lb--jp0" x="34" y="193" text-anchor="end">5.6兆</text>
+              <text class="ax" x="40" y="256">1995</text>
+              <text class="ax" x="520" y="256" text-anchor="end">2023</text>
+            </svg>
+            <div class="chart__src">出典: IMF World Economic Outlook (2026.4)　単位: 兆ドル</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 弐：問 -->
+    <section class="card" data-card="2">
+      <div class="veil"></div>
+      <div class="card__inner">
+        <div class="lede">
+          <p class="kana reveal">THE QUESTION</p>
+          <p class="say reveal">「停滞を招いたのは、政府でも、国民でもない。<br />経営者である」</p>
+          <div class="speaker reveal">
+            <div><div class="speaker__name">櫻田 謙悟</div><div class="speaker__role">経済同友会 代表幹事 ／ MNGA 会長</div></div>
+          </div>
+          <p class="body reveal">そして、<strong>自らもその一人だ</strong>と語ってきました。MNGAは、この問題意識から設立されました。停滞を招いたのが経営者の責任なら、それを変えられるのも、また経営者です。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 参：断 -->
+    <section class="card" data-card="3">
+      <div class="veil"></div>
+      <div class="card__inner">
+        <div class="lede">
+          <p class="kana reveal">THE DISCONNECT</p>
+          <h2 class="title reveal">足りないのは構想ではなく、<br />「回路」だった。</h2>
+          <p class="body reveal">構想はありました。足りなかったのは、それを事業化・実装へ<strong>「接続」する回路</strong>です。日本が持つ技術・人材・精神性を掛け合わせる回路さえあれば、世界に不可欠な新産業を生み出し、日本を「いなくてはならない国」と再定義できる。</p>
+          <p class="body reveal">大企業には豊富な資本・顧客基盤・社会実装力がある一方、既存事業に縛られ、外部共創の機敏性に欠ける。ベンチャーには迅速な意思決定と実行力がある一方、実装フィールドや信用、大企業との接点が足りない。両者は、出会わないまま離れていました。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 肆：接 -->
+    <section class="card" data-card="4">
+      <div class="veil"></div>
+      <div class="card__inner">
+        <div class="lede">
+          <p class="kana reveal">OUR ROLE</p>
+          <h2 class="title reveal">大企業とベンチャーを、<br />「接続」する実装基盤。</h2>
+          <p class="body reveal">大企業の資産・顧客基盤・意思決定力と、ベンチャーの仮説検証速度を接続する。新産業を案件化・検証・事業化まで前進させ、<strong>PoCで終わらせず、社会実装まで実行する</strong>仕組みです。</p>
+          <p class="body reveal">多くの企業家団体が交流に留まるなか、MNGAは協業・提携から新産業創出までを実現する、経営者と起業家の共創プラットフォームです。</p>
+          <div class="nexus reveal">
+            <div class="p"><div class="k">大企業</div><div class="s">資本・顧客基盤・社会実装力</div></div>
+            <div class="bridge"><i></i></div>
+            <div class="p" style="text-align:right"><div class="k">ベンチャー</div><div class="s">意思決定・実行力</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 伍：実 -->
+    <section class="card" data-card="5">
+      <div class="veil"></div>
+      <div class="card__inner">
+        <div class="lede">
+          <p class="kana reveal">FROM WORDS TO RESULTS</p>
+          <h2 class="title reveal">語ることではなく、<br />事業を通じて結果を残す。</h2>
+          <p class="body reveal">評価基準も、撤退ルールも、共創の規律も明示し、<strong>場の質</strong>を保ちます。提言で終わらせず、実装まで行く。私たちが進める協業案件は、売上だけでなく、生活者価値・社会実装可能性で評価します。</p>
+          <p class="body reveal">立ち上げ期は、経営層とベンチャーの意思決定者の双方から信頼される<strong>理事体制</strong>によって初期参加者の質を見極め、中長期は人材交流・育成・マッチングの運営基盤を構築します。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 結び（反転） -->
+    <section class="card card--close" data-card="6">
+      <div class="card__inner">
+        <p class="tagline">接続を、取り戻す。<span class="en">Toward an Indispensable Japan.</span></p>
+        <p class="close__lead">世界にとって不可欠な新産業を生み出すことで、停滞した日本を、再び前へ進める。それが、私たちがこのチームをつくった理由です。</p>
+        <p class="shield">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、経団連・経済同友会が築いてきた産業共創の系譜に連なる、非政治・中立の団体です。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 共通フッター（NEWS欄はトップに移設） -->
+  <div class="after">
+    <footer class="site-footer">
+      <div class="awrap">
+        <div class="foot-grid">
+          <div>
+            <a class="foot-logo-link" href="mock_top.html"><img class="foot-logo" src="../../00_素材・アセット/mnga-horizontal.png" alt="MNGA" /></a>
+            <p class="foot-org">一般社団法人 Make Nippon Great Again<br />〒107-0052 東京都港区赤坂1丁目8-1<br />平日 10:00–18:00（JST）</p>
+          </div>
+          <div class="foot-nav">
+            <a href="mock_top.html">TOP</a>
+            <a href="mock_about.html">ABOUT</a>
+            <a href="mock_activities.html">ACTIVITIES</a>
+            <a href="mock_report.html">REPORTS</a>
+            <a href="mock_top.html#news">NEWS</a>
+            <!-- TODO: 実Googleフォーム URL -->
+            <a href="#" target="_blank" rel="noopener">CONTACT（Googleフォーム）</a>
+          </div>
+        </div>
+        <p class="foot-neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、非政治・中立の一般社団法人として活動します。</p>
+        <p class="foot-copy en">© Make Nippon Great Again. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = matchMedia('(max-width: 820px)').matches;
+
+    /* プリローダー（読込イントロ：トップと統一） */
+    const pre = document.getElementById('preloader');
+    if(pre){
+      if(reduce){ pre.style.display='none'; }
+      else {
+        gsap.timeline()
+          .to('.preloader__bar',{ opacity:1, duration:.3 })
+          .to('.preloader__logo',{ opacity:1, duration:.6 }, '-=.1')
+          .to('.preloader__txt',{ opacity:1, duration:.5 }, '-=.35')
+          .to('.preloader__bar i',{ width:'100%', duration:.9, ease:'power1.inOut' }, '-=.5')
+          .to('.preloader',{ yPercent:-100, duration:.9, ease:'power3.inOut' }, '+=.15')
+          .add(()=>{ pre.style.display='none'; });
+        setTimeout(()=>{ if(pre && getComputedStyle(pre).display!=='none') pre.style.display='none'; }, 4000);
+      }
+    }
+
+    if(!reduce){
+      const lenis = new Lenis({ duration:1.15, smoothWheel:true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((t)=>lenis.raf(t*1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    const cards = gsap.utils.toArray('.card');
+    const nodes = gsap.utils.toArray('.thread__node');
+
+    /* 接続線：結びの手前まで引かれる */
+    gsap.to('.thread__fill', { scaleY:1, ease:'none',
+      scrollTrigger:{ trigger:'.deck', start:'top top', end:()=>cards[cards.length-1].offsetTop, scrub:true } });
+
+    const depthZ = isMobile ? 150 : 300;
+    cards.forEach((card,i)=>{
+      const items = card.querySelectorAll('.reveal, .cover__jp, .cover__en, .cover__q, .cover__scroll, .tagline, .close__lead, .shield');
+      const glyph = card.querySelector('.glyph__char');
+      const inner = card.querySelector('.card__inner');
+
+      if(reduce){
+        gsap.set(items,{opacity:1,y:0}); if(glyph) gsap.set(glyph,{opacity:1,scale:1});
+      }else{
+        if(glyph){
+          gsap.to(glyph,{ opacity:1, scale:1, duration:1.3, ease:'power3.out',
+            scrollTrigger:{ trigger:card, start:'top 60%', once:true } });
+        }
+        gsap.to(items,{ opacity:1, y:0, duration:.9, stagger:.1, ease:'power3.out',
+          scrollTrigger:{ trigger:card, start:'top 55%', once:true } });
+      }
+
+      if(nodes[i-1]){
+        ScrollTrigger.create({ trigger:card, start:'top 55%', end:'bottom 45%',
+          onToggle:(s)=> nodes[i-1].classList.toggle('is-active', s.isActive) });
+      }
+
+      if(inner && !reduce && i < cards.length-1){
+        /* 退場は早めに完了させ、次の札が読める位置に来る前に前の札を消す（テキスト残像＝可読性悪化を防ぐ） */
+        gsap.to(inner,{ z:depthZ, scale:1.05, opacity:0, ease:'power1.in',
+          scrollTrigger:{ trigger:cards[i+1], start:'top bottom', end:'top 35%', scrub:true } });
+      }
+    });
+
+    /* 接の札：橋が架かる */
+    const bridge = document.querySelector('.nexus .bridge i');
+    if(bridge){
+      if(reduce){ bridge.style.width='100%'; }
+      else gsap.to(bridge,{ width:'100%', ease:'power2.inOut', duration:1.2,
+        scrollTrigger:{ trigger:'.nexus', start:'top 68%', once:true } });
+    }
+
+    /* 失の札：GDPの線を引く */
+    document.querySelectorAll('.chart .ln').forEach((ln,i)=>{
+      const len = ln.getTotalLength();
+      gsap.set(ln,{ strokeDasharray:len, strokeDashoffset: reduce?0:len });
+      if(!reduce){
+        gsap.to(ln,{ strokeDashoffset:0, ease:'power2.out', duration:1.5+i*0.25,
+          scrollTrigger:{ trigger:'.chart', start:'top 80%', once:true } });
+      }
+    });
+
+    /* デッキを抜けたら接続線を隠す（NEWS・フッターに被らない） */
+    ScrollTrigger.create({ trigger:'.deck', start:'top top', end:'bottom top',
+      onLeave:()=>gsap.to('.thread',{opacity:0,duration:.4,pointerEvents:'none'}),
+      onEnterBack:()=>gsap.to('.thread',{opacity:1,duration:.4}) });
+
+    /* 共通ヘッダーの solid 化 */
+    const ahdr=document.getElementById('ahdr');
+    if(ahdr) ScrollTrigger.create({ start:'top -30', onUpdate:s=>ahdr.classList.toggle('solid', s.scroll()>30) });
+
+    /* NEWS の reveal */
+    if(reduce){ gsap.set('.nrow',{opacity:1,y:0}); }
+    else{ gsap.from('.nrow',{ opacity:0, y:20, duration:.8, stagger:.08, ease:'power3.out',
+      scrollTrigger:{ trigger:'.band-news', start:'top 80%', once:true } }); }
+  </script>
+  <script>
+  /* 文字の表示方法（行マスク split-lines）— プロトタイプ準拠。ヒーロー以外の見出しに適用 */
+  (function(){
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function splitLines(el){
+      var parts = el.innerHTML.split(/<br\s*\/?>/i);
+      el.innerHTML = parts.map(function(l){ return '<span class="line"><span class="line__i">'+l.trim()+'</span></span>'; }).join('');
+    }
+    var heads = [].slice.call(document.querySelectorAll('.split-lines'));
+    heads.forEach(splitLines);
+    if('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { threshold:.25, rootMargin:'0px 0px -8% 0px' });
+      heads.forEach(function(el){ io.observe(el); });
+    } else { heads.forEach(function(el){ el.classList.add('is-in'); }); }
+  })();
+  </script>
+</body>
+</html>

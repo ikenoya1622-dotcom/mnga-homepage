@@ -1,6 +1,13 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/activities", "destination": "/index.html" },
+    { "source": "/report", "destination": "/index.html" },
+    { "source": "/report/(.*)", "destination": "/index.html" },
+    { "source": "/news/(.*)", "destination": "/index.html" },
+    { "source": "/mnga-console-7kx9a", "destination": "/index.html" },
+    { "source": "/mnga-console-7kx9a/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {

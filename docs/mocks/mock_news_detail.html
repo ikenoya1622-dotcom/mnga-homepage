@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="MNGA 設立記者発表会を開催しました。設立の背景と初年度の実装方針を発表しました。" />
+<script>document.documentElement.classList.add('js');</script>
+<title>MNGA 設立記者発表会を開催しました ─ News</title>
+<!--
+  MNGA News詳細ページ モック (mock_news_detail.html)
+  - 参考分析: EO Tokyo Central（eotokyo.org）のNews詳細＝「告知特化のミニマル構成」を再分析して反映
+    実ページ /7411/ /3741/ を確認：ヒーロー画像なし(noimg)／本文は数行の告知／外部リンク1本／前の記事・次の記事／一覧に戻る／入会CTA帯。
+    共有ボタン・タグ・写真ギャラリー・関連グリッドは無し（それらはEORの「活動レポート詳細」側の要素）。
+  - 反映方針: レイアウト・技術パターンのみ参照（文章は流用しない）。配色/フォント/共通パーツはMNGA既存モックを継承
+  - 本文はモック用ダミー。本番は自前NEWS管理画面から動的描画
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#232220; --bg2:#2b2a26; --surface:#2b2a26; --surface-raised:#34322b;
+    --paper:#dcdcd0; --ivory:#f5f3ea; --body:#cecbbf; --ivory-dim:#a8a89a; --muted:#8f8f80;
+    --ink:#26261c; --accent:#f5f3ea; --hair:rgba(245,243,234,.18); --hair-strong:rgba(245,243,234,.4);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; background:var(--bg); }
+  body{ font-family:'Zen Old Mincho',serif; color:var(--ivory); background:var(--bg);
+    line-height:2.0; letter-spacing:.02em; overflow-x:hidden; font-feature-settings:"palt" 1; -webkit-font-smoothing:antialiased; }
+  .en{ font-family:'Cormorant Garamond',serif; letter-spacing:.06em; }
+  ::selection{ background:var(--ivory); color:var(--ink); }
+  a:focus-visible,button:focus-visible{ outline:2px solid var(--ivory); outline-offset:3px; border-radius:1px; }
+  :focus:not(:focus-visible){ outline:none; }
+
+  body::before{ content:''; position:fixed; inset:0; z-index:100; pointer-events:none; mix-blend-mode:screen;
+    background:radial-gradient(58% 42% at 82% -4%, rgba(120,150,210,.10), rgba(0,0,0,0) 60%),
+              radial-gradient(52% 50% at -4% 104%, rgba(196,150,110,.08), rgba(0,0,0,0) 60%); }
+  html::after{ content:''; position:fixed; inset:0; z-index:110; pointer-events:none; box-shadow:inset 0 0 220px 30px rgba(0,0,0,.5); }
+  body::after{ content:''; position:fixed; inset:0; z-index:90; pointer-events:none; opacity:.06; mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  /* ===== プリローダー ===== */
+  .preloader{ position:fixed; inset:0; z-index:1000; background:var(--bg); display:flex; align-items:center; justify-content:center; }
+  .preloader__inner{ display:flex; flex-direction:column; align-items:center; gap:22px; }
+  .preloader__logo{ height:92px; width:auto; display:block; opacity:0; }
+  .preloader__bar{ width:120px; height:1px; background:var(--hair); position:relative; overflow:hidden; opacity:0; }
+  .preloader__bar i{ position:absolute; left:0; top:0; height:100%; width:0; background:var(--ivory); }
+  .preloader__txt{ font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:.36em; text-transform:uppercase; color:var(--ivory-dim); opacity:0; }
+  @media (prefers-reduced-motion:reduce){ .preloader{ display:none; } }
+
+  /* ===== 共通ヘッダー ===== */
+  .site-header{ position:fixed; top:0; left:0; right:0; z-index:120; height:72px; display:flex; align-items:center;
+    background:rgba(22,20,16,.58); backdrop-filter:blur(12px); border-bottom:1px solid var(--hair); transition:background .4s; }
+  .site-header.solid{ background:rgba(22,20,16,.95); }
+  .site-nav{ width:100%; padding:0 6vw; display:flex; align-items:center; justify-content:space-between; }
+  .site-logo{ display:inline-flex; align-items:center; text-decoration:none; }
+  .site-logo img{ height:28px; width:auto; display:block; }
+  .site-nav__links{ display:flex; align-items:center; gap:30px; }
+  .site-nav__links a{ font-family:'Cormorant Garamond',serif; font-size:14px; letter-spacing:.06em; color:var(--ivory-dim); text-decoration:none; transition:color .25s; }
+  .site-nav__links a:hover,.site-nav__links a[aria-current]{ color:var(--ivory); }
+  .site-nav__cta{ font-family:'Cormorant Garamond',serif; font-size:14px; background:var(--ivory); color:var(--ink)!important; padding:9px 20px; border-radius:999px; }
+
+  /* ===== News詳細（告知特化のミニマル構成：EO News詳細に準拠） ===== */
+  .article{ max-width:720px; margin:0 auto; padding:calc(72px + 12vh) 6vw 0; }
+  .crumb{ font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:.1em; color:var(--muted); margin-bottom:40px; }
+  .crumb a{ color:var(--ivory-dim); text-decoration:none; transition:color .25s; }
+  .crumb a:hover{ color:var(--ivory); }
+  .crumb span{ margin:0 8px; opacity:.5; }
+
+  .art-meta{ display:flex; align-items:center; gap:16px; margin-bottom:20px; }
+  .art-pill{ font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ivory);
+    border:1px solid var(--hair-strong); border-radius:999px; padding:3px 14px; }
+  .art-date{ font-family:'Cormorant Garamond',serif; font-size:14px; color:var(--ivory-dim); }
+  .art-title{ font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:900; line-height:1.55; letter-spacing:.06em; color:var(--ivory);
+    word-break:keep-all; line-break:strict; text-wrap:balance; padding-bottom:30px; border-bottom:1px solid var(--hair); }
+
+  /* 本文＝数行の告知（長文記事にしない） */
+  .art-body{ margin-top:38px; font-size:clamp(1rem,1.5vw,1.1rem); color:var(--body); line-height:2.2; letter-spacing:.02em; text-wrap:pretty; }
+  .art-body p{ margin:22px 0; }
+  .art-body p:first-child{ margin-top:0; }
+  .art-body strong{ color:var(--ivory); font-weight:700; }
+  .art-note{ margin-top:26px; font-size:.86rem; color:var(--muted); line-height:1.95; }
+
+  /* 外部リンク（1本：EO News詳細の「企業/IRサイトへ」パターン） */
+  .art-extlink{ margin-top:34px; }
+  .art-extlink a{ display:inline-flex; align-items:center; gap:12px; text-decoration:none;
+    font-family:'Cormorant Garamond',serif; font-size:14px; letter-spacing:.12em; color:var(--ivory);
+    border:1px solid var(--hair-strong); border-radius:999px; padding:12px 26px; transition:all .3s; }
+  .art-extlink a .ja{ font-family:'Zen Old Mincho',serif; letter-spacing:.04em; }
+  .art-extlink a::after{ content:'↗'; }
+  .art-extlink a:hover{ background:var(--ivory); color:var(--ink); border-color:var(--ivory); }
+
+  /* 前の記事 / 次の記事 */
+  .art-paging{ max-width:720px; margin:64px auto 0; padding:0 6vw; }
+  .pg-grid{ display:grid; grid-template-columns:1fr 1px 1fr; align-items:stretch; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); }
+  .pg-div{ background:var(--hair); }
+  .pg-cell{ display:flex; flex-direction:column; gap:8px; padding:24px 22px; text-decoration:none; color:var(--ivory); transition:background .3s; min-height:96px; }
+  .pg-cell--next{ text-align:right; align-items:flex-end; }
+  .pg-cell:hover{ background:rgba(245,243,234,.035); }
+  .pg-cell.is-empty{ pointer-events:none; opacity:.4; }
+  .pg-lbl{ font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); display:inline-flex; gap:8px; }
+  .pg-cell--prev .pg-lbl::before{ content:'←'; }
+  .pg-cell--next .pg-lbl::after{ content:'→'; }
+  .pg-ttl{ font-size:.96rem; font-weight:700; line-height:1.7; letter-spacing:.03em; color:var(--ivory-dim); transition:color .25s;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .pg-cell:hover .pg-ttl{ color:var(--ivory); }
+
+  /* 一覧へ戻る */
+  .art-back{ display:flex; justify-content:center; margin-top:46px; }
+  .art-back a{ font-family:'Cormorant Garamond',serif; font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:var(--ivory);
+    text-decoration:none; border:1px solid var(--hair-strong); border-radius:999px; padding:13px 34px; transition:all .3s; }
+  .art-back a:hover{ background:var(--ivory); color:var(--ink); border-color:var(--ivory); }
+
+  /* 末尾CTA帯（EO News詳細の入会CTAに相当：MNGAは参加・問い合わせ） */
+  .news-cta{ margin-top:clamp(72px,11vh,120px); background:var(--bg2); border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); }
+  .news-cta__in{ max-width:1180px; margin:0 auto; padding:clamp(48px,7vh,84px) 6vw; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+  .news-cta__t{ font-size:clamp(1.3rem,2.6vw,1.9rem); font-weight:700; letter-spacing:.06em; line-height:1.7; }
+  .news-cta__t .en{ display:block; font-size:.8em; color:var(--ivory-dim); font-style:italic; margin-top:8px; letter-spacing:.04em; }
+  .news-cta__btn{ font-family:'Cormorant Garamond',serif; font-size:15px; letter-spacing:.1em; background:var(--ivory); color:var(--ink)!important;
+    text-decoration:none; padding:15px 36px; border-radius:999px; transition:transform .3s; white-space:nowrap; }
+  .news-cta__btn:hover{ transform:translateY(-3px); }
+
+  .reveal{ opacity:0; transform:translateY(24px); }
+
+  /* ===== 共通フッター ===== */
+  .site-footer{ background:#dcdcd0; color:var(--ink); padding:64px 0 40px; }
+  .awrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 6vw; }
+  .site-footer .awrap{ max-width:none; }
+  .foot-grid{ display:flex; justify-content:space-between; align-items:flex-start; gap:48px; }
+  .foot-logo{ height:40px; width:auto; display:block; }
+  .foot-org{ margin-top:16px; font-size:13px; color:#5c5c4e; line-height:2; letter-spacing:.04em; }
+  .foot-nav{ display:flex; flex-direction:column; align-items:flex-end; text-align:right; gap:13px; }
+  .foot-nav a{ font-family:'Cormorant Garamond',serif; font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink); text-decoration:none; opacity:.82; }
+  .foot-nav a:hover{ opacity:1; }
+  .foot-neutral{ margin-top:44px; padding-top:22px; border-top:1px solid rgba(38,38,28,.2); font-size:12px; color:#5c5c4e; line-height:2; font-style:italic; }
+  .foot-copy{ margin-top:14px; font-family:'Cormorant Garamond',serif; font-size:12px; letter-spacing:.06em; color:#5c5c4e; }
+
+  @media (max-width:820px){
+    .site-nav__links a:not(.site-nav__cta){ display:none; }
+    .pg-grid{ grid-template-columns:1fr; }
+    .pg-div{ height:1px; }
+    .pg-cell--next{ text-align:left; align-items:flex-start; }
+    .news-cta__in{ flex-direction:column; align-items:flex-start; }
+    .foot-grid{ flex-direction:column; gap:28px; } .foot-nav{ align-items:flex-start; text-align:left; }
+  }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1!important; transform:none!important; } }
+  html:not(.js) .reveal{ opacity:1; transform:none; }
+
+  .split-lines .line{ display:block; overflow:hidden; }
+  .split-lines .line__i{ display:block; transform:translateY(110%); will-change:transform; }
+  .split-lines.is-in .line__i{ transform:translateY(0); transition:transform 1s cubic-bezier(.22,1,.36,1); }
+  .split-lines.is-in .line:nth-child(2) .line__i{ transition-delay:.08s; }
+  @media (prefers-reduced-motion:reduce){ .split-lines .line__i{ transform:none!important; } }
+  html:not(.js) .split-lines .line__i{ transform:none; }
+
+  /* ===== セクション区切り線（1pxクリームのヘアライン）===== */
+  .news-cta{ border-top:1px solid var(--hair); }
+</style>
+</head>
+<body>
+
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <img class="preloader__logo" src="../../00_素材・アセット/mnga-symbol.png" alt="" />
+      <div class="preloader__bar"><i></i></div>
+      <span class="preloader__txt en">Make Nippon Great Again</span>
+    </div>
+  </div>
+
+  <header class="site-header" id="ahdr">
+    <nav class="site-nav">
+      <a class="site-logo" href="mock_top.html" aria-label="MNGA"><img src="mnga-horizontal-white.png" alt="MNGA ロゴ" /></a>
+      <div class="site-nav__links">
+        <a href="mock_top.html">TOP</a>
+        <a href="mock_about.html">ABOUT</a>
+        <a href="mock_activities.html">ACTIVITIES</a>
+        <a href="mock_report.html" aria-current="page">REPORTS</a>
+        <a class="site-nav__cta en" href="#" target="_blank" rel="noopener">問い合わせ</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <article class="article">
+      <!-- パンくず（EO: Home — 最新情報 — タイトル） -->
+      <nav class="crumb en" aria-label="現在地">
+        <a href="mock_top.html">Home</a><span>/</span><a href="mock_top.html#news">News</a><span>/</span>設立記者発表会
+      </nav>
+
+      <!-- 日付＋カテゴリ＋見出し（EO準拠：日付→カテゴリの順。ヒーロー画像は持たない＝告知形式） -->
+      <div class="art-meta">
+        <span class="art-date en">2026.06.10</span>
+        <span class="art-pill en">Press</span>
+      </div>
+      <h1 class="art-title split-lines">MNGA 設立記者発表会を<br />開催しました</h1>
+
+      <!-- 本文＝数行の告知 -->
+      <div class="art-body">
+        <p>一般社団法人 Make Nippon Great Again は、2026年6月10日、東京・赤坂にて設立記者発表会を開催し、設立の背景と初年度の実装方針を発表しました。</p>
+        <p>当日は会長 櫻田謙悟が登壇し、<strong>大企業とベンチャーを「接続」し、新産業を社会実装まで前進させる</strong>という設立趣旨をお伝えしました。発表内容の詳細は、下記のプレスリリースをご覧ください。</p>
+        <p class="art-note">※本記事はサイト構造確認用のモックです。記載の内容・日付はダミーで、本番では自前のNEWS管理画面から動的に描画されます。</p>
+      </div>
+
+      <!-- 外部リンク1本（EO News詳細の「企業/IRサイトへ」パターン） -->
+      <p class="art-extlink"><a href="#" target="_blank" rel="noopener"><span class="ja">プレスリリースを読む</span></a></p>
+    </article>
+
+    <!-- 前の記事 / 次の記事 -->
+    <nav class="art-paging" aria-label="記事送り">
+      <div class="pg-grid">
+        <a class="pg-cell pg-cell--prev" href="mock_news_detail.html">
+          <span class="pg-lbl en">Prev</span>
+          <span class="pg-ttl">第1回 共創ラウンドテーブルを実施</span>
+        </a>
+        <div class="pg-div" aria-hidden="true"></div>
+        <a class="pg-cell pg-cell--next" href="mock_news_detail.html">
+          <span class="pg-lbl en">Next</span>
+          <span class="pg-ttl">理事体制について（第一次発表）</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- 一覧へ戻る -->
+    <div class="art-back"><a href="mock_report.html" class="en">Back to list</a></div>
+
+    <!-- 末尾CTA帯 -->
+    <section class="news-cta">
+      <div class="news-cta__in">
+        <p class="news-cta__t">MNGAの活動に参加しませんか。<span class="en">Join the platform for an indispensable Japan.</span></p>
+        <a class="news-cta__btn" href="#" target="_blank" rel="noopener">お問い合わせ</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="awrap">
+      <div class="foot-grid">
+        <div>
+          <a class="foot-logo-link" href="mock_top.html"><img class="foot-logo" src="../../00_素材・アセット/mnga-horizontal.png" alt="MNGA" /></a>
+          <p class="foot-org">一般社団法人 Make Nippon Great Again<br />〒107-0052 東京都港区赤坂1丁目8-1<br />平日 10:00–18:00（JST）</p>
+        </div>
+        <div class="foot-nav">
+          <a href="mock_top.html">TOP</a>
+          <a href="mock_about.html">ABOUT</a>
+          <a href="mock_activities.html">ACTIVITIES</a>
+          <a href="mock_report.html">REPORTS</a>
+          <a href="mock_top.html#news">NEWS</a>
+          <a href="#" target="_blank" rel="noopener">CONTACT（Googleフォーム）</a>
+        </div>
+      </div>
+      <p class="foot-neutral">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、非政治・中立の一般社団法人として活動します。</p>
+      <p class="foot-copy en">© Make Nippon Great Again. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const pre = document.getElementById('preloader');
+
+    function playReveals(){
+      if(reduce){ gsap.set('.reveal',{opacity:1,y:0}); return; }
+      gsap.utils.toArray('.reveal').forEach(el=>{
+        gsap.to(el,{ opacity:1, y:0, duration:.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 90%', once:true } });
+      });
+    }
+    function playHead(){
+      if(reduce) return;
+      gsap.timeline({ defaults:{ ease:'power3.out' } })
+        .from('.crumb',{ opacity:0, y:12, duration:.6 })
+        .from('.art-meta',{ opacity:0, y:14, duration:.6 }, '-=.3')
+        .from('.art-body',{ opacity:0, y:18, duration:.8 }, '-=.2')
+        .from('.art-extlink',{ opacity:0, y:14, duration:.6 }, '-=.4');
+    }
+
+    if(reduce){ gsap.set('.reveal',{opacity:1,y:0}); if(pre) pre.style.display='none'; }
+    else{
+      if(window.Lenis){ const lenis=new Lenis({duration:1.15,smoothWheel:true}); lenis.on('scroll',ScrollTrigger.update); gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0); }
+      playReveals();
+      if(pre){
+        gsap.timeline()
+          .to('.preloader__bar',{ opacity:1, duration:.3 })
+          .to('.preloader__logo',{ opacity:1, duration:.6 }, '-=.1')
+          .to('.preloader__txt',{ opacity:1, duration:.5 }, '-=.35')
+          .to('.preloader__bar i',{ width:'100%', duration:.9, ease:'power1.inOut' }, '-=.5')
+          .to('.preloader',{ yPercent:-100, duration:.9, ease:'power3.inOut' }, '+=.15')
+          .add(()=>{ pre.style.display='none'; })
+          .add(playHead);
+      } else { playHead(); }
+      setTimeout(()=>{ if(pre && getComputedStyle(pre).display!=='none'){ pre.style.display='none'; playHead(); } }, 4000);
+    }
+
+    const ahdr=document.getElementById('ahdr');
+    if(ahdr) ScrollTrigger.create({ start:'top -30', onUpdate:s=>ahdr.classList.toggle('solid', s.scroll()>30) });
+  </script>
+  <script>
+  (function(){
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function splitLines(el){
+      var parts = el.innerHTML.split(/<br\s*\/?>/i);
+      el.innerHTML = parts.map(function(l){ return '<span class="line"><span class="line__i">'+l.trim()+'</span></span>'; }).join('');
+    }
+    var heads = [].slice.call(document.querySelectorAll('.split-lines'));
+    heads.forEach(splitLines);
+    if('IntersectionObserver' in window && !reduce){
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } }); }, { threshold:.25, rootMargin:'0px 0px -8% 0px' });
+      heads.forEach(function(el){ io.observe(el); });
+    } else { heads.forEach(function(el){ el.classList.add('is-in'); }); }
+  })();
+  </script>
+</body>
+</html>

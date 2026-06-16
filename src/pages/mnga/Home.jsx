@@ -62,16 +62,22 @@ export default function Home() {
     document.body.classList.add('mnga-active')
     const pre = q1('#preloader')
 
-    function playHero() {
-      if (reduce) return
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.from(q('.hero__kicker'), { opacity: 0, y: 16, duration: 0.7 })
+    // ヒーローは paused で即生成 → gsap.from の immediateRender で初期(非表示)状態が
+    // 同期適用され、プリローダ下で隠れる。退場後に playHero() で再生する。
+    // （以前は退場後に from を初めて適用→見出しが一瞬最終状態で見えてからスナップしていた）
+    let heroTl = null
+    function buildHero() {
+      if (reduce || heroTl) return
+      heroTl = gsap.timeline({ defaults: { ease: 'power3.out' }, paused: true })
+      heroTl.from(q('.hero__kicker'), { opacity: 0, y: 16, duration: 0.7 })
         .from(q('.hero__jp .line'), { yPercent: 70, opacity: 0, duration: 1.0, stagger: 0.12 }, '-=.2')
         .from(q('.hero__en'), { opacity: 0, y: 18, duration: 0.8 }, '-=.5')
         .from(q('.hero__meta'), { opacity: 0, y: 14, duration: 0.7 }, '-=.45')
         .from(q('.hero__rail'), { opacity: 0, duration: 1.1 }, '-=.7')
-      tweens.push(tl)
+      tweens.push(heroTl)
     }
+    function playHero() { buildHero(); if (heroTl) heroTl.play() }
+    buildHero()
 
     const stopSplit = observeSplitLines(root, reduce)
 

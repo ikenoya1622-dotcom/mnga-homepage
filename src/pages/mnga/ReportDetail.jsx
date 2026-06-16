@@ -138,14 +138,19 @@ export default function ReportDetail() {
         tweens.push(gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true } }))
       })
     }
-    function playHead() {
-      if (reduce) return
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.from(q('.crumb'), { opacity: 0, y: 12, duration: 0.6 })
+    // 見出し帯は paused で即生成 → gsap.from の immediateRender で初期(非表示)状態を
+    // 同期適用し、プリローダ下で隠す。退場後に playHead() で再生（見出しの一瞬の表示を防ぐ）。
+    let headTl = null
+    function buildHead() {
+      if (reduce || headTl) return
+      headTl = gsap.timeline({ defaults: { ease: 'power3.out' }, paused: true })
+      headTl.from(q('.crumb'), { opacity: 0, y: 12, duration: 0.6 })
         .from(q('.art-meta'), { opacity: 0, y: 14, duration: 0.6 }, '-=.3')
         .from(q('.art-lead'), { opacity: 0, y: 18, duration: 0.8 }, '-=.2')
-      tweens.push(tl)
+      tweens.push(headTl)
     }
+    function playHead() { buildHead(); if (headTl) headTl.play() }
+    buildHead()
 
     const ahdr = q1('#ahdr')
     if (ahdr) triggers.push(ScrollTrigger.create({ start: 'top -30', onUpdate: (s) => ahdr.classList.toggle('solid', s.scroll() > 30) }))

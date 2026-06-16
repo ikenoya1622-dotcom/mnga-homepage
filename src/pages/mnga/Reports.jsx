@@ -93,14 +93,19 @@ export default function Reports() {
     const pre = q1('#preloader')
     const stopSplit = observeSplitLines(root, reduce)
 
-    function playHero() {
-      if (reduce) return
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.from(q('.phero__kana'), { opacity: 0, y: 16, duration: 0.7 })
+    // ヒーローは paused で即生成 → gsap.from の immediateRender で初期(非表示)状態を
+    // 同期適用し、プリローダ下で隠す。退場後に playHero() で再生（見出しの一瞬の表示を防ぐ）。
+    let heroTl = null
+    function buildHero() {
+      if (reduce || heroTl) return
+      heroTl = gsap.timeline({ defaults: { ease: 'power3.out' }, paused: true })
+      heroTl.from(q('.phero__kana'), { opacity: 0, y: 16, duration: 0.7 })
         .from(q('.phero__title .line'), { yPercent: 110, duration: 1.0, stagger: 0.12 }, '-=.2')
         .from(q('.phero__lead'), { opacity: 0, y: 18, duration: 0.8 }, '-=.5')
-      tweens.push(tl)
+      tweens.push(heroTl)
     }
+    function playHero() { buildHero(); if (heroTl) heroTl.play() }
+    buildHero()
 
     const ahdr = q1('#ahdr')
     if (ahdr) triggers.push(ScrollTrigger.create({ start: 'top -30', onUpdate: (s) => ahdr.classList.toggle('solid', s.scroll() > 30) }))

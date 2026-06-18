@@ -29,10 +29,10 @@ export const ORGANIZATION_JSONLD = {
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'JP',
-    addressRegion: '東京都',
-    addressLocality: '港区',
-    streetAddress: '赤坂1丁目8-1',
-    postalCode: '107-0052',
+    addressRegion: 'xxx',
+    addressLocality: 'xxx',
+    streetAddress: 'xxx',
+    postalCode: 'xxx',
   },
   areaServed: 'JP',
 }

@@ -354,7 +354,7 @@ export default function Home() {
           <div className="foot">
             <div className="foot__org">
               <a className="logo" href="#top"><img className="foot__logo" src="/mnga-horizontal.png" alt="MNGA" /></a>
-              <p>一般社団法人 Make Nippon Great Again<br />〒107-0052 東京都港区赤坂1丁目8-1<br />平日 10:00–18:00（JST）</p>
+              <p>一般社団法人 Make Nippon Great Again<br />〒xxx-xxxx xxx<br />平日 10:00–18:00（JST）</p>
             </div>
             <div className="foot__nav">
               <a href="#top">TOP</a>

@@ -233,7 +233,7 @@ export default function NewsDetail() {
               <div className="art-body">
                 {isStatic ? (
                   <>
-                    <p>一般社団法人 Make Nippon Great Again は、2026年6月10日、東京・赤坂にて設立記者発表会を開催し、設立の背景と初年度の実装方針を発表しました。</p>
+                    <p>一般社団法人 Make Nippon Great Again は、2026年6月10日、東京都内にて設立記者発表会を開催し、設立の背景と初年度の実装方針を発表しました。</p>
                     <p>当日は理事長 櫻田謙悟が登壇し、<strong>大企業とベンチャーを「接続」し、新産業を社会実装まで前進させる</strong>という設立趣旨をお伝えしました。発表内容の詳細は、下記のプレスリリースをご覧ください。</p>
                   </>
                 ) : hasBlocks ? (
@@ -291,7 +291,7 @@ export default function NewsDetail() {
           <div className="foot-grid">
             <div>
               <Link className="foot-logo-link" to="/"><img className="foot-logo" src="/mnga-horizontal.png" alt="MNGA" /></Link>
-              <p className="foot-org">一般社団法人 Make Nippon Great Again<br />〒107-0052 東京都港区赤坂1丁目8-1<br />平日 10:00–18:00（JST）</p>
+              <p className="foot-org">一般社団法人 Make Nippon Great Again<br />〒xxx-xxxx xxx<br />平日 10:00–18:00（JST）</p>
             </div>
             <div className="foot-nav">
               <Link to="/">TOP</Link>

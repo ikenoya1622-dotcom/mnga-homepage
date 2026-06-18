@@ -38,8 +38,8 @@ export default function Footer() {
             {/* 右: 住所 */}
             <div style={{ textAlign: 'right' }}>
               <p style={{ fontSize: '11px', color: '#5a6478', margin: 0, lineHeight: 2, letterSpacing: '0.05em' }}>
-                東京都港区赤坂1丁目8番1号<br />
-                赤坂インターシティAIR 4階
+                xxx<br />
+                xxx
               </p>
             </div>
           </div>

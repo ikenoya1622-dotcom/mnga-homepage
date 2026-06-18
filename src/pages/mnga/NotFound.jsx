@@ -37,7 +37,7 @@ export default function NotFound() {
           <div className="foot-grid">
             <div>
               <Link className="foot-logo-link" to="/"><img className="foot-logo" src="/mnga-horizontal.png" alt="MNGA" /></Link>
-              <p className="foot-org">一般社団法人 Make Nippon Great Again<br />〒107-0052 東京都港区赤坂1丁目8-1<br />平日 10:00–18:00（JST）</p>
+              <p className="foot-org">一般社団法人 Make Nippon Great Again<br />〒xxx-xxxx xxx<br />平日 10:00–18:00（JST）</p>
             </div>
             <nav className="foot-nav" aria-label="フッターナビゲーション">
               <Link to="/">TOP</Link>

@@ -13,7 +13,7 @@ export default function Footer() {
             </div>
             <p className="text-xs text-gray-500">Make Nippon Great Again</p>
             <p className="text-xs text-gray-400 mt-2">
-              東京都港区赤坂1丁目8-1（最寄り駅）/ info@4-live.co　03-xxx-xxxx
+              xxx（最寄り駅）/ info@4-live.co　03-xxx-xxxx
             </p>
           </div>
           <nav>

@@ -168,6 +168,7 @@
 .mnga-top .btn--solid:hover{ transform:translateY(-3px); background:var(--accent); color:var(--on-accent); }
 .mnga-top .btn-row{ display:flex; flex-wrap:wrap; gap:16px; }
 .mnga-top .nlist{ border-top:1px solid var(--line); max-width:920px; margin-top:8px; }
+.mnga-top .nrow-empty{ max-width:920px; margin:8px auto 0; padding:40px 4px; color:var(--olive); border-top:1px solid var(--line); line-height:2.0; }
 .mnga-top .nrow{ position:relative; display:grid; grid-template-columns:auto auto 1fr; gap:22px; align-items:baseline;
     padding:22px 16px; border-bottom:1px solid var(--line); text-decoration:none; color:var(--cream);
     transition:background .3s ease, padding-left .35s cubic-bezier(.2,.7,.2,1); }

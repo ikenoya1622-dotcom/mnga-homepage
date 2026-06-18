@@ -18,11 +18,7 @@ const CATEGORIES = [
 ]
 
 // Mirrors the site's static rows; used when the DB is unconfigured/empty.
-const FALLBACK = [
-  { id: null, category: 'プレス', published_at: '2026-06-10', title: 'MNGA 設立記者発表会を開催しました' },
-  { id: null, category: 'お知らせ', title: '第1回 共創ラウンドテーブルの参加申込を開始しました', published_at: '2026-05-28' },
-  { id: null, category: '情報公開', published_at: '2026-04-23', title: '2026年度 理事体制を発表しました' },
-]
+// 公開中のお知らせはDBから取得する。未公開・0件のときは空状態を表示する。
 
 function fmtDate(s) {
   if (!s) return ''
@@ -35,21 +31,25 @@ function fmtDate(s) {
 export default function News() {
   const rootRef = useRef(null)
   const revealTriggers = useRef([])
-  const [items, setItems] = useState(FALLBACK)
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
   const [activeCat, setActiveCat] = useState('All')
   const [visible, setVisible] = useState(PAGE_SIZE)
 
   useEffect(() => {
     let cancelled = false
     async function load() {
-      if (!supabase) return
+      if (!supabase) { if (!cancelled) setLoading(false); return }
       const { data, error } = await supabase
         .from('news_items')
         .select('id, category, published_at, title, sort_order')
         .lte('published_at', new Date().toISOString())
         .order('published_at', { ascending: false })
         .order('sort_order', { ascending: true })
-      if (!cancelled && !error && data && data.length) setItems(data)
+      if (!cancelled) {
+        if (!error && data) setItems(data)
+        setLoading(false)
+      }
     }
     load()
     return () => { cancelled = true }
@@ -208,8 +208,8 @@ export default function News() {
             ))}
           </div>
 
-          {shown.length === 0 ? (
-            <p className="nlist-empty">該当するお知らせはまだありません。</p>
+          {!loading && shown.length === 0 ? (
+            <p className="nlist-empty">現在公開中のお知らせはありません。</p>
           ) : (
             <div className="nlist">
               {shown.map((n, i) => {

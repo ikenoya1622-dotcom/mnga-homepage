@@ -19,15 +19,7 @@ const CATEGORIES = [
   { key: 'Press', en: 'Press', ja: 'プレス' },
 ]
 
-// Mirrors the mock's static cards; used when the DB is unconfigured/empty.
-const FALLBACK = [
-  { id: null, category: 'Press', published_at: '2026-06-10', title: 'MNGA 設立記者発表会を開催しました', excerpt: '大企業経営層とベンチャー意思決定者、報道関係者を迎え、設立の背景と初年度の実装方針を発表しました。', thumbnail_url: '/images/about/c5.jpg' },
-  { id: null, category: 'Meetup', published_at: '2026-05-28', title: '第1回 共創ラウンドテーブルを実施', excerpt: '大企業7社・ベンチャー12社が参加。協業テーマを5領域に整理し、検証案件の優先順位を合意しました。', thumbnail_url: '/act-img/act-match.jpg' },
-  { id: null, category: 'Project', published_at: '2026-05-16', title: '協業案件「次世代モビリティ実装」がPoCフェーズへ', excerpt: '大企業の社会実装力とベンチャーの検証速度を接続。半年での社会実装を目標にPoCを開始しました。', thumbnail_url: '/act-img/act-impl.jpg' },
-  { id: null, category: 'Talk', published_at: '2026-05-03', title: '理事長が経営者育成プログラムに登壇', excerpt: '「停滞を招いたのも、変えられるのも経営者である」——自己変革と実装責任をテーマに講演しました。', thumbnail_url: '/act-img/act-ikusei.jpg' },
-  { id: null, category: 'Project', published_at: '2026-04-24', title: 'ナレッジ基盤「実装の型」第1版を公開', excerpt: '評価基準・撤退ルール・共創の規律を体系化。会員が案件設計に再利用できる形で整備しました。', thumbnail_url: '/act-img/act-knowledge.jpg' },
-  { id: null, category: 'Meetup', published_at: '2026-04-12', title: '分科会「新産業デザイン」キックオフ', excerpt: '領域横断の少人数分科会を始動。仮説の筋とフィールドの確度を、現場目線で磨き込みます。', thumbnail_url: '/act-img/bg-dawn.jpg' },
-]
+// 公開中レポートはDBから取得する。未公開（published_at が未来）・0件のときは空状態を表示する。
 
 function fmtDate(s) {
   if (!s) return ''
@@ -49,20 +41,24 @@ function deriveExcerpt(a) {
 export default function Reports() {
   const rootRef = useRef(null)
   const revealTriggers = useRef([])
-  const [articles, setArticles] = useState(FALLBACK)
+  const [articles, setArticles] = useState([])
+  const [loading, setLoading] = useState(true)
   const [activeCat, setActiveCat] = useState('All')
   const [visible, setVisible] = useState(PAGE_SIZE)
 
   useEffect(() => {
     let cancelled = false
     async function load() {
-      if (!supabase) return
+      if (!supabase) { if (!cancelled) setLoading(false); return }
       const { data, error } = await supabase
         .from('reports')
         .select('*')
         .lte('published_at', new Date().toISOString())
         .order('published_at', { ascending: false })
-      if (!cancelled && !error && data && data.length) setArticles(data)
+      if (!cancelled) {
+        if (!error && data) setArticles(data)
+        setLoading(false)
+      }
     }
     load()
     return () => { cancelled = true }
@@ -226,32 +222,38 @@ export default function Reports() {
             ))}
           </div>
 
-          <div className="repgrid">
-            {shown.map((a, i) => {
-              const img = a.thumbnail_url || FALLBACK_IMG[i % FALLBACK_IMG.length]
-              const inner = (
-                <>
-                  <div className="rcard__media">
-                    <img loading="lazy" decoding="async" src={img} alt="" />
-                  </div>
-                  <span className="rcard__cat">{a.category || 'Report'}</span>
-                  <h2 className="rcard__t">{a.title}</h2>
-                  <p className="rcard__ex">{deriveExcerpt(a)}</p>
-                  <span className="rcard__date en">{fmtDate(a.published_at)}</span>
-                </>
-              )
-              return a.id ? (
-                <Link className="rcard reveal" to={`/report/${a.id}`} key={a.id}>{inner}</Link>
-              ) : (
-                <a className="rcard reveal" href={CONTACT_URL} key={`fb-${i}`}>{inner}</a>
-              )
-            })}
-          </div>
+          {!loading && filtered.length === 0 ? (
+            <p className="rep-empty">現在公開中のレポートはありません。<br />新しい活動レポートを準備中です。</p>
+          ) : (
+            <>
+              <div className="repgrid">
+                {shown.map((a, i) => {
+                  const img = a.thumbnail_url || FALLBACK_IMG[i % FALLBACK_IMG.length]
+                  const inner = (
+                    <>
+                      <div className="rcard__media">
+                        <img loading="lazy" decoding="async" src={img} alt="" />
+                      </div>
+                      <span className="rcard__cat">{a.category || 'Report'}</span>
+                      <h2 className="rcard__t">{a.title}</h2>
+                      <p className="rcard__ex">{deriveExcerpt(a)}</p>
+                      <span className="rcard__date en">{fmtDate(a.published_at)}</span>
+                    </>
+                  )
+                  return a.id ? (
+                    <Link className="rcard reveal" to={`/report/${a.id}`} key={a.id}>{inner}</Link>
+                  ) : (
+                    <a className="rcard reveal" href={CONTACT_URL} key={`fb-${i}`}>{inner}</a>
+                  )
+                })}
+              </div>
 
-          {visible < filtered.length && (
-            <div className="repmore">
-              <button type="button" className="en" onClick={() => setVisible((v) => v + PAGE_SIZE)}>Load more</button>
-            </div>
+              {visible < filtered.length && (
+                <div className="repmore">
+                  <button type="button" className="en" onClick={() => setVisible((v) => v + PAGE_SIZE)}>Load more</button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </main>

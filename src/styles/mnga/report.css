@@ -69,6 +69,7 @@
     display:inline-flex; align-items:center; gap:9px; transition:color .25s, gap .25s; }
 .mnga-report .rcard__more::after{ content:'→'; transition:transform .25s; }
 .mnga-report .rcard:hover .rcard__more{ color:var(--ivory); gap:13px; }
+.mnga-report .rep-empty{ text-align:center; max-width:720px; margin:8px auto 0; padding:clamp(40px,7vh,80px) 16px; color:var(--ivory-dim); line-height:2.1; border-top:1px solid var(--hair); }
 .mnga-report .repmore{ display:flex; justify-content:center; margin-top:clamp(56px,8vh,96px); }
 .mnga-report .repmore button{ font-family:'Cormorant Garamond',serif; font-size:14px; letter-spacing:.18em; text-transform:uppercase; color:var(--ivory);
     background:transparent; border:1px solid var(--hair-strong); border-radius:999px; padding:14px 38px; cursor:pointer; transition:all .3s; }

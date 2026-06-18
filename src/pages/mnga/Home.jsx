@@ -18,21 +18,15 @@ function fmtDate(s) {
   return `${d.getFullYear()}.${p(d.getMonth() + 1)}.${p(d.getDate())}`
 }
 
-// Mirrors the mock's static NEWS rows; used when the DB is unconfigured/empty.
-const FALLBACK_NEWS = [
-  { id: null, published_at: '2026-06-10', category: 'プレス', title: 'MNGA 設立記者発表会を開催しました' },
-  { id: null, published_at: '2026-05-28', category: 'お知らせ', title: '第1回 共創ラウンドテーブルの参加申込を開始しました' },
-  { id: null, published_at: '2026-05-03', category: 'お知らせ', title: '理事体制について（第一次発表）' },
-]
-
 export default function Home() {
   const rootRef = useRef(null)
-  const [news, setNews] = useState(FALLBACK_NEWS)
+  const [news, setNews] = useState([])
+  const [newsLoading, setNewsLoading] = useState(true)
 
   useEffect(() => {
     let cancelled = false
     async function load() {
-      if (!supabase) return
+      if (!supabase) { if (!cancelled) setNewsLoading(false); return }
       const { data, error } = await supabase
         .from('news_items')
         .select('id, category, published_at, title')
@@ -40,7 +34,10 @@ export default function Home() {
         .order('published_at', { ascending: false })
         .order('sort_order', { ascending: true })
         .limit(3)
-      if (!cancelled && !error && data && data.length) setNews(data)
+      if (!cancelled) {
+        if (!error && data) setNews(data)
+        setNewsLoading(false)
+      }
     }
     load()
     return () => { cancelled = true }
@@ -310,20 +307,24 @@ export default function Home() {
           <div className="shead reveal"><span className="shead__no en">07</span><span className="shead__kick en">News<span className="shead__rule" aria-hidden="true" /></span></div>
           <SplitLines className="stitle" lines={['最新のお知らせ']} />
           <div className="nlist reveal">
-            {news.map((n, i) => {
-              const inner = (
-                <>
-                  <span className="nrow-date en">{fmtDate(n.published_at)}</span>
-                  <span className="nrow-cat">{n.category || 'お知らせ'}</span>
-                  <span className="nrow-t">{n.title}</span>
-                </>
-              )
-              return n.id ? (
-                <Link className="nrow" to={`/news/${n.id}`} key={n.id}>{inner}</Link>
-              ) : (
-                <a className="nrow" href={CONTACT_URL} key={i}>{inner}</a>
-              )
-            })}
+            {!newsLoading && news.length === 0 ? (
+              <p className="nrow-empty">現在公開中のお知らせはありません。</p>
+            ) : (
+              news.map((n, i) => {
+                const inner = (
+                  <>
+                    <span className="nrow-date en">{fmtDate(n.published_at)}</span>
+                    <span className="nrow-cat">{n.category || 'お知らせ'}</span>
+                    <span className="nrow-t">{n.title}</span>
+                  </>
+                )
+                return n.id ? (
+                  <Link className="nrow" to={`/news/${n.id}`} key={n.id}>{inner}</Link>
+                ) : (
+                  <a className="nrow" href={CONTACT_URL} key={i}>{inner}</a>
+                )
+              })
+            )}
           </div>
           <div className="btn-row reveal" style={{ marginTop: '28px' }}><Link className="btn" to="/news">すべてのお知らせ</Link></div>
         </div>

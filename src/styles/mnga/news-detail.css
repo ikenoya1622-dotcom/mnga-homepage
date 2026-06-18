@@ -7,7 +7,7 @@
   }
 .mnga-news-detail, .mnga-news-detail *{margin:0;padding:0;box-sizing:border-box;}
 .mnga-news-detail{ -webkit-text-size-adjust:100%; background:var(--bg); }
-.mnga-news-detail{ font-family:'Zen Old Mincho',serif; color:var(--ivory); background:radial-gradient(115% 55% at 50% -8%, rgba(245,243,234,.04), rgba(0,0,0,0) 55%), var(--bg); background-attachment:fixed;
+.mnga-news-detail{ font-family:'Zen Old Mincho',serif; color:var(--ivory); background:var(--bg);
     line-height:2.0; letter-spacing:.02em; overflow-x:hidden; font-feature-settings:"palt" 1; -webkit-font-smoothing:antialiased; }
 .mnga-news-detail .en{ font-family:'Cormorant Garamond',serif; letter-spacing:.06em; }
 .mnga-news-detail ::selection{ background:var(--ivory); color:var(--ink); }
@@ -87,8 +87,6 @@
 .mnga-news-detail .news-cta__btn:hover{ transform:translateY(-3px); }
 .mnga-news-detail .reveal{ opacity:0; transform:translateY(24px); }
 .mnga-news-detail .site-footer{ background:#dcdcd0; color:var(--ink); padding:64px 0 40px; }
-/* 固定オーバーレイ(グレインz90/ライトリークz100/ヴィネットz110)の曇りを下部から除く（ヘッダーz120より背面） */
-.mnga-news-detail .news-cta, .mnga-news-detail .site-footer{ position:relative; z-index:115; }
 .mnga-news-detail .awrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 6vw; }
 .mnga-news-detail .site-footer .awrap{ max-width:none; }
 .mnga-news-detail .foot-grid{ display:flex; justify-content:space-between; align-items:flex-start; gap:48px; }

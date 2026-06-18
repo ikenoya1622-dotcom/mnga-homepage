@@ -24,7 +24,7 @@ const FALLBACK = [
   { id: null, category: 'Press', published_at: '2026-06-10', title: 'MNGA 設立記者発表会を開催しました', excerpt: '大企業経営層とベンチャー意思決定者、報道関係者を迎え、設立の背景と初年度の実装方針を発表しました。', thumbnail_url: '/images/about/c5.jpg' },
   { id: null, category: 'Meetup', published_at: '2026-05-28', title: '第1回 共創ラウンドテーブルを実施', excerpt: '大企業7社・ベンチャー12社が参加。協業テーマを5領域に整理し、検証案件の優先順位を合意しました。', thumbnail_url: '/act-img/act-match.jpg' },
   { id: null, category: 'Project', published_at: '2026-05-16', title: '協業案件「次世代モビリティ実装」がPoCフェーズへ', excerpt: '大企業の社会実装力とベンチャーの検証速度を接続。半年での社会実装を目標にPoCを開始しました。', thumbnail_url: '/act-img/act-impl.jpg' },
-  { id: null, category: 'Talk', published_at: '2026-05-03', title: '理事長 櫻田が経営者育成プログラムに登壇', excerpt: '「停滞を招いたのも、変えられるのも経営者である」——自己変革と実装責任をテーマに講演しました。', thumbnail_url: '/act-img/act-ikusei.jpg' },
+  { id: null, category: 'Talk', published_at: '2026-05-03', title: '理事長が経営者育成プログラムに登壇', excerpt: '「停滞を招いたのも、変えられるのも経営者である」——自己変革と実装責任をテーマに講演しました。', thumbnail_url: '/act-img/act-ikusei.jpg' },
   { id: null, category: 'Project', published_at: '2026-04-24', title: 'ナレッジ基盤「実装の型」第1版を公開', excerpt: '評価基準・撤退ルール・共創の規律を体系化。会員が案件設計に再利用できる形で整備しました。', thumbnail_url: '/act-img/act-knowledge.jpg' },
   { id: null, category: 'Meetup', published_at: '2026-04-12', title: '分科会「新産業デザイン」キックオフ', excerpt: '領域横断の少人数分科会を始動。仮説の筋とフィールドの確度を、現場目線で磨き込みます。', thumbnail_url: '/act-img/bg-dawn.jpg' },
 ]

@@ -54,7 +54,7 @@ function StaticBody() {
   return (
     <>
       <div className="art-body">
-        <p>第1回 共創ラウンドテーブルは、大企業とベンチャーの意思決定者が<strong>「対等に向き合う」場</strong>として設計されました。冒頭、理事長 櫻田謙悟が「PoCで終わらせず、社会実装まで前進させる」という運営方針を改めて共有し、各社が抱える協業の障壁を率直に持ち寄ることから始まりました。</p>
+        <p>第1回 共創ラウンドテーブルは、大企業とベンチャーの意思決定者が<strong>「対等に向き合う」場</strong>として設計されました。冒頭、理事長が「PoCで終わらせず、社会実装まで前進させる」という運営方針を改めて共有し、各社が抱える協業の障壁を率直に持ち寄ることから始まりました。</p>
         <h2 className="reveal">5つの協業テーマ</h2>
         <p>当日の議論を通じて、検証を先行させる協業テーマを次の5領域に整理しました。</p>
         <ul className="art-list reveal">
@@ -69,7 +69,7 @@ function StaticBody() {
           <figcaption>分科会では、各テーマごとに「誰が・いつまでに・何を検証するか」を具体化した（イメージ）。</figcaption>
         </figure>
         <blockquote className="art-quote reveal">「交流で終わらせない。<br />ここで、案件を立ち上げる。」
-          <small>MNGA 理事長（代表理事） ／ 元経済同友会 代表幹事　櫻田 謙悟</small>
+          <small>MNGA 理事長（代表理事）</small>
         </blockquote>
         <h2 className="reveal">当日の様子</h2>
         <p>後半のクロージングでは、各テーマのオーナーを決め、次回までの検証ステップを合意。MNGAが伴走しながら、案件化・検証・事業化まで継続的に「回し続ける」体制を確認しました。</p>
@@ -355,6 +355,6 @@ export default function ReportDetail() {
 
 const STATIC_RELATED = [
   { id: null, category: 'Project', published_at: '2026-05-16', title: '協業案件「次世代モビリティ実装」がPoCフェーズへ', thumbnail_url: '/act-img/act-impl.jpg' },
-  { id: null, category: 'Talk', published_at: '2026-05-03', title: '理事長 櫻田が経営者育成プログラムに登壇', thumbnail_url: '/act-img/act-ikusei.jpg' },
+  { id: null, category: 'Talk', published_at: '2026-05-03', title: '理事長が経営者育成プログラムに登壇', thumbnail_url: '/act-img/act-ikusei.jpg' },
   { id: null, category: 'Meetup', published_at: '2026-04-12', title: '分科会「新産業デザイン」キックオフ', thumbnail_url: '/act-img/bg-dawn.jpg' },
 ]

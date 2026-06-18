@@ -2,11 +2,9 @@ const BRAND_RED = '#d63b2d'
 const HEADING_NAVY = '#1a2438'
 const HEADING_MUTED = '#5a6478'
 
+// 個人名・人物写真はいったん削除（理事体制は順次発表）
 const members = [
-  { role: '会長', name: '櫻田 謙悟', company: '株式会社○○', image: '/images/board/櫻田.jpg' },
-  { role: '副会長', name: '山木 智史', company: '株式会社Re-grit Partners', image: '/images/board/副会長.jpg' },
-  { role: '理事', name: 'XXX XXX', company: '株式会社○○', image: '/images/board/会長.jpg' },
-  { role: '理事', name: 'XXX XXX', company: '株式会社○○', image: '/images/board/副会長.jpg' },
+  { role: '理事', name: '準備中', company: '', image: null },
 ]
 
 export default function Board() {

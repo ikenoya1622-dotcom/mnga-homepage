@@ -234,11 +234,7 @@ export default function Home() {
           <div className="speaker reveal">
             <div>
               <p className="speaker__quote">「停滞を招いたのは、政府でも、国民でもない。経営者である」</p>
-              <div className="speaker__meta">
-                <div className="speaker__name">櫻田 謙悟</div>
-                <div className="speaker__role en">MNGA 理事長（代表理事） ／ 元経済同友会 代表幹事</div>
-              </div>
-              <p className="lede speaker__body">そして、自らもその一人だと語ってきました。MNGAは、この問題意識から設立されました。停滞を招いたのが経営者の責任なら、<strong>それを変えられるのも、また経営者</strong>です。</p>
+              <p className="lede speaker__body">そして、自らもその一人だと、私たちは考えます。MNGAは、この問題意識から設立されました。停滞を招いたのが経営者の責任なら、<strong>それを変えられるのも、また経営者</strong>です。</p>
             </div>
           </div>
         </div>
@@ -249,13 +245,7 @@ export default function Home() {
         <div className="wrap">
           <div className="shead reveal"><span className="shead__no en">03</span><span className="shead__kick en">Board Members<span className="shead__rule" aria-hidden="true" /></span></div>
           <SplitLines className="stitle" lines={['立ち上げ期を支える、', '各界を代表する理事体制。']} />
-          <div className="board">
-            <article className="dcard dcard--chair reveal">
-              <div className="dcard__photo"><span className="dcard__idx en">01</span></div>
-              <div className="dcard__body"><div className="dcard__name">櫻田 謙悟</div><div className="dcard__role en">理事長（代表理事） ／ 元経済同友会 代表幹事</div></div>
-            </article>
-          </div>
-          <p className="board-note reveal" style={{ marginTop: '24px', color: 'var(--olive)', letterSpacing: '.04em' }}>理事は順次発表します。</p>
+          <p className="board-note reveal" style={{ marginTop: '24px', color: 'var(--olive)', letterSpacing: '.04em' }}>理事体制は順次発表します。</p>
         </div>
       </section>
 

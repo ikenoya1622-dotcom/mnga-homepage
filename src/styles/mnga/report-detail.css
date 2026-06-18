@@ -7,7 +7,7 @@
   }
 .mnga-report-detail, .mnga-report-detail *{margin:0;padding:0;box-sizing:border-box;}
 .mnga-report-detail{ -webkit-text-size-adjust:100%; background:var(--bg); }
-.mnga-report-detail{ font-family:'Zen Old Mincho',serif; color:var(--ivory); background:radial-gradient(115% 55% at 50% -8%, rgba(245,243,234,.04), rgba(0,0,0,0) 55%), var(--bg); background-attachment:fixed;
+.mnga-report-detail{ font-family:'Zen Old Mincho',serif; color:var(--ivory); background:var(--bg);
     line-height:2.0; letter-spacing:.02em; overflow-x:hidden; font-feature-settings:"palt" 1; -webkit-font-smoothing:antialiased; }
 .mnga-report-detail .en{ font-family:'Cormorant Garamond',serif; letter-spacing:.06em; }
 .mnga-report-detail ::selection{ background:var(--ivory); color:var(--ink); }
@@ -47,10 +47,10 @@
 .mnga-report-detail .art-pill{ font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ivory);
     border:1px solid var(--hair-strong); border-radius:999px; padding:3px 14px; }
 .mnga-report-detail .art-date{ font-family:'Cormorant Garamond',serif; font-size:14px; color:var(--ivory-dim); }
-.mnga-report-detail .art-title{ font-size:clamp(1.6rem,3vw,2.4rem); font-weight:900; line-height:1.55; letter-spacing:.03em; color:var(--ivory); margin-bottom:6px;
+.mnga-report-detail .art-title{ font-size:clamp(1.9rem,4vw,3rem); font-weight:900; line-height:1.5; letter-spacing:.06em; color:var(--ivory);
     word-break:keep-all; line-break:strict; text-wrap:balance; }
-.mnga-report-detail .art-lead{ margin-top:22px; font-size:clamp(1.04rem,1.6vw,1.2rem); color:var(--body); line-height:2.1; }
-.mnga-report-detail .art-utility{ display:flex; align-items:center; justify-content:space-between; gap:18px; padding:16px 0; margin:8px 0 20px; border-bottom:1px solid var(--hair); flex-wrap:wrap; }
+.mnga-report-detail .art-lead{ margin-top:26px; font-size:clamp(1.04rem,1.6vw,1.2rem); color:var(--body); line-height:2.1; padding-bottom:30px; border-bottom:1px solid var(--hair); }
+.mnga-report-detail .art-utility{ display:flex; align-items:center; justify-content:space-between; gap:18px; padding:18px 0 0; margin-bottom:14px; flex-wrap:wrap; }
 .mnga-report-detail .art-source{ font-size:12px; color:var(--muted); letter-spacing:.04em; }
 .mnga-report-detail .art-share{ display:flex; align-items:center; gap:10px; }
 .mnga-report-detail .art-share span{ font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); }
@@ -58,8 +58,8 @@
     border:1px solid var(--hair); border-radius:50%; color:var(--ivory-dim); background:transparent; cursor:pointer; transition:all .25s; }
 .mnga-report-detail .art-share a:hover, .mnga-report-detail .art-share button:hover{ color:var(--ink); background:var(--ivory); border-color:var(--ivory); }
 .mnga-report-detail .art-share svg{ width:15px; height:15px; fill:currentColor; }
-.mnga-report-detail .art-hero{ margin:34px 0 4px; width:100%; }
-.mnga-report-detail .art-hero img{ width:100%; aspect-ratio:16/9; object-fit:cover; border:1px solid var(--hair); filter:grayscale(0) brightness(.98) contrast(1.02); display:block; }
+.mnga-report-detail .art-hero{ margin:8px 0 12px; }
+.mnga-report-detail .art-hero img{ width:100%; aspect-ratio:16/9; object-fit:cover; border:1px solid var(--hair); filter:grayscale(.12) brightness(.9) contrast(1.03); display:block; }
 .mnga-report-detail figure{ margin:42px 0; }
 .mnga-report-detail figure img{ width:100%; object-fit:cover; border:1px solid var(--hair); filter:grayscale(.12) brightness(.9) contrast(1.03); display:block; }
 .mnga-report-detail figcaption{ margin-top:12px; font-size:12px; color:var(--muted); letter-spacing:.04em; line-height:1.9; }
@@ -103,8 +103,6 @@
 .mnga-report-detail .rcard:hover .rcard__t{ color:#fff; }
 .mnga-report-detail .reveal{ opacity:0; transform:translateY(24px); }
 .mnga-report-detail .site-footer{ background:#dcdcd0; color:var(--ink); padding:64px 0 40px; margin-top:clamp(80px,12vh,140px); }
-/* 固定オーバーレイ(グレインz90/ライトリークz100/ヴィネットz110)の曇りを下部から除く（ヘッダーz120より背面） */
-.mnga-report-detail .related, .mnga-report-detail .site-footer{ position:relative; z-index:115; }
 .mnga-report-detail .awrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 6vw; }
 .mnga-report-detail .site-footer .awrap{ max-width:none; }
 .mnga-report-detail .foot-grid{ display:flex; justify-content:space-between; align-items:flex-start; gap:48px; }

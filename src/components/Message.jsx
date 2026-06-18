@@ -3,27 +3,14 @@ export default function Message() {
     <section style={{padding: '80px 0', backgroundColor: '#f9fafb'}}>
       <div style={{maxWidth: '1100px', margin: '0 auto', padding: '0 24px'}}>
         <div className="message-inner">
-          <div className="message-photo-wrap">
-            <img
-              src="/images/board/櫻田.jpg"
-              alt="MNGA 理事長 櫻田謙悟"
-              style={{
-                maxWidth: '300px',
-                width: '100%',
-                aspectRatio: '3/4',
-                objectFit: 'cover',
-                marginLeft: '15%',
-              }}
-            />
-          </div>
+          <div className="message-photo-wrap" />
           <div>
             <p style={{fontSize: '14px', color: '#6b7280', marginBottom: '12px'}}>2. 代表メッセージ</p>
             <h2 style={{fontSize: '24px', fontWeight: 'bold', lineHeight: '1.5', marginBottom: '16px'}}>
               失ったのは、われわれだ。<br />接続を、取り戻す。
             </h2>
             <p style={{fontSize: '14px', color: '#6b7280', marginBottom: '16px'}}>
-              Make Nippon Great Again 理事長<br />
-              <span style={{fontWeight: 'bold', color: '#374151'}}>櫻田 謙悟</span>
+              Make Nippon Great Again 理事長
             </p>
             <div style={{fontSize: '14px', color: '#4b5563', lineHeight: '1.9'}}>
               <p style={{marginBottom: '14px'}}>

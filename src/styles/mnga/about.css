@@ -133,8 +133,7 @@
 .mnga-about .lb--jp0{ fill:var(--muted); font-size:10px; }
 .mnga-about .ax{ font-size:10px; fill:var(--muted); letter-spacing:.1em; }
 .mnga-about .chart__src{ font-size:9px; color:var(--muted); margin-top:10px; letter-spacing:.06em; }
-/* 結び（明色の反転面）は暗デッキ用の固定オーバーレイ（グレインz90/ライトリークz100/ヴィネットz110）の前面に出して曇りを除く。ヘッダー(z120)より背面に保つ */
-.mnga-about .card--close{ background:var(--paper); color:var(--ink); z-index:115; }
+.mnga-about .card--close{ background:var(--paper); color:var(--ink); }
 .mnga-about .card--close .card__inner{ grid-template-columns:1fr; max-width:820px; text-align:center; }
 .mnga-about .tagline{ font-size:clamp(2rem,5.5vw,3.6rem); font-weight:700; color:var(--ink); letter-spacing:.12em; line-height:1.5; opacity:0; transform:translateY(20px); }
 .mnga-about .tagline .en{ display:block; font-size:clamp(1rem,2vw,1.4rem); color:var(--muted); margin-top:18px; font-style:italic; }
@@ -176,8 +175,7 @@
 .mnga-about .site-nav__links a{ font-family:'Cormorant Garamond',serif; font-size:14px; letter-spacing:.06em; color:var(--ivory-dim); text-decoration:none; transition:color .25s; }
 .mnga-about .site-nav__links a:hover{ color:var(--ivory); }
 .mnga-about .site-nav__cta{ font-family:'Cormorant Garamond',serif; font-size:14px; background:var(--ivory); color:var(--ink)!important; padding:9px 20px; border-radius:999px; }
-/* フッター帯（明色）も固定オーバーレイの前面に出して曇りを除く（ヘッダーz120より背面） */
-.mnga-about .after{ position:relative; z-index:115; }
+.mnga-about .after{ position:relative; z-index:70; }
 .mnga-about .awrap{ width:100%; max-width:1180px; margin:0 auto; padding:0 6vw; }
 .mnga-about .band-news{ background:var(--bg); padding:clamp(72px,12vh,140px) 0; scroll-margin-top:72px; }
 .mnga-about .news-head{ display:flex; align-items:baseline; gap:18px; margin-bottom:22px; }

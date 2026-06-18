@@ -10,7 +10,7 @@ const FEATURES = [
   {
     id: 'f1', flip: false, img: '/act-img/act-ikusei.jpg', fallback: '/act-img/bg-night.jpg',
     h: ['経営者育成', '― 地力と視座を磨く'],
-    body: <>第一線の経営者による講話と対話を通じて、覚悟と視座を磨く場（プログラム名：<strong>櫻田塾</strong>）。アドバイスではなく経験を共有する——上から目線の助言ではなく、<strong>経営者同士が対等に学び合う</strong>設計です。</>,
+    body: <>第一線の経営者による講話と対話を通じて、覚悟と視座を磨く場（<strong>経営者育成プログラム</strong>）。アドバイスではなく経験を共有する——上から目線の助言ではなく、<strong>経営者同士が対等に学び合う</strong>設計です。</>,
   },
   {
     id: 'f2', flip: true, img: '/act-img/act-match.jpg', fallback: '/act-img/bg-night.jpg',

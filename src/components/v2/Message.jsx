@@ -36,21 +36,8 @@ export default function Message() {
             alignItems: 'center',
           }}
         >
-          {/* 左: 写真 */}
-          <div>
-            <img
-              src="/images/board/櫻田.jpg"
-              alt="MNGA 理事長 櫻田謙悟"
-              style={{
-                width: '100%',
-                maxWidth: '440px',
-                aspectRatio: '4/5',
-                objectFit: 'cover',
-                display: 'block',
-                margin: '0 auto',
-              }}
-            />
-          </div>
+          {/* 左: 写真（個人写真はいったん削除） */}
+          <div />
 
           {/* 右: 本文 */}
           <div>
@@ -93,9 +80,6 @@ export default function Message() {
             <div style={{ marginTop: '40px', paddingTop: '20px', borderTop: '1px solid #d1d5db' }}>
               <p style={{ fontSize: '12px', color: '#666', margin: 0 }}>
                 Make Nippon Great Again　理事長
-              </p>
-              <p style={{ fontSize: '16px', fontWeight: 700, color: '#1a1a1a', marginTop: '6px' }}>
-                櫻田 謙悟
               </p>
             </div>
           </div>

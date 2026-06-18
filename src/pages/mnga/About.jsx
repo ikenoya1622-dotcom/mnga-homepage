@@ -215,10 +215,7 @@ export default function About() {
             <div className="lede">
               <p className="kana reveal">THE QUESTION</p>
               <p className="say reveal">「停滞を招いたのは、政府でも、国民でもない。<br />経営者である」</p>
-              <div className="speaker reveal">
-                <div><div className="speaker__name">櫻田 謙悟</div><div className="speaker__role">MNGA 理事長（代表理事） ／ 元経済同友会 代表幹事</div></div>
-              </div>
-              <p className="body reveal">そして、<strong>自らもその一人だ</strong>と語ってきました。MNGAは、この問題意識から設立されました。停滞を招いたのが経営者の責任なら、それを変えられるのも、また経営者です。</p>
+              <p className="body reveal">そして、<strong>自らもその一人だ</strong>——私たちはそう考えます。MNGAは、この問題意識から設立されました。停滞を招いたのが経営者の責任なら、それを変えられるのも、また経営者です。</p>
             </div>
           </div>
         </section>

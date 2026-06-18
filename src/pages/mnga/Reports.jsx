@@ -193,6 +193,7 @@ export default function Reports() {
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report" aria-current="page">REPORTS</Link>
+            <Link to="/news">NEWS</Link>
             <a className="site-nav__cta en" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>問い合わせ（準備中）</a>
           </div>
         </nav>
@@ -266,6 +267,7 @@ export default function Reports() {
               <Link to="/about">ABOUT</Link>
               <Link to="/activities">ACTIVITIES</Link>
               <Link to="/report">REPORTS</Link>
+              <Link to="/news">NEWS</Link>
               <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
             </div>
           </div>

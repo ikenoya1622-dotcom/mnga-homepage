@@ -157,6 +157,7 @@ export default function Activities() {
             <li><Link to="/about">ABOUT</Link></li>
             <li><Link className="is-current" aria-current="page" to="/activities">ACTIVITIES</Link></li>
             <li><Link to="/report">REPORTS</Link></li>
+            <li><Link to="/news">NEWS</Link></li>
             <li><a className="nav__cta en" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>問い合わせ（準備中）</a></li>
           </ul>
         </nav>
@@ -237,7 +238,7 @@ export default function Activities() {
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report">REPORTS</Link>
-            <Link to="/#news">NEWS</Link>
+            <Link to="/news">NEWS</Link>
             <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
           </nav>
         </div>

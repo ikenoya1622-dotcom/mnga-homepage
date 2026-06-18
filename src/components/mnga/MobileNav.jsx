@@ -5,6 +5,7 @@ const LINKS = [
   ['/about', 'ABOUT'],
   ['/activities', 'ACTIVITIES'],
   ['/report', 'REPORTS'],
+  ['/news', 'NEWS'],
 ]
 
 // Shared smartphone navigation: a fixed hamburger (≤820px) that opens a

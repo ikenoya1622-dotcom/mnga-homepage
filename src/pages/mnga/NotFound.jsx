@@ -18,6 +18,7 @@ export default function NotFound() {
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report">REPORTS</Link>
+            <Link to="/news">NEWS</Link>
           </div>
         </nav>
       </header>
@@ -42,7 +43,7 @@ export default function NotFound() {
               <Link to="/about">ABOUT</Link>
               <Link to="/activities">ACTIVITIES</Link>
               <Link to="/report">REPORTS</Link>
-              <Link to="/#news">NEWS</Link>
+              <Link to="/news">NEWS</Link>
               <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
             </nav>
           </div>

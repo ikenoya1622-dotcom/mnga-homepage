@@ -201,6 +201,7 @@ export default function NewsDetail() {
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report">REPORTS</Link>
+            <Link to="/news">NEWS</Link>
             <a className="site-nav__cta en" role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>問い合わせ（準備中）</a>
           </div>
         </nav>
@@ -210,13 +211,13 @@ export default function NewsDetail() {
         {!isStatic && notFound ? (
           <article className="article">
             <p className="art-body" style={{ marginTop: 0 }}>お知らせが見つかりませんでした。</p>
-            <div className="art-back" style={{ marginTop: 24 }}><Link to="/#news" className="en">Back to list</Link></div>
+            <div className="art-back" style={{ marginTop: 24 }}><Link to="/news" className="en">Back to list</Link></div>
           </article>
         ) : (
           <>
             <article className="article">
               <nav className="crumb en" aria-label="現在地">
-                <Link to="/">Home</Link><span>/</span><Link to="/#news">News</Link><span>/</span>{title}
+                <Link to="/">Home</Link><span>/</span><Link to="/news">News</Link><span>/</span>{title}
               </nav>
 
               <div className="art-meta">
@@ -273,7 +274,7 @@ export default function NewsDetail() {
               </div>
             </nav>
 
-            <div className="art-back"><Link to="/#news" className="en">Back to list</Link></div>
+            <div className="art-back"><Link to="/news" className="en">Back to list</Link></div>
 
             <section className="news-cta">
               <div className="news-cta__in">
@@ -296,7 +297,7 @@ export default function NewsDetail() {
               <Link to="/about">ABOUT</Link>
               <Link to="/activities">ACTIVITIES</Link>
               <Link to="/report">REPORTS</Link>
-              <Link to="/#news">NEWS</Link>
+              <Link to="/news">NEWS</Link>
               <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
             </div>
           </div>

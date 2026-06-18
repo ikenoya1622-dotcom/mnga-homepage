@@ -7,6 +7,7 @@ import About from './pages/mnga/About'
 import Activities from './pages/mnga/Activities'
 import Reports from './pages/mnga/Reports'
 import ReportDetail from './pages/mnga/ReportDetail'
+import News from './pages/mnga/News'
 import NewsDetail from './pages/mnga/NewsDetail'
 import NotFound from './pages/mnga/NotFound'
 import Admin from './pages/Admin'
@@ -46,6 +47,7 @@ function App() {
         <Route path="/activities" element={<Activities />} />
         <Route path="/report" element={<Reports />} />
         <Route path="/report/:id" element={<ReportDetail />} />
+        <Route path="/news" element={<News />} />
         <Route path="/news/:id" element={<NewsDetail />} />
         <Route path="/mnga-console-7kx9a/login" element={<AdminLogin />} />
         <Route path="/mnga-console-7kx9a" element={<PrivateRoute><Admin /></PrivateRoute>} />

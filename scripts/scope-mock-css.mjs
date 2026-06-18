@@ -28,6 +28,7 @@ const PAGES = [
   { file: 'mock_report.html', out: 'report.css', root: 'mnga-report' },
   { file: 'mock_report_detail.html', out: 'report-detail.css', root: 'mnga-report-detail' },
   { file: 'mock_news_detail.html', out: 'news-detail.css', root: 'mnga-news-detail' },
+  { file: 'mock_news.html', out: 'news.css', root: 'mnga-news' },
 ]
 
 function extractStyle(html) {

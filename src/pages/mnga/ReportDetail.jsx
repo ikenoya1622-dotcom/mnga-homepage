@@ -243,7 +243,6 @@ export default function ReportDetail() {
         <nav className="site-nav" aria-label="メインナビゲーション">
           <Link className="site-logo" to="/" aria-label="MNGA"><img src="/mnga-horizontal-white.png" alt="MNGA ロゴ" /></Link>
           <div className="site-nav__links">
-            <Link to="/">TOP</Link>
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report" aria-current="page">REPORTS</Link>
@@ -339,7 +338,6 @@ export default function ReportDetail() {
               <p className="foot-org">一般社団法人 Make Nippon Great Again<br />〒xxx-xxxx xxx<br />平日 10:00–18:00（JST）</p>
             </div>
             <div className="foot-nav">
-              <Link to="/">TOP</Link>
               <Link to="/about">ABOUT</Link>
               <Link to="/activities">ACTIVITIES</Link>
               <Link to="/report">REPORTS</Link>

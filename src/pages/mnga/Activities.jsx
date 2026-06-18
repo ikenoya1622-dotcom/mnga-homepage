@@ -154,7 +154,6 @@ export default function Activities() {
         <Link className="nav__brand" to="/" aria-label="MNGA トップ"><img className="nav__logo" src="/mnga-horizontal-white.png" alt="MNGA" /></Link>
         <nav aria-label="メインナビゲーション">
           <ul className="nav__links">
-            <li><Link to="/">TOP</Link></li>
             <li><Link to="/about">ABOUT</Link></li>
             <li><Link className="is-current" aria-current="page" to="/activities">ACTIVITIES</Link></li>
             <li><Link to="/report">REPORTS</Link></li>
@@ -235,7 +234,6 @@ export default function Activities() {
             <p className="shield">私たちの “Again” は、復古ではなく前進です。“Great” は、規模ではなく不可欠性です。本団体は政治的・宗教的な含意を一切持たず、経団連・経済同友会が築いてきた産業共創の系譜に連なる、非政治・中立のプラットフォームです。</p>
           </div>
           <nav className="footer__nav" aria-label="フッターナビ">
-            <Link to="/">TOP</Link>
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report">REPORTS</Link>

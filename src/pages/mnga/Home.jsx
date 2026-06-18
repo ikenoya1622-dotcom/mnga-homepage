@@ -187,7 +187,6 @@ export default function Home() {
             <img className="logo__img" src="/mnga-horizontal-white.png" alt="MNGA ロゴ" />
           </a>
           <div className="nav__links">
-            <a href="#top">TOP</a>
             <Link to="/about">ABOUT</Link>
             <Link to="/activities">ACTIVITIES</Link>
             <Link to="/report">REPORTS</Link>
@@ -357,7 +356,6 @@ export default function Home() {
               <p>一般社団法人 Make Nippon Great Again<br />〒xxx-xxxx xxx<br />平日 10:00–18:00（JST）</p>
             </div>
             <div className="foot__nav">
-              <a href="#top">TOP</a>
               <Link to="/about">ABOUT</Link>
               <Link to="/activities">ACTIVITIES</Link>
               <Link to="/report">REPORTS</Link>

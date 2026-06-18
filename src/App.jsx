@@ -10,6 +10,8 @@ import ReportDetail from './pages/mnga/ReportDetail'
 import News from './pages/mnga/News'
 import NewsDetail from './pages/mnga/NewsDetail'
 import NotFound from './pages/mnga/NotFound'
+import Privacy from './pages/mnga/Privacy'
+import Organization from './pages/mnga/Organization'
 import Admin from './pages/Admin'
 import AdminNews from './pages/AdminNews'
 import AdminLogin from './pages/AdminLogin'
@@ -50,6 +52,8 @@ function App() {
         <Route path="/report/:id" element={<ReportDetail />} />
         <Route path="/news" element={<News />} />
         <Route path="/news/:id" element={<NewsDetail />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/organization" element={<Organization />} />
         <Route path="/mnga-console-7kx9a/login" element={<AdminLogin />} />
         <Route path="/mnga-console-7kx9a" element={<PrivateRoute><Admin /></PrivateRoute>} />
         <Route path="/mnga-console-7kx9a/news" element={<PrivateRoute><AdminNews /></PrivateRoute>} />

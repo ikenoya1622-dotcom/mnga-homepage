@@ -298,6 +298,8 @@ export default function NewsDetail() {
               <Link to="/activities">ACTIVITIES</Link>
               <Link to="/report">REPORTS</Link>
               <Link to="/news">NEWS</Link>
+              <Link to="/privacy">プライバシーポリシー</Link>
+              <Link to="/organization">法人概要</Link>
               <a role="link" aria-disabled="true" tabIndex={-1} title="お問い合わせフォームは準備中です" onClick={(e) => e.preventDefault()}>CONTACT（準備中）</a>
             </div>
           </div>

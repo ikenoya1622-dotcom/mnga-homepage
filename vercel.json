@@ -5,7 +5,10 @@
     { "source": "/activities", "destination": "/index.html" },
     { "source": "/report", "destination": "/index.html" },
     { "source": "/report/(.*)", "destination": "/index.html" },
+    { "source": "/news", "destination": "/index.html" },
     { "source": "/news/(.*)", "destination": "/index.html" },
+    { "source": "/privacy", "destination": "/index.html" },
+    { "source": "/organization", "destination": "/index.html" },
     { "source": "/mnga-console-7kx9a", "destination": "/index.html" },
     { "source": "/mnga-console-7kx9a/(.*)", "destination": "/index.html" }
   ],

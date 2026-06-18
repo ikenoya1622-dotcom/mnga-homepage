@@ -3,13 +3,14 @@ import Seo from '../../components/Seo'
 import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/news-detail.css'
 
-// 既存の news-detail のヘッダー/記事レイアウトを流用した、ブランド整合の404。
-export default function NotFound() {
+// プライバシーポリシー（内容未確定のための「準備中」スケルトン。導線・URLを先に用意）。
+// news-detail のヘッダー/記事/フッターを流用し、ブランド整合を保つ。
+export default function Privacy() {
   return (
     <div className="mnga-news-detail js">
-      <Seo title="ページが見つかりません" path="/404" noindex />
+      <Seo title="プライバシーポリシー" path="/privacy" description="一般社団法人 Make Nippon Great Again（MNGA）のプライバシーポリシー。現在準備中です。" noindex />
       <a className="skip-link" href="#main">本文へスキップ</a>
-      <MobileNav current="/" />
+      <MobileNav current="/privacy" />
 
       <header className="site-header solid" id="ahdr">
         <nav className="site-nav" aria-label="メインナビゲーション">
@@ -24,10 +25,22 @@ export default function NotFound() {
       </header>
 
       <main id="main">
-        <article className="article" style={{ textAlign: 'center', minHeight: '52vh' }}>
-          <p className="en" style={{ fontSize: 13, letterSpacing: '.32em', color: '#8f8f80', marginBottom: 18 }}>404 ― NOT FOUND</p>
-          <h1 className="art-title" style={{ borderBottom: 'none', paddingBottom: 0 }}>ページが見つかりませんでした</h1>
-          <p className="art-body">お探しのページは、移動または削除された可能性があります。URLをご確認のうえ、トップページからお進みください。</p>
+        <article className="article">
+          <p className="crumb"><Link to="/">TOP</Link><span>/</span>プライバシーポリシー</p>
+          <h1 className="art-title">プライバシーポリシー</h1>
+          <div className="art-body">
+            <p><strong>本プライバシーポリシーは現在準備中です。</strong>確定し次第、本ページにて公開します。</p>
+            <p style={{ color: 'var(--muted)' }}>掲載を予定している主な項目：</p>
+            <ul style={{ listStyle: 'none', padding: 0, color: 'var(--ivory-dim)', lineHeight: 2.2 }}>
+              <li>1. 個人情報の利用目的</li>
+              <li>2. 取得する情報の範囲</li>
+              <li>3. 第三者提供・委託について</li>
+              <li>4. 安全管理措置</li>
+              <li>5. 開示・訂正・利用停止のご請求</li>
+              <li>6. お問い合わせ窓口</li>
+            </ul>
+            <p className="art-note">本ポリシー公開までの間、個人情報を取得するお問い合わせ・お申込みの受付は行っておりません。</p>
+          </div>
           <div className="art-back"><Link to="/" className="en">Back to Home</Link></div>
         </article>
       </main>

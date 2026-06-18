@@ -3,13 +3,25 @@ import Seo from '../../components/Seo'
 import MobileNav from '../../components/mnga/MobileNav'
 import '../../styles/mnga/news-detail.css'
 
-// 既存の news-detail のヘッダー/記事レイアウトを流用した、ブランド整合の404。
-export default function NotFound() {
+// 法人概要（内容未確定のための枠。導線・URLを先に用意）。
+// 確定済みの団体名のみ記載し、個人名・未確定項目は「準備中」とする。
+const ROWS = [
+  ['名称', '一般社団法人 Make Nippon Great Again'],
+  ['設立年月日', '準備中'],
+  ['主たる事務所', '準備中'],
+  ['代表理事', '準備中'],
+  ['役員一覧', '準備中'],
+  ['事業目的', '準備中'],
+  ['連絡先', '準備中'],
+  ['決算公告', '準備中'],
+]
+
+export default function Organization() {
   return (
     <div className="mnga-news-detail js">
-      <Seo title="ページが見つかりません" path="/404" noindex />
+      <Seo title="法人概要" path="/organization" description="一般社団法人 Make Nippon Great Again（MNGA）の法人概要。詳細は順次公開します。" noindex />
       <a className="skip-link" href="#main">本文へスキップ</a>
-      <MobileNav current="/" />
+      <MobileNav current="/organization" />
 
       <header className="site-header solid" id="ahdr">
         <nav className="site-nav" aria-label="メインナビゲーション">
@@ -24,10 +36,29 @@ export default function NotFound() {
       </header>
 
       <main id="main">
-        <article className="article" style={{ textAlign: 'center', minHeight: '52vh' }}>
-          <p className="en" style={{ fontSize: 13, letterSpacing: '.32em', color: '#8f8f80', marginBottom: 18 }}>404 ― NOT FOUND</p>
-          <h1 className="art-title" style={{ borderBottom: 'none', paddingBottom: 0 }}>ページが見つかりませんでした</h1>
-          <p className="art-body">お探しのページは、移動または削除された可能性があります。URLをご確認のうえ、トップページからお進みください。</p>
+        <article className="article">
+          <p className="crumb"><Link to="/">TOP</Link><span>/</span>法人概要</p>
+          <h1 className="art-title">法人概要</h1>
+          <div className="art-body">
+            <p><strong>本ページは準備中です。</strong>代表理事・設立年月日・役員一覧・連絡先・決算公告などの詳細は、確定し次第、順次公開します。</p>
+            <dl style={{ margin: '36px 0 0', borderTop: '1px solid var(--hair)' }}>
+              {ROWS.map(([label, value]) => (
+                <div
+                  key={label}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '160px 1fr',
+                    gap: '16px',
+                    padding: '18px 0',
+                    borderBottom: '1px solid var(--hair)',
+                  }}
+                >
+                  <dt style={{ color: 'var(--ivory-dim)', fontSize: '.92rem', letterSpacing: '.04em' }}>{label}</dt>
+                  <dd style={{ margin: 0, color: value === '準備中' ? 'var(--muted)' : 'var(--ivory)' }}>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
           <div className="art-back"><Link to="/" className="en">Back to Home</Link></div>
         </article>
       </main>

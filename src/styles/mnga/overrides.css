@@ -22,3 +22,8 @@
 .mnga-top footer { position: relative; z-index: 210; }
 
 .mnga-activities .footer { position: relative; z-index: 210; }
+
+/* NEWS一覧: HERO(.phero)を廃しコンパクトな見出しに。固定ヘッダー(72px)下の余白を確保 */
+.mnga-news .news-head { max-width: 1180px; margin: 0 auto; padding: calc(72px + 5vh) 6vw 0; }
+.mnga-news .news-head .phero__title { font-size: clamp(1.8rem, 3.6vw, 2.8rem); line-height: 1.3; }
+.mnga-news .news-head .phero__kana { margin-bottom: 18px; }

@@ -187,17 +187,12 @@ export default function News() {
       </header>
 
       <main id="main">
-        <section className="phero">
-          <div className="phero__bg" aria-hidden="true" />
-          <div className="phero__inner">
-            <p className="phero__kana">News — お知らせ</p>
-            <h1 className="phero__title">
-              <span className="lineMask"><span className="line">決定も、進捗も、</span></span>
-              <span className="lineMask"><span className="line">一次情報で残す。</span></span>
-            </h1>
-            <p className="phero__lead">設立・理事体制・定款などの公式開示から、共創ラウンドテーブル・登壇・プレス発表まで。MNGAの一次情報を、時系列でここに集約します。</p>
-          </div>
-        </section>
+        <div className="news-head">
+          <p className="phero__kana">News — お知らせ</p>
+          <h1 className="phero__title">
+            <span className="lineMask"><span className="line">お知らせ</span></span>
+          </h1>
+        </div>
 
         <div className="repwrap">
           <div className="repfilter" role="group" aria-label="カテゴリで絞り込み">

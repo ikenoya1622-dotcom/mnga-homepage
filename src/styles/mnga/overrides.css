@@ -1,0 +1,24 @@
+/* ハンド管理のオーバーライド（scope-mock-css.mjs の再生成では消えない）。
+   ページ別CSSの後に App.jsx で読み込むこと。
+
+   目的: 固定オーバーレイ(ヴィネット/グレイン/ライトリーク = position:fixed)が
+   明色フッターや結びセクションに重なって「曇って」見える問題を解消する。
+   当該セクションをオーバーレイより前面・固定ヘッダーより背面の z-index に上げる。
+   ・report/report-detail/news-detail/about: オーバーレイ z90-110 / ヘッダー z120 → z115
+   ・top/activities: ヴィネット無し・ライトリーク z150 / グレイン z200 → footer z210 */
+
+.mnga-about .card--close,
+.mnga-about .after { position: relative; z-index: 115; }
+
+.mnga-report .repwrap,
+.mnga-report .site-footer { position: relative; z-index: 115; }
+
+.mnga-report-detail .related,
+.mnga-report-detail .site-footer { position: relative; z-index: 115; }
+
+.mnga-news-detail .news-cta,
+.mnga-news-detail .site-footer { position: relative; z-index: 115; }
+
+.mnga-top footer { position: relative; z-index: 210; }
+
+.mnga-activities .footer { position: relative; z-index: 210; }

@@ -15,6 +15,7 @@ import AdminNews from './pages/AdminNews'
 import AdminLogin from './pages/AdminLogin'
 import PrivateRoute from './components/PrivateRoute'
 import './styles/mnga/mobile-nav.css'
+import './styles/mnga/overrides.css' // 再生成で消えない手動オーバーライド（フッター等の曇り解消）。ページCSSの後に読み込む
 
 gsap.registerPlugin(ScrollTrigger)
 

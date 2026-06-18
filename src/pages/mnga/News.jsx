@@ -158,7 +158,7 @@ export default function News() {
       revealTriggers.current.forEach((t) => { t.scrollTrigger && t.scrollTrigger.kill(); t.kill() })
       revealTriggers.current = []
     }
-  }, [shown.length, activeCat])
+  }, [items, activeCat, visible])
 
   function selectCat(key) {
     setActiveCat(key)
